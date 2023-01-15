@@ -126,8 +126,10 @@ in
   # ensure we see the journal on TTY12
   services.journald.console = "/dev/tty12";
 
-  # enjoy a fast machine
-  powerManagement.cpuFreqGovernor = "performance";
+  # keep power consumption and heat in check
+  powerManagement.enable = true;
+  powerManagement.cpuFreqGovernor = "powersave";
+  services.thermald.enable = true;
 
   # allow firmware updates
   services.fwupd.enable = true;
@@ -148,6 +150,7 @@ in
     # use GDM and Wayland
     enable = true;
     displayManager.gdm.enable = true;
+    displayManager.gdm.autoSuspend = false;
     displayManager.defaultSession = "plasmawayland";
   };
 
