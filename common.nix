@@ -95,9 +95,6 @@ in
   #
   networking.useDHCP = true;
 
-  # we want /tmp to be non-persistent
-  boot.cleanTmpDir = true;
-
   # swap to RAM
   zramSwap.enable = true;
 
