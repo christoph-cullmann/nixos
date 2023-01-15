@@ -90,10 +90,15 @@ in
     ];
   };
 
-  #
-  # we let the FRITZ!Box do the job
-  #
-  networking.useDHCP = true;
+  # allow all firmware
+  hardware.enableAllFirmware = true;
+
+  # use systemd-networkd
+  networking.useDHCP = false;
+  networking.useNetworkd = true;
+
+  # ensure firewall is up
+  networking.firewall.enable = true;
 
   # swap to RAM
   zramSwap.enable = true;
@@ -267,11 +272,6 @@ in
   services.printing.drivers = [ pkgs.hplip ];
   services.avahi.enable = true;
   services.avahi.nssmdns = true;
-
-  # ensure firewall is up
-  networking.firewall = {
-    enable = true;
-  };
 
   # let's get SSD status
   services.smartd.enable = true;
