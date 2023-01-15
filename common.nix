@@ -340,6 +340,12 @@ in
   virtualisation.virtualbox.host.enable = true;
   users.extraGroups.vboxusers.members = [ "cullmann" ];
 
+  # configure sudo
+  security.sudo.execWheelOnly = true;
+  security.sudo.extraConfig = ''
+    Defaults lecture = never
+  '';
+
   ###
   ### per user configuration below
   ###
