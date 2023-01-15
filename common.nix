@@ -36,6 +36,18 @@ in
   services.zfs.autoScrub.enable = true;
   services.zfs.trim.enable = true;
 
+  # persistent nix
+  fileSystems."/nix" = {
+    device = "zroot/nix";
+    fsType = "zfs";
+  };
+
+  # persistent homes
+  fileSystems."/home" = {
+    device = "zroot/home";
+    fsType = "zfs";
+  };
+
   # non persistent root
   fileSystems."/" = {
     device = "none";
