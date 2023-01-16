@@ -261,6 +261,7 @@ in
 
   # virus scanner, we only want the updater running
   services.clamav = {
+    daemon.enable = true;
     updater.enable = true;
   };
 
