@@ -431,6 +431,7 @@ in
       marble
       neochat
       nmap
+      okteta
       okular
       pciutils
       perf-tools
