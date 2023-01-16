@@ -260,10 +260,7 @@ in
   };
 
   # virus scanner, we only want the updater running
-  services.clamav = {
-    daemon.enable = true;
-    updater.enable = true;
-  };
+  services.clamav.updater.enable = true;
 
   # try to ensure we can use our network printers
   services.printing.enable = true;
