@@ -69,9 +69,6 @@ in
 
   # some stuff is needed to early for environment.persistence
   environment.etc = {
-    # machine-id is used for the journal
-    "machine-id".source = "/nix/persistent/machine-id";
-
     # stable host keys
     "ssh/ssh_host_rsa_key".source = "/nix/persistent/ssh_host_rsa_key";
     "ssh/ssh_host_rsa_key.pub".source = "/nix/persistent/ssh_host_rsa_key.pub";
@@ -82,11 +79,11 @@ in
   # keep some stuff persistent
   environment.persistence."/nix/persistent" = {
     directories = [
-      # system service persistent data
-      "/var/lib"
+      # systemd timers
+      { directory = "/var/lib/systemd/timers"; user = "root"; group = "root"; mode = "u=rwx,g=rx,o=rx"; }
 
-      # our logs
-      "/var/log"
+      # clamav database
+      { directory = "/var/lib/clamav"; user = "clamav"; group = "clamav"; mode = "u=rwx,g=rx,o=rx"; }
     ];
   };
 
