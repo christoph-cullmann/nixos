@@ -415,10 +415,10 @@ in
       ffmpeg
       file
       firefox
-      gimp-with-plugins
+      #gimp-with-plugins
       gnome.gedit
       go
-      hotspot
+      #hotspot
       hugo
       inetutils
       kate
