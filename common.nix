@@ -208,8 +208,10 @@ in
     aspellDicts.en
     borgbackup
     bpytop
+    chromium
     clamav
     evtest # needs root permissions to run
+    firefox
     gitFull
     hunspellDicts.de_DE
     hunspellDicts.en_US
@@ -341,6 +343,17 @@ in
     Defaults lecture = never
   '';
 
+  # enable firejail
+  programs.firejail.enable = true;
+
+  # firejail some stuff globally
+  programs.firejail.wrappedBinaries = {
+      firefox = {
+          executable = "${pkgs.lib.getBin pkgs.firefox}/bin/firefox";
+          profile = "${pkgs.firejail}/etc/firejail/firefox.profile";
+      };
+  };
+
   ###
   ### per user configuration below
   ###
@@ -408,13 +421,11 @@ in
     home.packages = with pkgs; [
       alacritty
       ark
-      chromium
       emacs
       falkon
       fdupes
       ffmpeg
       file
-      firefox
       #gimp-with-plugins
       gnome.gedit
       go
