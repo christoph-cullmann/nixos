@@ -343,17 +343,6 @@ in
     Defaults lecture = never
   '';
 
-  # enable firejail
-  programs.firejail.enable = true;
-
-  # firejail some stuff globally
-  programs.firejail.wrappedBinaries = {
-      firefox = {
-          executable = "${pkgs.lib.getBin pkgs.firefox}/bin/firefox";
-          profile = "${pkgs.firejail}/etc/firejail/firefox.profile";
-      };
-  };
-
   ###
   ### per user configuration below
   ###
