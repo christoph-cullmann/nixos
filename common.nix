@@ -257,8 +257,8 @@ in
   # Enable the OpenSSH daemon.
   services.openssh = {
     enable = true;
-    passwordAuthentication = false;
-    permitRootLogin = "yes";
+    settings.PasswordAuthentication = false;
+    settings.PermitRootLogin = "yes";
   };
 
   # virus scanner, we only want the updater running
