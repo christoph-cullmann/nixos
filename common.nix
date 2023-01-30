@@ -133,7 +133,7 @@ in
   # allow firmware updates
   services.fwupd.enable = true;
 
-  # X11 settings, don't enable it, we use greetd
+  # X11 settings
   services.xserver = {
     libinput.enable = true;
 
@@ -146,10 +146,9 @@ in
     desktopManager.plasma5.runUsingSystemd = true;
     desktopManager.plasma5.phononBackend = "vlc";
 
-    # use GDM and Wayland
+    # use SDDM and Plasma Wayland
     enable = true;
-    displayManager.gdm.enable = true;
-    displayManager.gdm.autoSuspend = false;
+    displayManager.sddm.enable = true;
     displayManager.defaultSession = "plasmawayland";
   };
 
@@ -257,6 +256,7 @@ in
   # Enable the OpenSSH daemon.
   services.openssh = {
     enable = true;
+    startWhenNeeded = true;
     settings.PasswordAuthentication = false;
     settings.PermitRootLogin = "yes";
   };
@@ -416,19 +416,15 @@ in
       ffmpeg
       file
       #gimp-with-plugins
-      gnome.gedit
       go
       #hotspot
       hugo
       inetutils
       kate
       keychain
-      keymapviz
-      kitty
-      libreoffice
+      #libreoffice
       libwebp
       linuxKernel.packages.linux_latest_libre.perf
-      marble
       neochat
       nmap
       okteta
@@ -516,6 +512,10 @@ in
       alacritty
       ark
       lutris
+      sqlitebrowser
+      unrar
+      unzip
+      xdotool
 
       # retroarch with some emulators
       (retroarch.override {
@@ -528,11 +528,6 @@ in
       libretro.genesis-plus-gx
       libretro.snes9x
       libretro.beetle-psx-hw
-
-      sqlitebrowser
-      unrar
-      unzip
-      xdotool
     ];
 
     # generate the shell config
