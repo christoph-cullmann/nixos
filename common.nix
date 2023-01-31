@@ -415,14 +415,14 @@ in
       fdupes
       ffmpeg
       file
-      #gimp-with-plugins
+      gimp
       go
-      #hotspot
       hugo
       inetutils
       kate
       keychain
-      #libreoffice
+      krita
+      libreoffice
       libwebp
       linuxKernel.packages.linux_latest_libre.perf
       neochat
