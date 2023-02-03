@@ -422,8 +422,8 @@ in
       kate
       keychain
       krita
+      libjxl
       libreoffice
-      libwebp
       linuxKernel.packages.linux_latest_libre.perf
       neochat
       nmap
