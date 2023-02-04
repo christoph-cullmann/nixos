@@ -346,6 +346,15 @@ in
   # use some small web server to have easy file sharing at home
   services.nginx.enable = true;
 
+  # no need for upower
+  services.upower.enable = pkgs.lib.mkForce false;
+
+  # no need for accounts-daemon
+  services.accounts-daemon.enable = pkgs.lib.mkForce false;
+
+  # no need for power-profiles-daemon
+  services.power-profiles-daemon.enable = pkgs.lib.mkForce false;
+
   ###
   ### per user configuration below
   ###
