@@ -208,10 +208,7 @@ in
     aspellDicts.en
     borgbackup
     bpytop
-    chromium
     clamav
-    evtest # needs root permissions to run
-    firefox
     gitFull
     hunspellDicts.de_DE
     hunspellDicts.en_US
@@ -416,11 +413,13 @@ in
     home.packages = with pkgs; [
       alacritty
       ark
+      chromium
       emacs
       falkon
       fdupes
       ffmpeg
       file
+      firefox
       gimp
       go
       hugo
@@ -450,7 +449,7 @@ in
       via
       vial
       vlc
-      vscode
+      vscodium
       xorg.xhost
     ];
 
@@ -516,6 +515,7 @@ in
     home.packages = with pkgs; [
       alacritty
       ark
+      firefox
       lutris
       sqlitebrowser
       unrar
