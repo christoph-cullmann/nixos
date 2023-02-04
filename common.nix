@@ -94,8 +94,9 @@ in
   networking.useDHCP = false;
   networking.useNetworkd = true;
 
-  # ensure firewall is up
+  # ensure firewall is up, allow ssh and http in
   networking.firewall.enable = true;
+  networking.firewall.allowedTCPPorts = [ 22 80 ];
 
   # swap to RAM
   zramSwap.enable = true;
@@ -343,6 +344,9 @@ in
     Defaults lecture = never
   '';
 
+  # use some small web server to have easy file sharing at home
+  services.nginx.enable = true;
+
   ###
   ### per user configuration below
   ###
@@ -438,7 +442,6 @@ in
       texlive.combined.scheme-small
       tigervnc
       tk
-      uim
       unrar
       unzip
       usbutils
