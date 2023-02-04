@@ -230,16 +230,18 @@ in
 
   # more fonts for all users
   fonts = {
-    # some default fonts
-    enableDefaultFonts = true;
-
     # more fonts
     fonts = with pkgs; [
-      # nice monospaced font
+      # nice mono spaced font
       iosevka-bin
 
       # needed for powerlevel10k zsh stuff
       meslo-lgs-nf
+
+      # unicode capable font
+      noto-fonts
+      noto-fonts-extra
+      noto-fonts-emoji
     ];
 
     # tune fontconfig
