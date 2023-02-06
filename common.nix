@@ -264,11 +264,9 @@ in
   # virus scanner, we only want the updater running
   services.clamav.updater.enable = true;
 
-  # try to ensure we can use our network printers
+  # try to ensure we can use our network LaserJet
   services.printing.enable = true;
   services.printing.drivers = [ pkgs.hplip ];
-  services.avahi.enable = true;
-  services.avahi.nssmdns = true;
 
   # let's get SSD status
   services.smartd.enable = true;
