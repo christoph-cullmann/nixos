@@ -90,10 +90,6 @@ in
   # allow all firmware
   hardware.enableAllFirmware = true;
 
-  # use systemd-networkd
-  networking.useDHCP = false;
-  networking.useNetworkd = true;
-
   # ensure firewall is up, allow ssh and http in
   networking.firewall.enable = true;
   networking.firewall.allowedTCPPorts = [ 22 80 ];
@@ -356,9 +352,6 @@ in
 
   # no need for disk stuff at home
   services.udisks2.enable = pkgs.lib.mkForce false;
-
-  # no polkit needed either
-  security.polkit.enable = pkgs.lib.mkForce false;
 
   ###
   ### per user configuration below
