@@ -281,6 +281,7 @@ in
         tls = true;
         from = "noreply@home.local";
         host = "babylon2k.com";
+        port = "587";
         user = builtins.readFile "/home/root/nixos/mailuser";
         password = builtins.readFile "/home/root/nixos/mailpassword";
       };
