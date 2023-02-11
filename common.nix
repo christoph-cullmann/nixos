@@ -30,9 +30,9 @@ in
   boot.loader.efi.canTouchEfiVariables = true;
   boot.loader.efi.efiSysMountPoint = "/boot";
 
-  # zfs
+  # zfs & NTFS for Windows stuff
   boot.kernelPackages = config.boot.zfs.package.latestCompatibleLinuxPackages;
-  boot.supportedFilesystems = [ "zfs" ];
+  boot.supportedFilesystems = [ "zfs" "ntfs" ];
   services.zfs.autoScrub.enable = true;
   services.zfs.trim.enable = true;
 
@@ -211,6 +211,7 @@ in
     lsof
     mailutils
     mc
+    woeusb
     zsh
     zsh-powerlevel10k
   ];
@@ -432,6 +433,7 @@ in
       hugo
       inetutils
       kate
+      kcalc
       keychain
       krita
       libjxl
