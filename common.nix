@@ -351,9 +351,6 @@ in
   # no need for power-profiles-daemon
   services.power-profiles-daemon.enable = pkgs.lib.mkForce false;
 
-  # no need for disk stuff at home
-  services.udisks2.enable = pkgs.lib.mkForce false;
-
   ###
   ### per user configuration below
   ###
