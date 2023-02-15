@@ -15,6 +15,6 @@
     ];
 
   # host name & id
-  networking.hostName = "liku";
-  networking.hostId = "ad1d2150";
+  networking.hostName = "mini";
+  networking.hostId = "db461356";
 }
