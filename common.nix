@@ -444,6 +444,7 @@ in
       perf-tools
       pulseaudio
       qmk
+      remmina
       signal-desktop
       tcl
       texlive.combined.scheme-small
@@ -481,10 +482,10 @@ in
         # ssh around in the local network
         kuro = "ssh kuro.fritz.box";
         kuroroot = "ssh root@kuro.fritz.box";
+        mini = "ssh mini.fritz.box";
+        miniroot = "ssh root@mini.fritz.box";
         neko = "ssh neko.fritz.box";
         nekoroot = "ssh root@neko.fritz.box";
-        liku = "ssh liku.fritz.box";
-        likuroot = "ssh root@liku.fritz.box";
       };
     };
 
