@@ -147,6 +147,9 @@ in
     enable = true;
     displayManager.sddm.enable = true;
     displayManager.defaultSession = "plasmawayland";
+
+    upscaleDefaultCursor = false;
+
   };
 
   # Enable sound with pipewire.
@@ -203,7 +206,7 @@ in
     aspellDicts.de
     aspellDicts.en
     borgbackup
-    bpytop
+    btop
     clamav
     gitFull
     hunspellDicts.de_DE
