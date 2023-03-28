@@ -212,7 +212,6 @@ in
     hunspellDicts.de_DE
     hunspellDicts.en_US
     lsof
-    mailutils
     mc
     woeusb
     zsh
