@@ -90,6 +90,19 @@ in
   # allow all firmware
   hardware.enableAllFirmware = true;
 
+  # networking via networkd
+  systemd.network.enable = true;
+  systemd.network.networks."10-lan" = {
+    networkConfig = {
+      # start a DHCP Client for IPv4 Addressing/Routing
+      DHCP = "ipv4";
+      # accept Router Advertisements for Stateless IPv6 Autoconfiguraton (SLAAC)
+      IPv6AcceptRA = true;
+    };
+    # make routing on this interface a dependency for network-online.target
+    linkConfig.RequiredForOnline = "routable";
+  };
+
   # ensure firewall is up, allow ssh and http in
   networking.firewall.enable = true;
   networking.firewall.allowedTCPPorts = [ 22 80 ];
@@ -133,6 +146,7 @@ in
   # X11 settings
   services.xserver = {
     libinput.enable = true;
+    upscaleDefaultCursor = false;
 
     # Configure keymap in X11
     layout = "eu";
@@ -147,9 +161,6 @@ in
     enable = true;
     displayManager.sddm.enable = true;
     displayManager.defaultSession = "plasmawayland";
-
-    upscaleDefaultCursor = false;
-
   };
 
   # Enable sound with pipewire.
@@ -529,6 +540,7 @@ in
       sqlitebrowser
       unrar
       unzip
+      wine64
       xdotool
 
       # retroarch with some emulators

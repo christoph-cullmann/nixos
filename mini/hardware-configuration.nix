@@ -20,8 +20,8 @@
 
   swapDevices = [ ];
 
-  # Enables DHCP on the right ethernet interface.
-  networking.interfaces.eno1.useDHCP = true;
+  # setup our network for later config in common.nix
+  systemd.network.networks."10-lan".matchConfig.Name = "eno1";
 
   nixpkgs.hostPlatform = lib.mkDefault "x86_64-linux";
   hardware.cpu.amd.updateMicrocode = lib.mkDefault config.hardware.enableRedistributableFirmware;
