@@ -90,20 +90,45 @@ in
   # allow all firmware
   hardware.enableAllFirmware = true;
 
-  # networking via networkd
-  networking.useDHCP = false;
-  systemd.network.enable = true;
-  systemd.network.networks."10-lan" = {
-    networkConfig = {
-      DHCP = "yes";
-    };
-    # make routing on this interface a dependency for network-online.target
-    linkConfig.RequiredForOnline = "routable";
-  };
+  # networking just with the dhcp client
+  networking.useDHCP = true;
 
   # ensure firewall is up, allow ssh and http in
   networking.firewall.enable = true;
   networking.firewall.allowedTCPPorts = [ 22 80 ];
+
+  # secure dns with local resolve via fritz.box
+  networking = {
+    nameservers = [ "127.0.0.1" "::1" ];
+    dhcpcd.extraConfig = "nohook resolv.conf";
+    resolvconf.useLocalResolver = true;
+  };
+  environment.etc = {
+    forwarding_rules = {
+      text = ''
+        fritz.box 192.168.13.1
+      '';
+    };
+  };
+  services.dnscrypt-proxy2 = {
+    enable = true;
+    settings = {
+      ipv6_servers = true;
+      require_dnssec = true;
+      sources.public-resolvers = {
+        urls = [
+          "https://raw.githubusercontent.com/DNSCrypt/dnscrypt-resolvers/master/v3/public-resolvers.md"
+          "https://download.dnscrypt.info/resolvers-list/v3/public-resolvers.md"
+        ];
+        cache_file = "/nix/persistent/public-resolvers.md";
+        minisign_key = "RWQf6LRCGA9i53mlYecO4IzT51TGPpvWucNSCh1CBM0QTaLn73Y7GFO3";
+      };
+      forwarding_rules = "/etc/forwarding_rules";
+    };
+  };
+  systemd.services.dnscrypt-proxy2.serviceConfig = {
+    StateDirectory = "dnscrypt-proxy";
+  };
 
   # swap to RAM
   zramSwap.enable = true;

@@ -20,9 +20,6 @@
 
   swapDevices = [ ];
 
-  # setup our network for later config in common.nix
-  systemd.network.networks."10-lan".matchConfig.Name = "enp1s0";
-
   nixpkgs.hostPlatform = lib.mkDefault "x86_64-linux";
   hardware.cpu.amd.updateMicrocode = lib.mkDefault config.hardware.enableRedistributableFirmware;
 }

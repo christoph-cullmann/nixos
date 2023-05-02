@@ -25,9 +25,6 @@
 
   swapDevices = [ ];
 
-  # setup our network for later config in common.nix
-  systemd.network.networks."10-lan".matchConfig.Name = "enp8s0";
-
   nixpkgs.hostPlatform = lib.mkDefault "x86_64-linux";
   powerManagement.cpuFreqGovernor = lib.mkDefault "powersave";
   hardware.cpu.intel.updateMicrocode = lib.mkDefault config.hardware.enableRedistributableFirmware;
