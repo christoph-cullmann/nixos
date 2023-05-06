@@ -460,6 +460,7 @@ in
     home.packages = with pkgs; [
       alacritty
       ark
+      calibre
       chromium
       emacs
       falkon
