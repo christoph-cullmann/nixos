@@ -475,6 +475,7 @@ in
       kate
       kcalc
       keychain
+      konversation
       krita
       libjxl
       libreoffice
