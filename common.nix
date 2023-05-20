@@ -260,7 +260,7 @@ in
   ];
 
   # allow keyboard configure tools to work
-  services.udev.packages = [ pkgs.qmk-udev-rules pkgs.via ];
+  hardware.keyboard.qmk.enable = true;
 
   # add ~/bin to PATH
   environment.homeBinInPath = true;
@@ -290,8 +290,19 @@ in
     };
   };
 
+  # 64-bit GL
+  hardware.opengl.driSupport = true;
+
   # proper lutris gaming for 32-bit stuff
   hardware.opengl.driSupport32Bit = true;
+
+  # extra AMD stuff
+  hardware.opengl.extraPackages = [
+    pkgs.amdvlk
+  ];
+  hardware.opengl.extraPackages32 = [
+    pkgs.driversi686Linux.amdvlk
+  ];
 
   # Enable the OpenSSH daemon.
   services.openssh = {
