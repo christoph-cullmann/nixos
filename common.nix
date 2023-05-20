@@ -192,15 +192,13 @@ in
     displayManager.defaultSession = "plasmawayland";
   };
 
-  # Enable sound with pipewire.
-  sound.enable = true;
-  hardware.pulseaudio.enable = false;
+  # enable sound with PipeWire
   services.pipewire = {
     enable = true;
     alsa.enable = true;
     alsa.support32Bit = true;
-    pulse.enable = true;
     jack.enable = true;
+    pulse.enable = true;
   };
 
   # allow realtime
@@ -365,7 +363,7 @@ in
     enable = true;
 
     # some env vars I want in all of my shells
-    shellInit = "export MOZ_ENABLE_WAYLAND=1; export POWERLEVEL9K_DISABLE_CONFIGURATION_WIZARD=true;";
+    shellInit = "export NIXOS_OZONE_WL=1; export MOZ_ENABLE_WAYLAND=1; export POWERLEVEL9K_DISABLE_CONFIGURATION_WIZARD=true;";
 
     # great prompt
     promptInit = "source ${pkgs.zsh-powerlevel10k}/share/zsh-powerlevel10k/powerlevel10k.zsh-theme; if [ -f ~/.p10k.zsh ]; then source ~/.p10k.zsh; fi;";
@@ -373,6 +371,9 @@ in
 
   # we want steam for gaming
   programs.steam.enable = true;
+
+  # dconf is needed for gtk, see https://nixos.wiki/wiki/KDE
+  programs.dconf.enable = true;
 
   # enable VirtualBox
   virtualisation.virtualbox.host.enable = true;
