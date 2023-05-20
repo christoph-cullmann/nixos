@@ -225,8 +225,7 @@ in
     };
 
     # we want some experimental features like nix search
-    package = pkgs.nixFlakes;
-    extraOptions = pkgs.lib.optionalString (config.nix.package == pkgs.nixFlakes) "experimental-features = nix-command flakes";
+    extraOptions = ''experimental-features = nix-command flakes'';
   };
 
   # avoid suspend ever to be triggered
