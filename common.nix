@@ -296,14 +296,6 @@ in
   # proper lutris gaming for 32-bit stuff
   hardware.opengl.driSupport32Bit = true;
 
-  # extra AMD stuff
-  hardware.opengl.extraPackages = [
-    pkgs.amdvlk
-  ];
-  hardware.opengl.extraPackages32 = [
-    pkgs.driversi686Linux.amdvlk
-  ];
-
   # Enable the OpenSSH daemon.
   services.openssh = {
     enable = true;
