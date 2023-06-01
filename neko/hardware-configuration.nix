@@ -13,6 +13,9 @@
   boot.kernelModules = [ "kvm-intel" ];
   boot.extraModulePackages = [ ];
 
+  # Intel ARC
+  boot.kernelParams = [ "i915.force_probe=56a0" ];
+
   fileSystems."/boot" =
     { device = "/dev/disk/by-uuid/9CF2-12FF";
       fsType = "vfat";
