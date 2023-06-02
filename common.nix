@@ -30,6 +30,15 @@ in
   boot.loader.efi.canTouchEfiVariables = true;
   boot.loader.efi.efiSysMountPoint = "/boot";
 
+  # use a high resolution
+  boot.loader.systemd-boot.consoleMode = "max";
+
+  # use systemd early
+  boot.initrd.systemd.enable = true;
+
+  # setup the console stuff early
+  console.earlySetup = true;
+
   # zfs & NTFS for Windows stuff
   boot.kernelPackages = config.boot.zfs.package.latestCompatibleLinuxPackages;
   boot.supportedFilesystems = [ "zfs" "ntfs" ];
