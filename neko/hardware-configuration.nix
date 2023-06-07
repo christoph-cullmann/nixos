@@ -14,7 +14,7 @@
   boot.extraModulePackages = [ ];
 
   # Intel ARC
-  boot.kernelParams = [ "i915.force_probe=56a0" ];
+  boot.kernelParams = [ "i915.force_probe=56a0" "i915.enable_guc=1" ];
 
   fileSystems."/boot" =
     { device = "/dev/disk/by-uuid/9CF2-12FF";
