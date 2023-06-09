@@ -9,26 +9,64 @@
     ];
 
   boot.initrd.availableKernelModules = [ "xhci_pci" "ahci" "nvme" "usbhid" "usb_storage" "sd_mod" ];
-  boot.initrd.kernelModules = [ "i915" ];
+  boot.initrd.kernelModules = [ ];
   boot.kernelModules = [ "kvm-intel" ];
   boot.extraModulePackages = [ ];
 
-  # Intel ARC
-  boot.kernelParams = [ "i915.force_probe=56a0" "i915.enable_guc=1" ];
+  fileSystems."/" =
+    { device = "none";
+      fsType = "tmpfs";
+    };
 
   fileSystems."/boot" =
-    { device = "/dev/disk/by-uuid/9CF2-12FF";
+    { device = "/dev/disk/by-uuid/D6ED-7B8C";
       fsType = "vfat";
     };
 
   fileSystems."/boot-fallback" =
-    { device = "/dev/disk/by-uuid/9CF2-9E07";
+    { device = "/dev/disk/by-uuid/D6ED-BC4A";
       fsType = "vfat";
+    };
+
+  boot.initrd.luks.devices."crypt-disk1".device = "/dev/disk/by-uuid/d24c36a7-d39c-4de5-8fc0-33ff0262e964";
+  boot.initrd.luks.devices."crypt-disk1".allowDiscards = true;
+  boot.initrd.luks.devices."crypt-disk1".bypassWorkqueues = true;
+  boot.initrd.luks.devices."crypt-disk2".device = "/dev/disk/by-uuid/cde8caa0-be38-4ff8-a3b3-aa82bc587550";
+  boot.initrd.luks.devices."crypt-disk2".allowDiscards = true;
+  boot.initrd.luks.devices."crypt-disk2".bypassWorkqueues = true;
+
+  fileSystems."/nix" =
+    { device = "/dev/mapper/crypt-disk1";
+      fsType = "btrfs";
+      options = [ "device=/dev/mapper/crypt-disk2" "subvol=nix" "noatime" "compress=zstd" ];
+    };
+
+  fileSystems."/data" =
+    { device = "/dev/mapper/crypt-disk1";
+      fsType = "btrfs";
+      options = [ "device=/dev/mapper/crypt-disk2" "subvol=data" "noatime" "compress=zstd" ];
+    };
+
+  fileSystems."/home" =
+    { device = "/data/home";
+      fsType = "none";
+      options = [ "bind" ];
+    };
+
+  fileSystems."/root" =
+    { device = "/data/root";
+      fsType = "none";
+      options = [ "bind" ];
+    };
+
+  fileSystems."/etc/nixos" =
+    { device = "/data/nixos/neko";
+      fsType = "none";
+      options = [ "bind" ];
     };
 
   swapDevices = [ ];
 
   nixpkgs.hostPlatform = lib.mkDefault "x86_64-linux";
-  powerManagement.cpuFreqGovernor = lib.mkDefault "powersave";
   hardware.cpu.intel.updateMicrocode = lib.mkDefault config.hardware.enableRedistributableFirmware;
 }

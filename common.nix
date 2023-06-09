@@ -19,16 +19,18 @@ in
 
   # This value determines the NixOS release from which the default
   # settings for stateful data, like file locations and database versions
-  # on your system were taken. It‘s perfectly fine and recommended to leave
+  # on your system were taken. It's perfectly fine and recommended to leave
   # this value at the release version of the first install of this system.
   # Before changing this value read the documentation for this option
   # (e.g. man configuration.nix or on https://nixos.org/nixos/options.html).
-  system.stateVersion = "22.11"; # Did you read the comment?
+  system.stateVersion = "23.05"; # Did you read the comment?
+
+  # use the latest kernel
+  boot.kernelPackages = pkgs.linuxPackages_latest;
 
   # Use the systemd-boot EFI boot loader.
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
-  boot.loader.efi.efiSysMountPoint = "/boot";
 
   # use a high resolution
   boot.loader.systemd-boot.consoleMode = "max";
@@ -38,52 +40,6 @@ in
 
   # setup the console stuff early
   console.earlySetup = true;
-
-  # zfs & NTFS for Windows stuff
-  boot.kernelPackages = config.boot.zfs.package.latestCompatibleLinuxPackages;
-  boot.supportedFilesystems = [ "zfs" "ntfs" ];
-  services.zfs.autoScrub.enable = true;
-  services.zfs.trim.enable = true;
-
-  # persistent nix
-  fileSystems."/nix" = {
-    device = "zroot/nix";
-    fsType = "zfs";
-  };
-
-  # persistent homes
-  fileSystems."/home" = {
-    device = "zroot/home";
-    fsType = "zfs";
-  };
-
-  # non persistent root
-  fileSystems."/" = {
-    device = "none";
-    fsType = "tmpfs";
-    options = [ "defaults" "size=8G" "mode=755" ];
-  };
-
-  # bind mount persistent nixos config, per host different
-  fileSystems."/etc/nixos" = {
-    device = "/home/cullmann/install/nixos/${config.networking.hostName}";
-    options = [ "bind" ];
-  };
-
-  # bind mount persistent root home
-  fileSystems."/root" = {
-    device = "/home/root";
-    options = [ "bind" ];
-  };
-
-  # some stuff is needed to early for environment.persistence
-  environment.etc = {
-    # stable host keys
-    "ssh/ssh_host_rsa_key".source = "/nix/persistent/ssh_host_rsa_key";
-    "ssh/ssh_host_rsa_key.pub".source = "/nix/persistent/ssh_host_rsa_key.pub";
-    "ssh/ssh_host_ed25519_key".source = "/nix/persistent/ssh_host_ed25519_key";
-    "ssh/ssh_host_ed25519_key.pub".source = "/nix/persistent/ssh_host_ed25519_key.pub";
-  };
 
   # keep some stuff persistent
   environment.persistence."/nix/persistent" = {
@@ -104,40 +60,24 @@ in
 
   # ensure firewall is up, allow ssh and http in
   networking.firewall.enable = true;
-  networking.firewall.allowedTCPPorts = [ 22 80 ];
+  networking.firewall.logRefusedConnections = false;
 
-  # secure dns with local resolve via fritz.box
-  networking = {
-    nameservers = [ "127.0.0.1" "::1" ];
-    dhcpcd.extraConfig = "nohook resolv.conf";
-    resolvconf.useLocalResolver = true;
-  };
-  environment.etc = {
-    forwarding_rules = {
-      text = ''
-        fritz.box 192.168.13.1
-      '';
-    };
-  };
-  services.dnscrypt-proxy2 = {
+  # OpenSSH daemon config
+  services.openssh = {
+    # enable with public key only auth
     enable = true;
-    settings = {
-      ipv6_servers = true;
-      require_dnssec = true;
-      sources.public-resolvers = {
-        urls = [
-          "https://raw.githubusercontent.com/DNSCrypt/dnscrypt-resolvers/master/v3/public-resolvers.md"
-          "https://download.dnscrypt.info/resolvers-list/v3/public-resolvers.md"
-        ];
-        cache_file = "/nix/persistent/public-resolvers.md";
-        minisign_key = "RWQf6LRCGA9i53mlYecO4IzT51TGPpvWucNSCh1CBM0QTaLn73Y7GFO3";
-      };
-      forwarding_rules = "/etc/forwarding_rules";
-    };
+    settings.PasswordAuthentication = false;
+    settings.KbdInteractiveAuthentication = false;
+
+    # only ed25519 keys, make them persistent
+    hostKeys = [{
+      path = "/nix/persistent/ssh_host_ed25519_key";
+      type = "ed25519";
+    }];
   };
-  systemd.services.dnscrypt-proxy2.serviceConfig = {
-    StateDirectory = "dnscrypt-proxy";
-  };
+
+  # guard the ssh service
+  services.sshguard.enable = true;
 
   # block some crap, see https://github.com/StevenBlack/hosts#nixos
   networking.extraHosts = let
@@ -305,14 +245,6 @@ in
   # proper lutris gaming for 32-bit stuff
   hardware.opengl.driSupport32Bit = true;
 
-  # Enable the OpenSSH daemon.
-  services.openssh = {
-    enable = true;
-    startWhenNeeded = true;
-    settings.PasswordAuthentication = false;
-    settings.PermitRootLogin = "yes";
-  };
-
   # virus scanner, we only want the updater running
   services.clamav.updater.enable = true;
 
@@ -334,8 +266,8 @@ in
         from = "noreply@home.local";
         host = "babylon2k.com";
         port = "587";
-        user = builtins.readFile "/home/root/nixos/mailuser";
-        password = builtins.readFile "/home/root/nixos/mailpassword";
+        user = builtins.readFile "/data/nixos/mailuser.secret";
+        password = builtins.readFile "/data/nixos/mailpassword.secret";
       };
     };
     defaults = {
@@ -350,20 +282,6 @@ in
       '';
       mode = "0644";
     };
-  };
-
-  # allow the ZFS service to send mails
-  services.zfs.zed.settings = {
-    ZED_DEBUG_LOG = "/tmp/zed.debug.log";
-    ZED_EMAIL_ADDR = [ "root" ];
-    ZED_EMAIL_PROG = "${pkgs.msmtp}/bin/msmtp";
-    ZED_EMAIL_OPTS = "@ADDRESS@";
-
-    ZED_NOTIFY_INTERVAL_SECS = 3600;
-    ZED_NOTIFY_VERBOSE = true;
-
-    ZED_USE_ENCLOSURE_LEDS = true;
-    ZED_SCRUB_AFTER_RESILVER = true;
   };
 
   # use ZSH per default
@@ -397,9 +315,6 @@ in
     Defaults lecture = never
   '';
 
-  # use some small web server to have easy file sharing at home
-  services.nginx.enable = true;
-
   # no need for upower
   services.upower.enable = pkgs.lib.mkForce false;
 
@@ -422,7 +337,7 @@ in
 
   users.users.root = {
     # init password
-    hashedPassword = builtins.readFile "/home/root/nixos/passwd";
+    hashedPassword = builtins.readFile "/data/nixos/password.secret";
 
     # use same keys as my main user
     openssh.authorizedKeys.keys = pkgs.lib.splitString "\n" (builtins.readFile "/home/cullmann/.ssh/authorized_keys");
@@ -462,7 +377,7 @@ in
     extraGroups = [ "wheel" ];
 
     # init password
-    hashedPassword = builtins.readFile "/home/root/nixos/passwd";
+    hashedPassword = builtins.readFile "/data/nixos/password.secret";
   };
 
   home-manager.users.cullmann = { pkgs, ... }: {
