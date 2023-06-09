@@ -13,14 +13,52 @@
   boot.kernelModules = [ "kvm-amd" ];
   boot.extraModulePackages = [ ];
 
+  fileSystems."/" =
+    { device = "none";
+      fsType = "tmpfs";
+    };
+
   fileSystems."/boot" =
-    { device = "/dev/disk/by-uuid/4FD5-6BF5";
+    { device = "/dev/disk/by-uuid/90AD-64A8";
       fsType = "vfat";
+    };
+
+  boot.initrd.luks.devices."crypt-disk1".device = "/dev/disk/by-uuid/2244e83d-eb7a-4e42-8632-9ba4586f240c";
+  boot.initrd.luks.devices."crypt-disk1".allowDiscards = true;
+  boot.initrd.luks.devices."crypt-disk1".bypassWorkqueues = true;
+
+  fileSystems."/nix" =
+    { device = "/dev/mapper/crypt-disk1";
+      fsType = "btrfs";
+      options = [ "subvol=nix" "noatime" "compress=zstd" ];
+    };
+
+  fileSystems."/data" =
+    { device = "/dev/mapper/crypt-disk1";
+      fsType = "btrfs";
+      options = [ "subvol=data" "noatime" "compress=zstd" ];
+    };
+
+  fileSystems."/home" =
+    { device = "/data/home";
+      fsType = "none";
+      options = [ "bind" ];
+    };
+
+  fileSystems."/root" =
+    { device = "/data/root";
+      fsType = "none";
+      options = [ "bind" ];
+    };
+
+  fileSystems."/etc/nixos" =
+    { device = "/data/nixos/mini";
+      fsType = "none";
+      options = [ "bind" ];
     };
 
   swapDevices = [ ];
 
   nixpkgs.hostPlatform = lib.mkDefault "x86_64-linux";
-  powerManagement.cpuFreqGovernor = lib.mkDefault "powersave";
   hardware.cpu.amd.updateMicrocode = lib.mkDefault config.hardware.enableRedistributableFirmware;
 }
