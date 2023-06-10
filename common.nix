@@ -52,6 +52,13 @@ in
     ];
   };
 
+  # ensure we scrub the btrfs sometimes
+  services.btrfs.autoScrub = {
+    enable = true;
+    fileSystems = [ "/data" ];
+    interval = "weekly";
+  };
+
   # allow all firmware
   hardware.enableAllFirmware = true;
 
