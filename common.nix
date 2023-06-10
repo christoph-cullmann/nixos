@@ -206,6 +206,8 @@ in
     hunspellDicts.en_US
     lsof
     mc
+    unrar
+    unzip
     woeusb
     zsh
     zsh-powerlevel10k
@@ -426,8 +428,6 @@ in
       texlive.combined.scheme-small
       tigervnc
       tk
-      unrar
-      unzip
       usbutils
       via
       vial
@@ -500,8 +500,6 @@ in
       ark
       lutris
       sqlitebrowser
-      unrar
-      unzip
       wine64
       xdotool
     ];
