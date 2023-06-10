@@ -212,22 +212,28 @@ in
   # List packages installed in system profile. To search, run:
   # $ nix search wget
   environment.systemPackages = with pkgs; [
+    alacritty
+    ark
     aspellDicts.de
     aspellDicts.en
     borgbackup
     btop
     chromium
     clamav
+    clinfo
     filelight
     firefox
     gitFull
+    glxinfo
     hunspellDicts.de_DE
     hunspellDicts.en_US
+    libva-utils
     lsof
     mc
     unrar
     unzip
-    woeusb
+    vulkan-tools
+    wayland-utils
     zsh
     zsh-powerlevel10k
   ];
@@ -413,8 +419,6 @@ in
 
     # extra packages, stuff for work/kde/...
     home.packages = with pkgs; [
-      alacritty
-      ark
       calibre
       emacs
       falkon
@@ -515,8 +519,6 @@ in
 
     # extra packages, stuff for games
     home.packages = with pkgs; [
-      alacritty
-      ark
       lutris
       sqlitebrowser
       wine64

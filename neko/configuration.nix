@@ -19,4 +19,8 @@
 
   # main network interface
   systemd.network.networks."10-wan".matchConfig.Name = "enp9s0";
+
+  # intel graphics
+  hardware.opengl.extraPackages = with pkgs; [ intel-media-driver ];
+  hardware.opengl.extraPackages32 = with pkgs.pkgsi686Linux; [ intel-media-driver ];
 }
