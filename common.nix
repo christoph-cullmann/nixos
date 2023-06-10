@@ -62,11 +62,23 @@ in
   # allow all firmware
   hardware.enableAllFirmware = true;
 
-  # networking just with the dhcp client
-  networking.useDHCP = true;
+  # use systemd-networkd
+  networking.useDHCP = false;
+  systemd.network.enable = true;
+   systemd.network.networks."10-wan" = {
+    networkConfig = {
+      # start a DHCP Client for IPv4 Addressing/Routing
+      DHCP = "ipv4";
+      # accept Router Advertisements for Stateless IPv6 Autoconfiguraton (SLAAC)
+      IPv6AcceptRA = true;
+    };
+    # make routing on this interface a dependency for network-online.target
+    linkConfig.RequiredForOnline = "routable";
+  };
 
   # ensure firewall is up, allow ssh and http in
   networking.firewall.enable = true;
+  networking.firewall.allowedTCPPorts = [ 22 ];
   networking.firewall.logRefusedConnections = false;
 
   # OpenSSH daemon config

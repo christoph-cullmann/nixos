@@ -16,4 +16,7 @@
 
   # host name
   networking.hostName = "neko";
+
+  # main network interface
+  systemd.network.networks."10-wan".matchConfig.Name = "enp9s0";
 }

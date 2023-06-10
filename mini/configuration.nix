@@ -16,4 +16,7 @@
 
   # host name
   networking.hostName = "mini";
+
+  # main network interface
+  systemd.network.networks."10-wan".matchConfig.Name = "eno1";
 }
