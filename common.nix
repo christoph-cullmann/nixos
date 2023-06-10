@@ -197,7 +197,10 @@ in
     aspellDicts.en
     borgbackup
     btop
+    chromium
     clamav
+    filelight
+    firefox
     gitFull
     hunspellDicts.de_DE
     hunspellDicts.en_US
@@ -392,13 +395,11 @@ in
       alacritty
       ark
       calibre
-      chromium
       emacs
       falkon
       fdupes
       ffmpeg
       file
-      firefox
       gimp
       go
       hugo
@@ -497,25 +498,12 @@ in
     home.packages = with pkgs; [
       alacritty
       ark
-      firefox
       lutris
       sqlitebrowser
       unrar
       unzip
       wine64
       xdotool
-
-      # retroarch with some emulators
-      (retroarch.override {
-        cores = [
-          libretro.genesis-plus-gx
-          libretro.snes9x
-          libretro.beetle-psx-hw
-        ];
-      })
-      libretro.genesis-plus-gx
-      libretro.snes9x
-      libretro.beetle-psx-hw
     ];
 
     # generate the shell config
