@@ -19,4 +19,8 @@
 
   # main network interface
   systemd.network.networks."10-wan".matchConfig.Name = "eno1";
+
+  # amd graphics
+  hardware.opengl.extraPackages = with pkgs; [ amdvlk rocm-opencl-icd rocm-opencl-runtime ];
+  hardware.opengl.extraPackages32 = with pkgs.pkgsi686Linux; [ amdvlk ];
 }
