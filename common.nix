@@ -331,15 +331,6 @@ in
     Defaults lecture = never
   '';
 
-  # no need for upower
-  services.upower.enable = pkgs.lib.mkForce false;
-
-  # no need for accounts-daemon
-  services.accounts-daemon.enable = pkgs.lib.mkForce false;
-
-  # no need for power-profiles-daemon
-  services.power-profiles-daemon.enable = pkgs.lib.mkForce false;
-
   ###
   ### per user configuration below
   ###
