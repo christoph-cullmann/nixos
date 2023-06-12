@@ -20,11 +20,11 @@
     };
 
   fileSystems."/boot" =
-    { device = "/dev/disk/by-uuid/A556-B697";
+    { device = "/dev/disk/by-uuid/03B1-533D";
       fsType = "vfat";
     };
 
-  boot.initrd.luks.devices."crypt-disk1".device = "/dev/disk/by-uuid/bf308205-93aa-4350-840d-46c3e64d814a";
+  boot.initrd.luks.devices."crypt-disk1".device = "/dev/disk/by-uuid/3009a0b5-3d8a-48e3-88a7-2a27a928b648";
   boot.initrd.luks.devices."crypt-disk1".allowDiscards = true;
   boot.initrd.luks.devices."crypt-disk1".bypassWorkqueues = true;
 
