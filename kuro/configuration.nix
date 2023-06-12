@@ -1,6 +1,6 @@
 # Edit this configuration file to define what should be installed on
 # your system.  Help is available in the configuration.nix(5) man page
-# and in the NixOS manual (accessible by running ‘nixos-help’).
+# and in the NixOS manual (accessible by running `nixos-help`).
 
 { config, pkgs, ... }:
 
@@ -11,10 +11,22 @@
       ./hardware-configuration.nix
 
       # Shared config of all machines
-      /home/cullmann/install/nixos/common.nix
+      /data/nixos/common.nix
     ];
 
-  # host name & id
+  # host name
   networking.hostName = "kuro";
-  networking.hostId = "862cf3b5";
+
+  # main network interface via systemd-networkd
+  networking.useDHCP = false;
+  systemd.network.enable = true;
+  systemd.network.networks."10-lan" = {
+    matchConfig.Name = "enp2s0";
+    networkConfig.DHCP = "yes";
+    linkConfig.RequiredForOnline = "routable";
+  };
+
+  # amd graphics
+  hardware.opengl.extraPackages = with pkgs; [ amdvlk rocm-opencl-icd rocm-opencl-runtime ];
+  hardware.opengl.extraPackages32 = with pkgs.pkgsi686Linux; [ amdvlk ];
 }
