@@ -17,8 +17,14 @@
   # host name
   networking.hostName = "mini";
 
-  # main network interface
-  systemd.network.networks."10-wan".matchConfig.Name = "eno1";
+  # main network interface via systemd-networkd
+  networking.useDHCP = false;
+  systemd.network.enable = true;
+  systemd.network.networks."10-lan" = {
+    matchConfig.Name = "eno1";
+    networkConfig.DHCP = "yes";
+    linkConfig.RequiredForOnline = "routable";
+  };
 
   # amd graphics
   hardware.opengl.extraPackages = with pkgs; [ amdvlk rocm-opencl-icd rocm-opencl-runtime ];

@@ -17,8 +17,14 @@
   # host name
   networking.hostName = "neko";
 
-  # main network interface
-  systemd.network.networks."10-wan".matchConfig.Name = "enp9s0";
+  # main network interface via systemd-networkd
+  networking.useDHCP = false;
+  systemd.network.enable = true;
+  systemd.network.networks."10-lan" = {
+    matchConfig.Name = "enp9s0";
+    networkConfig.DHCP = "yes";
+    linkConfig.RequiredForOnline = "routable";
+  };
 
   # intel graphics
   hardware.opengl.extraPackages = with pkgs; [ intel-media-driver intel-compute-runtime ];
