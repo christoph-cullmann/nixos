@@ -497,6 +497,7 @@ in
     # extra packages, stuff for games
     home.packages = with pkgs; [
       lutris
+      protonup-qt
       sqlitebrowser
       wine64
       xdotool
