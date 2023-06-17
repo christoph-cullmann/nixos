@@ -176,8 +176,11 @@ in
       cores = 4;
     };
 
-    # we want some experimental features like nix search
-    extraOptions = ''experimental-features = nix-command flakes'';
+    # https://github.com/nix-community/nix-direnv
+    extraOptions = ''
+      keep-outputs = true
+      keep-derivations = true
+    '';
   };
 
   # avoid suspend ever to be triggered
@@ -436,11 +439,9 @@ in
       xorg.xhost
     ];
 
-    # enable direnv integration
+    # https://github.com/nix-community/nix-direnv
     programs.direnv.enable = true;
-
-    # nix-shell on drugs
-    services.lorri.enable = true;
+    programs.direnv.nix-direnv.enable = true;
 
     # generate the shell config
     programs.zsh = {
