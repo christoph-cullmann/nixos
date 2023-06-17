@@ -357,9 +357,6 @@ in
     # initial version
     home.stateVersion = "22.11";
 
-    # sometimes doesn't work
-    manual.manpages.enable = false;
-
     # generate the shell config
     programs.zsh = {
       enable = true;
@@ -393,9 +390,6 @@ in
   home-manager.users.cullmann = { pkgs, ... }: {
     # initial version
     home.stateVersion = "22.11";
-
-    # sometimes doesn't work
-    manual.manpages.enable = false;
 
     # extra packages, stuff for work/kde/...
     home.packages = with pkgs; [
@@ -491,9 +485,6 @@ in
   home-manager.users.sandbox = { pkgs, ... }: {
     # initial version
     home.stateVersion = "22.11";
-
-    # sometimes doesn't work
-    manual.manpages.enable = false;
 
     # extra packages, stuff for games
     home.packages = with pkgs; [
