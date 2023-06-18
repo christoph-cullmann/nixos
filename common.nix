@@ -437,6 +437,9 @@ in
     programs.direnv.enable = true;
     programs.direnv.nix-direnv.enable = true;
 
+    # reverse package search, https://github.com/nix-community/nix-index
+    programs.nix-index.enable = true;
+
     # generate the shell config
     programs.zsh = {
       enable = true;
