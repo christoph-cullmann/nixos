@@ -491,6 +491,7 @@ in
 
     # extra packages, stuff for games
     home.packages = with pkgs; [
+      bottles
       lutris
       protonup-qt
       sqlitebrowser
