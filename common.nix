@@ -84,12 +84,6 @@ in
   # guard the ssh service
   services.sshguard.enable = true;
 
-  # block some crap, see https://github.com/StevenBlack/hosts#nixos
-  networking.extraHosts = let
-    hostsPath = https://raw.githubusercontent.com/StevenBlack/hosts/master/hosts;
-    hostsFile = builtins.fetchurl hostsPath;
-  in builtins.readFile "${hostsFile}";
-
   # swap to RAM
   zramSwap.enable = true;
 
