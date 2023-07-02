@@ -241,6 +241,9 @@ in
       noto-fonts
       noto-fonts-extra
       noto-fonts-emoji
+
+      # other nice mono spaced font
+      victor-mono
     ];
 
     # tune fontconfig
