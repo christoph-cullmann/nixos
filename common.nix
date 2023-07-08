@@ -403,6 +403,7 @@ in
       kate
       kcalc
       keychain
+      kompare
       konversation
       krita
       libjxl
