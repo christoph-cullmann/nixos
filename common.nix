@@ -423,6 +423,7 @@ in
       texlive.combined.scheme-small
       tigervnc
       tk
+      tokodon
       usbutils
       via
       vial
