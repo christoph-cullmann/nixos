@@ -1,0 +1,34 @@
+global
+    # use the latest KF5 and Qt5-based software.
+    branch-group kf5-qt5
+
+    # we want .kateproject files with ninja
+    cmake-options -G "Kate - Ninja"
+
+    # Restrict make and ninja to using no more than 8 separate compile jobs even
+    # when more CPU is available, to avoid running out of memory
+    make-options -j8 NINJAFLAGS=-j8
+    ninja-options -j8
+
+    # clangd tooling
+    compile-commands-export yes
+    compile-commands-linking yes
+
+    # flat structure
+    directory-layout flat
+
+    # Install directory for KDE software
+    kdedir ~/projects/kde/usr
+
+    # Directory for downloaded source code
+    source-dir ~/projects/kde/src
+
+    # Directory to build KDE into before installing
+    # relative to source-dir by default
+    build-dir ~/projects/kde/build
+end global
+
+include ~/projects/kde/src/kdesrc-build/kf5-frameworks-build-include
+include ~/projects/kde/src/kdesrc-build/kf5-applications-build-include
+include ~/projects/kde/src/kdesrc-build/kf5-workspace-build-include
+include ~/projects/kde/src/kdesrc-build/kf5-extragear-build-include
