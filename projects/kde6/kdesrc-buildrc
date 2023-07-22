@@ -3,7 +3,7 @@ global
     branch-group kf6-qt6
 
     # we want .kateproject files with ninja
-    cmake-options -G "Kate - Ninja" -DBUILD_WITH_QT6=ON -DQT_MAJOR_VERSION=6
+    cmake-options -G "Kate - Ninja" -DBUILD_WITH_QT6=ON -DQT_MAJOR_VERSION=6 -DPHONON_BUILD_QT5=OFF
 
     # Restrict make and ninja to using no more than 8 separate compile jobs even
     # when more CPU is available, to avoid running out of memory
