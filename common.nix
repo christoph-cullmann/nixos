@@ -231,9 +231,6 @@ in
   fonts = {
     # more fonts
     fonts = with pkgs; [
-      # nice mono spaced font
-      iosevka-bin
-
       # needed for powerlevel10k zsh stuff
       meslo-lgs-nf
 
@@ -242,7 +239,9 @@ in
       noto-fonts-extra
       noto-fonts-emoji
 
-      # other nice mono spaced font
+      # nice mono spaced fonts
+      fira-code
+      iosevka-bin
       victor-mono
     ];
 
@@ -425,8 +424,6 @@ in
       tk
       tokodon
       usbutils
-      via
-      vial
       vlc
       vscodium
       xorg.xhost
