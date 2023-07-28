@@ -80,6 +80,10 @@ nixos-generate-config --root /mnt
 
 # save /mnt/etc/nixos/hardware-configuration.nix /mnt/etc/nixos/configuration.nix
 
+cp /mnt/etc/nixos/hardware-configuration.nix /tmp
+cp /mnt/etc/nixos/configuration.nix /tmp
+
+
 # copy data
 
 
