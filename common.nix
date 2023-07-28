@@ -35,6 +35,9 @@ in
   # use a high resolution
   boot.loader.systemd-boot.consoleMode = "max";
 
+  # we want to be able to do a memtest
+  boot.loader.systemd-boot.memtest86.enable = true;
+
   # use systemd early
   boot.initrd.systemd.enable = true;
 
@@ -213,6 +216,7 @@ in
     libva-utils
     lsof
     mc
+    nixos-install-tools
     unrar
     unzip
     vulkan-tools

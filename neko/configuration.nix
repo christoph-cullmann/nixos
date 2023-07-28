@@ -21,7 +21,7 @@
   networking.useDHCP = false;
   systemd.network.enable = true;
   systemd.network.networks."10-lan" = {
-    matchConfig.Name = "enp9s0";
+    matchConfig.Name = "enp10s0";
     networkConfig.DHCP = "yes";
     linkConfig.RequiredForOnline = "routable";
   };
