@@ -207,6 +207,7 @@ in
     chromium
     clamav
     clinfo
+    efibootmgr
     filelight
     firefox
     gitFull
