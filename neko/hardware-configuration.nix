@@ -24,9 +24,20 @@
       fsType = "vfat";
     };
 
+  # system
   boot.initrd.luks.devices."crypt-system".device = "/dev/disk/by-uuid/2dc54953-958b-4c5a-8454-21c0b1d16222";
   boot.initrd.luks.devices."crypt-system".allowDiscards = true;
   boot.initrd.luks.devices."crypt-system".bypassWorkqueues = true;
+
+  # projects
+  boot.initrd.luks.devices."crypt-projects".device = "/dev/disk/by-id/nvme-Samsung_SSD_980_PRO_2TB_S69ENF0R846614L";
+  boot.initrd.luks.devices."crypt-projects".allowDiscards = true;
+  boot.initrd.luks.devices."crypt-projects".bypassWorkqueues = true;
+
+  # vms
+  boot.initrd.luks.devices."crypt-vms".device = "/dev/disk/by-id/nvme-CT2000P5PSSD8_213330E4ED05";
+  boot.initrd.luks.devices."crypt-vms".allowDiscards = true;
+  boot.initrd.luks.devices."crypt-vms".bypassWorkqueues = true;
 
   fileSystems."/nix" =
     { device = "/dev/mapper/crypt-system";
@@ -56,6 +67,18 @@
     { device = "/data/nixos/neko";
       fsType = "none";
       options = [ "bind" ];
+    };
+
+  fileSystems."/home/cullmann/projects" =
+    { device = "/dev/mapper/crypt-projects";
+      fsType = "btrfs";
+      options = [ "noatime" ];
+    };
+
+  fileSystems."/home/cullmann/vms" =
+    { device = "/dev/mapper/crypt-vms";
+      fsType = "btrfs";
+      options = [ "noatime" ];
     };
 
   swapDevices = [ ];

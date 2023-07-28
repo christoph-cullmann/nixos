@@ -91,5 +91,59 @@ rsync --checksum -vaR --delete /data /mnt
 
 nixos-install --no-root-passwd --root /mnt
 
+# unmount all stuff
+
 umount -Rl /mnt
 cryptsetup luksClose crypt-system
+
+# create projects disk
+
+DD=/dev/disk/by-id/nvme-Samsung_SSD_980_PRO_2TB_S69ENF0R846614L
+sgdisk --zap-all $DD
+blkdiscard -v $DD
+wipefs -a $DD
+
+sleep 5
+
+# create the crypto containers
+cryptsetup luksFormat --batch-mode --verify-passphrase $DD
+
+sleep 5
+
+# open them
+cryptsetup luksOpen $DD crypt-projects
+
+sleep 5
+lsblk --fs
+
+# create btrfs with strong checksumming and fast mounting
+mkfs.btrfs -f --csum blake2 --features block-group-tree /dev/mapper/crypt-projects
+
+sleep 5
+btrfs filesystem show
+
+# create vms disk
+
+DD=/dev/disk/by-id/nvme-CT2000P5PSSD8_213330E4ED05
+sgdisk --zap-all $DD
+blkdiscard -v $DD
+wipefs -a $DD
+
+sleep 5
+
+# create the crypto containers
+cryptsetup luksFormat --batch-mode --verify-passphrase $DD
+
+sleep 5
+
+# open them
+cryptsetup luksOpen $DD crypt-vms
+
+sleep 5
+lsblk --fs
+
+# create btrfs with strong checksumming and fast mounting
+mkfs.btrfs -f --csum blake2 --features block-group-tree /dev/mapper/crypt-vms
+
+sleep 5
+btrfs filesystem show
