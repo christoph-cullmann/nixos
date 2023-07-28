@@ -1,0 +1,91 @@
+# Defining some helper variables (these will be used in later code
+# blocks as well, so make sure to use the same terminal session or
+# redefine them later)
+DISK=/dev/disk/by-id/nvme-Seagate_FireCuda_530_ZP4000GM30013_7VS01VBM
+HOST=neko
+
+# kill old data
+sgdisk --zap-all $DISK
+blkdiscard -v $DISK
+wipefs -a $DISK
+gdisk -l $DISK
+
+# create partitions
+parted $DISK -- mklabel gpt
+sgdisk -n 1:0:+1024M -c 1:"EFI System Partition" -t 1:EF00 $DISK
+sgdisk -n 2:0:0 -c 2:"Linux" -t 2:8e00 $DISK
+parted $DISK -- set 1 boot on
+
+sleep 5
+
+# take a look
+cat /proc/partitions
+
+# boot partition
+mkfs.fat -F 32 -n EFIBOOT $DISK-part1
+
+# create the crypto containers
+cryptsetup luksFormat --batch-mode --verify-passphrase $DISK-part2
+
+sleep 5
+
+# open them
+cryptsetup luksOpen $DISK-part2 crypt-system
+
+sleep 5
+lsblk --fs
+
+# create btrfs with strong checksumming and fast mounting
+mkfs.btrfs -f --csum blake2 --features block-group-tree /dev/mapper/crypt-system
+
+sleep 5
+btrfs filesystem show
+
+# create all the volumes
+mount /dev/mapper/crypt-system /mnt
+btrfs subvolume create /mnt/data
+btrfs subvolume create /mnt/nix
+
+sleep 5
+btrfs subvolume list /mnt
+
+# umount again, we will only use explicit subvolumes
+umount /mnt
+
+# prepare install
+mount -t tmpfs none /mnt
+
+# Create directories to mount file systems on
+mkdir -p /mnt/{data,nix,home,boot,root,etc/nixos}
+
+# Mount both of the ESP's
+mount $DISK-part1 /mnt/boot
+
+# mount volumes
+mount -o subvol=data,compress=zstd,noatime /dev/mapper/crypt-system /mnt/data
+mount -o subvol=nix,compress=zstd,noatime /dev/mapper/crypt-system /mnt/nix
+
+# bind mount persistent stuff to data
+mkdir -p /mnt/{data/home,data/root,data/nixos/$HOST}
+mount --bind /mnt/data/home /mnt/home
+mount --bind /mnt/data/root /mnt/root
+mount --bind /mnt/data/nixos/$HOST /mnt/etc/nixos
+
+# take a look
+mount
+
+# configure
+nixos-generate-config --root /mnt
+
+
+# save /mnt/etc/nixos/hardware-configuration.nix /mnt/etc/nixos/configuration.nix
+
+# copy data
+
+
+# install
+
+nixos-install --no-root-passwd --root /mnt
+
+umount -Rl /mnt
+cryptsetup luksClose crypt-system

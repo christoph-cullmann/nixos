@@ -212,12 +212,14 @@ in
     firefox
     gitFull
     glxinfo
+    gptfdisk
     hunspellDicts.de_DE
     hunspellDicts.en_US
     libva-utils
     lsof
     mc
     nixos-install-tools
+    parted
     unrar
     unzip
     vulkan-tools
