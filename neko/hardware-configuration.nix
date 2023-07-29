@@ -52,31 +52,41 @@
     };
 
   fileSystems."/home" =
-    { device = "/data/home";
+    {
+      depends = [ "/data" ];
+      device = "/data/home";
       fsType = "none";
       options = [ "bind" ];
     };
 
   fileSystems."/root" =
-    { device = "/data/root";
+    {
+      depends = [ "/data" ];
+      device = "/data/root";
       fsType = "none";
       options = [ "bind" ];
     };
 
   fileSystems."/etc/nixos" =
-    { device = "/data/nixos/neko";
+    {
+      depends = [ "/data" ];
+      device = "/data/nixos/neko";
       fsType = "none";
       options = [ "bind" ];
     };
 
   fileSystems."/home/cullmann/projects" =
-    { device = "/dev/mapper/crypt-projects";
+    {
+      depends = [ "/home" ];
+      device = "/dev/mapper/crypt-projects";
       fsType = "btrfs";
       options = [ "noatime" ];
     };
 
   fileSystems."/home/cullmann/vms" =
-    { device = "/dev/mapper/crypt-vms";
+    {
+      depends = [ "/home" ];
+      device = "/dev/mapper/crypt-vms";
       fsType = "btrfs";
       options = [ "noatime" ];
     };

@@ -237,7 +237,7 @@ in
   # more fonts for all users
   fonts = {
     # more fonts
-    fonts = with pkgs; [
+    packages = with pkgs; [
       # needed for powerlevel10k zsh stuff
       meslo-lgs-nf
 
@@ -409,6 +409,7 @@ in
       kate
       kcalc
       keychain
+      kmail
       kompare
       konversation
       krita
