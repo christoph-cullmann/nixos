@@ -219,6 +219,7 @@ in
     lsof
     mc
     nixos-install-tools
+    p7zip
     parted
     unrar
     unzip
