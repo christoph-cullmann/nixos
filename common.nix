@@ -109,9 +109,6 @@ in
     LC_TIME = "de_DE.UTF-8";
   };
 
-  # ensure we build all needed locales
-  i18n.supportedLocales = ["en_US.UTF-8/UTF-8" "de_DE.UTF-8/UTF-8"];
-
   # ensure we see the journal on TTY12
   services.journald.console = "/dev/tty12";
 
