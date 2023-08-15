@@ -402,9 +402,11 @@ in
       file
       gimp
       go
+      hotspot
       hugo
       inetutils
       kate
+      kcachegrind
       kcalc
       keychain
       kmail
@@ -430,6 +432,7 @@ in
       tk
       tokodon
       usbutils
+      valgrind
       vlc
       vscodium
       xorg.xhost
