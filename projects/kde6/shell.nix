@@ -80,7 +80,6 @@ export QT_QUICK_CONTROLS_STYLE_PATH=/home/cullmann/projects/kde6/usr/lib/qml/QtQ
     pkg-config
     polkit
     qrencode
-    qt6.full
     qt6.qt3d
     qt6.qt5compat
     qt6.qtbase
