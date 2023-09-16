@@ -20,24 +20,22 @@
     };
 
   fileSystems."/boot" =
-    { device = "/dev/disk/by-uuid/90AD-64A8";
+    { device = "/dev/disk/by-uuid/F404-531A";
       fsType = "vfat";
     };
 
-  boot.initrd.luks.devices."crypt-disk1".device = "/dev/disk/by-uuid/2244e83d-eb7a-4e42-8632-9ba4586f240c";
-  boot.initrd.luks.devices."crypt-disk1".allowDiscards = true;
-  boot.initrd.luks.devices."crypt-disk1".bypassWorkqueues = true;
+  boot.initrd.luks.devices."crypt-system".device = "/dev/disk/by-uuid/22c208e6-579b-4d34-8f83-83aa4a7ab1c3";
 
   fileSystems."/nix" =
-    { device = "/dev/mapper/crypt-disk1";
+    { device = "/dev/mapper/crypt-system";
       fsType = "btrfs";
-      options = [ "subvol=nix" "noatime" "compress=zstd" ];
+      options = [ "subvol=nix" "noatime" "nodiratime" ];
     };
 
   fileSystems."/data" =
-    { device = "/dev/mapper/crypt-disk1";
+    { device = "/dev/mapper/crypt-system";
       fsType = "btrfs";
-      options = [ "subvol=data" "noatime" "compress=zstd" ];
+      options = [ "subvol=data" "noatime" "nodiratime" ];
     };
 
   fileSystems."/home" =

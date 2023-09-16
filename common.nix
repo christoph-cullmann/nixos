@@ -207,6 +207,7 @@ in
     chromium
     clamav
     clinfo
+    config.boot.kernelPackages.perf
     efibootmgr
     filelight
     firefox
@@ -418,7 +419,6 @@ in
       krita
       libjxl
       libreoffice
-      linuxKernel.packages.linux_latest_libre.perf
       neochat
       nmap
       okteta
