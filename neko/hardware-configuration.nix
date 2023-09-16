@@ -20,35 +20,29 @@
     };
 
   fileSystems."/boot" =
-    { device = "/dev/disk/by-uuid/F1C1-0271";
+    { device = "/dev/disk/by-uuid/909C-CE7E";
       fsType = "vfat";
     };
 
   # system
-  boot.initrd.luks.devices."crypt-system".device = "/dev/disk/by-uuid/2dc54953-958b-4c5a-8454-21c0b1d16222";
-  boot.initrd.luks.devices."crypt-system".allowDiscards = true;
-  boot.initrd.luks.devices."crypt-system".bypassWorkqueues = true;
+  boot.initrd.luks.devices."crypt-system".device = "/dev/disk/by-uuid/27c4619d-4e60-458e-95ad-e348a7894a14";
 
   # projects
   boot.initrd.luks.devices."crypt-projects".device = "/dev/disk/by-id/nvme-Samsung_SSD_980_PRO_2TB_S69ENF0R846614L";
-  boot.initrd.luks.devices."crypt-projects".allowDiscards = true;
-  boot.initrd.luks.devices."crypt-projects".bypassWorkqueues = true;
 
   # vms
   boot.initrd.luks.devices."crypt-vms".device = "/dev/disk/by-id/nvme-CT2000P5PSSD8_213330E4ED05";
-  boot.initrd.luks.devices."crypt-vms".allowDiscards = true;
-  boot.initrd.luks.devices."crypt-vms".bypassWorkqueues = true;
 
   fileSystems."/nix" =
     { device = "/dev/mapper/crypt-system";
       fsType = "btrfs";
-      options = [ "subvol=nix" "noatime" "compress=zstd" ];
+      options = [ "subvol=nix" "noatime" "nodiratime" ];
     };
 
   fileSystems."/data" =
     { device = "/dev/mapper/crypt-system";
       fsType = "btrfs";
-      options = [ "subvol=data" "noatime" "compress=zstd" ];
+      options = [ "subvol=data" "noatime" "nodiratime" ];
     };
 
   fileSystems."/home" =
@@ -80,7 +74,7 @@
       depends = [ "/home" ];
       device = "/dev/mapper/crypt-projects";
       fsType = "btrfs";
-      options = [ "noatime" ];
+      options = [ "noatime" "nodiratime" ];
     };
 
   fileSystems."/home/cullmann/vms" =
@@ -88,7 +82,7 @@
       depends = [ "/home" ];
       device = "/dev/mapper/crypt-vms";
       fsType = "btrfs";
-      options = [ "noatime" ];
+      options = [ "noatime" "nodiratime" ];
     };
 
   swapDevices = [ ];
