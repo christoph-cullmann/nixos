@@ -119,14 +119,14 @@ cryptsetup luksFormat --batch-mode --verify-passphrase $DD
 
 sleep 5
 
-# open them
-cryptsetup luksOpen $DD crypt-projects
+# open them, set right options persistently
+cryptsetup luksOpen --allow-discards --perf-no_read_workqueue --perf-no_write_workqueue --persistent $DD crypt-projects
 
 sleep 5
 lsblk --fs
 
-# create btrfs with strong checksumming and fast mounting
-mkfs.btrfs -f --csum blake2 --features block-group-tree /dev/mapper/crypt-projects
+# create btrfs with fast & strong checksumming and fast mounting
+mkfs.btrfs -f --csum xxhash --features block-group-tree /dev/mapper/crypt-projects
 
 sleep 5
 btrfs filesystem show
@@ -145,14 +145,14 @@ cryptsetup luksFormat --batch-mode --verify-passphrase $DD
 
 sleep 5
 
-# open them
-cryptsetup luksOpen $DD crypt-vms
+# open them, set right options persistently
+cryptsetup luksOpen --allow-discards --perf-no_read_workqueue --perf-no_write_workqueue --persistent $DD crypt-vms
 
 sleep 5
 lsblk --fs
 
-# create btrfs with strong checksumming and fast mounting
-mkfs.btrfs -f --csum blake2 --features block-group-tree /dev/mapper/crypt-vms
+# create btrfs with fast & strong checksumming and fast mounting
+mkfs.btrfs -f --csum xxhash --features block-group-tree /dev/mapper/crypt-vms
 
 sleep 5
 btrfs filesystem show
