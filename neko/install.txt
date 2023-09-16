@@ -4,6 +4,12 @@
 DISK=/dev/disk/by-id/nvme-Seagate_FireCuda_530_ZP4000GM30013_7VS01VBM
 HOST=neko
 
+# ensure 4k sector size
+nvme format --lbaf=1 --force $DISK
+nvme id-ns -H $DISK
+
+sleep 5
+
 # kill old data
 sgdisk --zap-all $DISK
 blkdiscard -v $DISK
@@ -25,18 +31,18 @@ cat /proc/partitions
 mkfs.fat -F 32 -n EFIBOOT $DISK-part1
 
 # create the crypto containers
-cryptsetup luksFormat --batch-mode --verify-passphrase $DISK-part2
+cryptsetup luksFormat --sector-size 4096 --batch-mode --verify-passphrase $DISK-part2
 
 sleep 5
 
-# open them
-cryptsetup luksOpen $DISK-part2 crypt-system
+# open them, set right options persistently
+cryptsetup luksOpen --allow-discards --perf-no_read_workqueue --perf-no_write_workqueue --persistent $DISK-part2 crypt-system
 
 sleep 5
 lsblk --fs
 
-# create btrfs with strong checksumming and fast mounting
-mkfs.btrfs -f --csum blake2 --features block-group-tree /dev/mapper/crypt-system
+# create btrfs with fast & strong checksumming and fast mounting
+mkfs.btrfs -f --csum xxhash --features block-group-tree /dev/mapper/crypt-system
 
 sleep 5
 btrfs filesystem show
@@ -58,12 +64,12 @@ mount -t tmpfs none /mnt
 # Create directories to mount file systems on
 mkdir -p /mnt/{data,nix,home,boot,root,etc/nixos}
 
-# Mount both of the ESP's
+# mount the ESP
 mount $DISK-part1 /mnt/boot
 
 # mount volumes
-mount -o subvol=data,compress=zstd,noatime /dev/mapper/crypt-system /mnt/data
-mount -o subvol=nix,compress=zstd,noatime /dev/mapper/crypt-system /mnt/nix
+mount -o subvol=data,noatime,nodiratime /dev/mapper/crypt-system /mnt/data
+mount -o subvol=nix,noatime,nodiratime /dev/mapper/crypt-system /mnt/nix
 
 # bind mount persistent stuff to data
 mkdir -p /mnt/{data/home,data/root,data/nixos/$HOST}
@@ -76,7 +82,6 @@ mount
 
 # configure
 nixos-generate-config --root /mnt
-
 
 # save /mnt/etc/nixos/hardware-configuration.nix /mnt/etc/nixos/configuration.nix
 
