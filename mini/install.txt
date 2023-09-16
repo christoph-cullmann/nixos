@@ -100,3 +100,33 @@ nixos-install --no-root-passwd --root /mnt
 
 umount -Rl /mnt
 cryptsetup luksClose crypt-system
+
+#
+# after install tasks for extra file systems
+#
+
+# create vms disk
+
+DD=/dev/disk/by-id/ata-CT2000MX500SSD1_2138E5D5061F
+sgdisk --zap-all $DD
+blkdiscard -v $DD
+wipefs -a $DD
+
+sleep 5
+
+# create the crypto containers
+cryptsetup luksFormat --batch-mode --verify-passphrase $DD
+
+sleep 5
+
+# open them, set right options persistently
+cryptsetup luksOpen --allow-discards --perf-no_read_workqueue --perf-no_write_workqueue --persistent $DD crypt-vms
+
+sleep 5
+lsblk --fs
+
+# create btrfs with fast & strong checksumming and fast mounting
+mkfs.btrfs -f --csum xxhash --features block-group-tree /dev/mapper/crypt-vms
+
+sleep 5
+btrfs filesystem show

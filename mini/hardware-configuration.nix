@@ -24,7 +24,11 @@
       fsType = "vfat";
     };
 
+  # system
   boot.initrd.luks.devices."crypt-system".device = "/dev/disk/by-uuid/22c208e6-579b-4d34-8f83-83aa4a7ab1c3";
+
+  # vms
+  boot.initrd.luks.devices."crypt-vms".device = "/dev/disk/by-id/ata-CT2000MX500SSD1_2138E5D5061F";
 
   fileSystems."/nix" =
     { device = "/dev/mapper/crypt-system";
@@ -54,6 +58,14 @@
     { device = "/data/nixos/mini";
       fsType = "none";
       options = [ "bind" ];
+    };
+
+  fileSystems."/home/cullmann/vms" =
+    {
+      depends = [ "/home" ];
+      device = "/dev/mapper/crypt-vms";
+      fsType = "btrfs";
+      options = [ "noatime" "nodiratime" ];
     };
 
   swapDevices = [ ];
