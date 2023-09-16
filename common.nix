@@ -220,6 +220,7 @@ in
     lsof
     mc
     nixos-install-tools
+    nvme-cli
     p7zip
     parted
     unrar
