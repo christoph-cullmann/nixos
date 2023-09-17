@@ -58,12 +58,15 @@ in
   # ensure we scrub the btrfs sometimes
   services.btrfs.autoScrub = {
     enable = true;
-    fileSystems = [ "/data" ];
     interval = "weekly";
   };
 
   # allow all firmware
   hardware.enableAllFirmware = true;
+
+  # use NetworkManager
+  networking.useDHCP = false;
+  networking.networkmanager.enable = true;
 
   # ensure firewall is up, allow ssh and http in
   networking.firewall.enable = true;

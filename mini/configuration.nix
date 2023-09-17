@@ -17,15 +17,6 @@
   # host name
   networking.hostName = "mini";
 
-  # main network interface via systemd-networkd
-  networking.useDHCP = false;
-  systemd.network.enable = true;
-  systemd.network.networks."10-lan" = {
-    matchConfig.Name = "eno1";
-    networkConfig.DHCP = "yes";
-    linkConfig.RequiredForOnline = "routable";
-  };
-
   # amd graphics
   hardware.opengl.extraPackages = with pkgs; [ amdvlk rocm-opencl-icd rocm-opencl-runtime ];
   hardware.opengl.extraPackages32 = with pkgs.pkgsi686Linux; [ amdvlk ];
