@@ -410,6 +410,7 @@ in
       file
       gimp
       go
+      heaptrack
       hotspot
       hugo
       inetutils
