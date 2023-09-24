@@ -8,7 +8,7 @@ export PATH=/home/cullmann/projects/kde6/usr/bin:/home/cullmann/projects/kde6:/h
 # LD_LIBRARY_PATH only needed if you are building without rpath
 # export LD_LIBRARY_PATH=/home/cullmann/projects/kde6/usr/lib:$LD_LIBRARY_PATH
 
-export QT_PLUGIN_PATH=/home/cullmann/projects/kde6/usr/lib/plugins:${pkgs.qt6.qtbase.qtPluginPrefix}:${pkgs.lib.getBin pkgs.qt6.qtsvg}/${pkgs.qt6.qtbase.qtPluginPrefix}:$QT_PLUGIN_PATH
+export QT_PLUGIN_PATH=/home/cullmann/projects/kde6/usr/lib/plugins:${pkgs.qt6.qtbase.qtPluginPrefix}:${pkgs.lib.getBin pkgs.qt6.qtsvg}/${pkgs.qt6.qtbase.qtPluginPrefix}:${pkgs.lib.getBin pkgs.qt6.qtwayland}/${pkgs.qt6.qtbase.qtPluginPrefix}:$QT_PLUGIN_PATH
 export QML2_IMPORT_PATH=/home/cullmann/projects/kde6/usr/lib/qml:$QML2_IMPORT_PATH
 
 export QT_QUICK_CONTROLS_STYLE_PATH=/home/cullmann/projects/kde6/usr/lib/qml/QtQuick/Controls.2/:$QT_QUICK_CONTROLS_STYLE_PATH
