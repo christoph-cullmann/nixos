@@ -90,9 +90,6 @@ in
   # guard the ssh service
   services.sshguard.enable = true;
 
-  # swap to RAM
-  zramSwap.enable = true;
-
   # Set your time zone.
   time.timeZone = "Europe/Berlin";
 
