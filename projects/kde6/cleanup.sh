@@ -9,4 +9,4 @@ cd ~/projects/kde6/src || exit 1
 git clone https://invent.kde.org/sdk/kdesrc-build.git || exit 1
 
 # start from scratch
-exec ./kdesrc-build/kdesrc-build --rc-file=../kdesrc-buildrc --include-dependencies breeze plasma-integration konsole kate
+exec ./kdesrc-build/kdesrc-build --rc-file=../kdesrc-buildrc --include-dependencies breeze plasma-integration kwayland-integration konsole kate
