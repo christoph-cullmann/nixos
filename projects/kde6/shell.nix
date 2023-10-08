@@ -1,6 +1,11 @@
-{ pkgs ? import <nixpkgs> {} }:
+with import <nixpkgs> {};
 
-pkgs.mkShell {
+# use new clang
+let myllvm = llvmPackages_16; in
+
+# clang based dev env
+myllvm.stdenv.mkDerivation {
+  name = "clang-nix-shell";
   # ensure the local KDE things are in path
   shellHook = ''
 export PATH=/home/cullmann/projects/kde6/usr/bin:/home/cullmann/projects/kde6:/home/cullmann/projects/kde6/src/kdesrc-build:$PATH
@@ -22,7 +27,6 @@ export QT_QUICK_CONTROLS_STYLE_PATH=/home/cullmann/projects/kde6/usr/lib/qml/QtQ
     bison
     boost
     bzip2
-    clang-tools
     cmake
     docbook_xml_dtd_45
     docbook_xsl_ns
@@ -39,7 +43,6 @@ export QT_QUICK_CONTROLS_STYLE_PATH=/home/cullmann/projects/kde6/usr/lib/qml/QtQ
     lcms2
     libcanberra
     libcap
-    libclang.python
     libdisplay-info
     libepoxy
     libgcrypt
@@ -62,6 +65,7 @@ export QT_QUICK_CONTROLS_STYLE_PATH=/home/cullmann/projects/kde6/usr/lib/qml/QtQ
     lmdb
     mesa
     meson
+    myllvm.libclang.python # git-clang-format
     networkmanager
     ninja
     openal
