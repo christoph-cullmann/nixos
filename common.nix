@@ -281,24 +281,24 @@ in
   services.smartd.enable = true;
 
   # ensure cron and Co. can send mails
-#   programs.msmtp = {
-#     enable = true;
-#     setSendmail = true;
-#     accounts = {
-#       default = {
-#         auth = true;
-#         tls = true;
-#         from = "noreply@home.local";
-#         host = "babylon2k.com";
-#         port = "587";
-#         user = builtins.readFile "/data/nixos/mailuser.secret";
-#         password = builtins.readFile "/data/nixos/mailpassword.secret";
-#       };
-#     };
-#     defaults = {
-#       aliases = "/etc/aliases";
-#     };
-#   };
+  programs.msmtp = {
+    enable = true;
+    setSendmail = true;
+    accounts = {
+      default = {
+        auth = true;
+        tls = true;
+        from = "noreply@home.local";
+        host = "babylon2k.com";
+        port = "587";
+        user = builtins.readFile "/data/nixos/mailuser.secret";
+        password = builtins.readFile "/data/nixos/mailpassword.secret";
+      };
+    };
+    defaults = {
+      aliases = "/etc/aliases";
+    };
+  };
 
   environment.etc = {
     "aliases" = {

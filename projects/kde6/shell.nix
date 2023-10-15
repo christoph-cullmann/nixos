@@ -28,6 +28,7 @@ export QT_QUICK_CONTROLS_STYLE_PATH=/home/cullmann/projects/kde6/usr/lib/qml/QtQ
     boost
     bzip2
     cmake
+    ctags
     docbook_xml_dtd_45
     docbook_xsl_ns
     flex
