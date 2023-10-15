@@ -205,11 +205,13 @@ in
     aspellDicts.en
     borgbackup
     btop
+    chromium
     clamav
     clinfo
     config.boot.kernelPackages.perf
     efibootmgr
     filelight
+    firefox
     gitFull
     glxinfo
     gptfdisk
