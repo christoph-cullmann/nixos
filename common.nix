@@ -205,13 +205,11 @@ in
     aspellDicts.en
     borgbackup
     btop
-    chromium
     clamav
     clinfo
     config.boot.kernelPackages.perf
     efibootmgr
     filelight
-    firefox
     gitFull
     glxinfo
     gptfdisk
@@ -231,6 +229,10 @@ in
     zsh
     zsh-powerlevel10k
   ];
+
+  # we want global available browsers
+  programs.chromium.enable = true;
+  programs.firefox.enable = true;
 
   # allow keyboard configure tools to work
   hardware.keyboard.qmk.enable = true;
