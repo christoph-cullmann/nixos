@@ -209,6 +209,8 @@ in
     clinfo
     config.boot.kernelPackages.perf
     efibootmgr
+    fdupes
+    file
     filelight
     firefox
     gitFull
@@ -216,6 +218,7 @@ in
     gptfdisk
     hunspellDicts.de_DE
     hunspellDicts.en_US
+    inetutils
     konsole
     libva-utils
     lsof
@@ -224,6 +227,7 @@ in
     nvme-cli
     p7zip
     parted
+    pciutils
     unrar
     unzip
     vulkan-tools
@@ -407,15 +411,12 @@ in
       calibre
       emacs
       falkon
-      fdupes
       ffmpeg
-      file
       gimp
       go
       heaptrack
       hotspot
       hugo
-      inetutils
       kate
       kcachegrind
       kcalc
@@ -430,11 +431,9 @@ in
       nmap
       okteta
       okular
-      pciutils
       perf-tools
       pulseaudio
       qmk
-      remmina
       signal-desktop
       tcl
       texlive.combined.scheme-small
