@@ -140,6 +140,7 @@ in
     # use SDDM and Plasma Wayland
     enable = true;
     displayManager.sddm.enable = true;
+    displayManager.sddm.wayland.enable = true;
     displayManager.defaultSession = "plasmawayland";
   };
 
