@@ -431,7 +431,6 @@ in
       nmap
       okteta
       okular
-      perf-tools
       pulseaudio
       qmk
       signal-desktop
