@@ -199,7 +199,6 @@ in
   # List packages installed in system profile. To search, run:
   # $ nix search wget
   environment.systemPackages = with pkgs; [
-    alacritty
     ark
     aspellDicts.de
     aspellDicts.en
@@ -217,6 +216,7 @@ in
     gptfdisk
     hunspellDicts.de_DE
     hunspellDicts.en_US
+    konsole
     libva-utils
     lsof
     mc
