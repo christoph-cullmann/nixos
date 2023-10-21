@@ -238,19 +238,29 @@ in
   # run some stuff in a sandbox
   programs.firejail = {
     enable = true;
+
     wrappedBinaries = {
       chromium = {
         executable = "${pkgs.lib.getBin pkgs.chromium}/bin/chromium";
         profile = "${pkgs.firejail}/etc/firejail/chromium.profile";
       };
+
       firefox = {
         executable = "${pkgs.lib.getBin pkgs.firefox}/bin/firefox";
         profile = "${pkgs.firejail}/etc/firejail/firefox.profile";
       };
+
+      signal-desktop = {
+        executable = "${pkgs.signal-desktop}/bin/signal-desktop";
+        profile = "${pkgs.firejail}/etc/firejail/signal-desktop.profile";
+        desktop = "${pkgs.signal-desktop}/share/applications/signal-desktop.desktop";
+      };
     };
   };
+
   # chromium needs programs.firefox.enable here and systemPackages entry to have icon and work
   programs.chromium.enable = true;
+
   # firefox needs programs.firefox.enable here but no systemPackages entry to have icon and work
   programs.firefox.enable = true;
 
@@ -447,7 +457,6 @@ in
       okular
       pulseaudio
       qmk
-      signal-desktop
       tcl
       texlive.combined.scheme-small
       tigervnc
