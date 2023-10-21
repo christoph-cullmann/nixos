@@ -204,7 +204,6 @@ in
     aspellDicts.en
     borgbackup
     btop
-    chromium
     clamav
     clinfo
     config.boot.kernelPackages.perf
@@ -212,7 +211,6 @@ in
     fdupes
     file
     filelight
-    firefox
     gitFull
     glxinfo
     gptfdisk
@@ -236,7 +234,18 @@ in
     zsh-powerlevel10k
   ];
 
-  # we want global available browsers
+  # we want sandboxed browsers
+  programs.firejail.enable = true;
+  programs.firejail.wrappedBinaries = {
+    chromium = {
+      executable = "${pkgs.lib.getBin pkgs.chromium}/bin/chromium";
+      profile = "${pkgs.firejail}/etc/firejail/chromium.profile";
+    };
+    firefox = {
+      executable = "${pkgs.lib.getBin pkgs.firefox}/bin/firefox";
+      profile = "${pkgs.firejail}/etc/firejail/firefox.profile";
+    };
+  };
   programs.chromium.enable = true;
   programs.firefox.enable = true;
 
