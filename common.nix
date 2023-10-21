@@ -123,25 +123,20 @@ in
   # allow firmware updates
   services.fwupd.enable = true;
 
-  # X11 settings
-  services.xserver = {
-    libinput.enable = true;
-    upscaleDefaultCursor = false;
+  # EurKey layout
+  services.xserver.layout = "eu";
 
-    # Configure keymap in X11
-    layout = "eu";
-    xkbVariant = "";
+  # enable the KDE Plasma Desktop Environment
+  services.xserver.desktopManager.plasma5.enable = true;
 
-    # Enable the KDE Plasma Desktop Environment.
-    desktopManager.plasma5.enable = true;
-    desktopManager.plasma5.runUsingSystemd = true;
-    desktopManager.plasma5.phononBackend = "vlc";
-
-    # use SDDM and Plasma Wayland
+  # greetd console display manager
+  services.greetd = {
     enable = true;
-    displayManager.sddm.enable = true;
-    displayManager.sddm.wayland.enable = true;
-    displayManager.defaultSession = "plasmawayland";
+    settings = {
+      default_session = {
+        command = "${pkgs.greetd.tuigreet}/bin/tuigreet --time --cmd '${pkgs.plasma-workspace}/libexec/plasma-dbus-run-session-if-needed ${pkgs.plasma-workspace}/bin/startplasma-wayland'";
+      };
+    };
   };
 
   # enable sound with PipeWire
