@@ -123,8 +123,9 @@ in
   # allow firmware updates
   services.fwupd.enable = true;
 
-  # EurKey layout
+  # EurKey layout everywhere
   services.xserver.layout = "eu";
+  console.useXkbConfig = true;
 
   # enable the KDE Plasma Desktop Environment
   services.xserver.desktopManager.plasma5.enable = true;
