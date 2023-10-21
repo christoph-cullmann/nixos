@@ -17,6 +17,9 @@
   # host name
   networking.hostName = "neko";
 
+  # main network interface
+  systemd.network.networks."10-wan".matchConfig.Name = "enp10s0";
+
   # intel graphics
   hardware.opengl.extraPackages = with pkgs; [ intel-media-driver intel-compute-runtime ];
   hardware.opengl.extraPackages32 = with pkgs.pkgsi686Linux; [ intel-media-driver ];
