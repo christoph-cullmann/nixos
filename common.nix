@@ -204,6 +204,7 @@ in
     aspellDicts.en
     borgbackup
     btop
+    chromium
     clamav
     clinfo
     config.boot.kernelPackages.perf
@@ -234,19 +235,23 @@ in
     zsh-powerlevel10k
   ];
 
-  # we want sandboxed browsers
-  programs.firejail.enable = true;
-  programs.firejail.wrappedBinaries = {
-    chromium = {
-      executable = "${pkgs.lib.getBin pkgs.chromium}/bin/chromium";
-      profile = "${pkgs.firejail}/etc/firejail/chromium.profile";
-    };
-    firefox = {
-      executable = "${pkgs.lib.getBin pkgs.firefox}/bin/firefox";
-      profile = "${pkgs.firejail}/etc/firejail/firefox.profile";
+  # run some stuff in a sandbox
+  programs.firejail = {
+    enable = true;
+    wrappedBinaries = {
+      chromium = {
+        executable = "${pkgs.lib.getBin pkgs.chromium}/bin/chromium";
+        profile = "${pkgs.firejail}/etc/firejail/chromium.profile";
+      };
+      firefox = {
+        executable = "${pkgs.lib.getBin pkgs.firefox}/bin/firefox";
+        profile = "${pkgs.firejail}/etc/firejail/firefox.profile";
+      };
     };
   };
+  # chromium needs programs.firefox.enable here and systemPackages entry to have icon and work
   programs.chromium.enable = true;
+  # firefox needs programs.firefox.enable here but no systemPackages entry to have icon and work
   programs.firefox.enable = true;
 
   # allow keyboard configure tools to work
