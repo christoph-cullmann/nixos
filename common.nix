@@ -287,6 +287,11 @@ in
         profile = "${pkgs.firejail}/etc/firejail/chromium.profile";
       };
 
+      falkon = {
+        executable = "${pkgs.lib.getBin pkgs.falkon}/bin/falkon";
+        profile = "${pkgs.firejail}/etc/firejail/falkon.profile";
+      };
+
       firefox = {
         executable = "${pkgs.lib.getBin pkgs.firefox}/bin/firefox";
         profile = "${pkgs.firejail}/etc/firejail/firefox.profile";
