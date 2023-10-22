@@ -212,31 +212,65 @@ in
     aspellDicts.en
     borgbackup
     btop
+    calibre
     chromium
     clamav
     clinfo
     config.boot.kernelPackages.perf
     efibootmgr
+    emacs
+    falkon
     fdupes
+    ffmpeg
     file
     filelight
+    gimp
     gitFull
     glxinfo
+    go
     gptfdisk
+    heaptrack
+    hotspot
+    hugo
     hunspellDicts.de_DE
     hunspellDicts.en_US
     inetutils
+    kate
+    kcachegrind
+    kcalc
+    keychain
+    kmail
+    kompare
     konsole
+    konversation
+    krita
+    libjxl
+    libreoffice
     libva-utils
     lsof
     mc
+    neochat
     nixos-install-tools
+    nmap
     nvme-cli
+    okteta
+    okular
     p7zip
     parted
     pciutils
+    pulseaudio
+    qmk
+    tcl
+    texlive.combined.scheme-small
+    tigervnc
+    tk
+    tokodon
     unrar
     unzip
+    usbutils
+    valgrind
+    vlc
+    vscodium
     vulkan-tools
     wayland-utils
     zsh
@@ -272,6 +306,14 @@ in
   # firefox needs programs.firefox.enable here but no systemPackages entry to have icon and work
   programs.firefox.enable = true;
 
+  # Flatpak to sandbox Steam, Bottles and Co.
+  #
+  # flatpak remote-add --if-not-exists --user flathub https://dl.flathub.org/repo/flathub.flatpakrepo
+  # flatpak install --user flathub com.usebottles.bottles
+  # flatpak install --user flathub com.valvesoftware.Steam
+  #
+  services.flatpak.enable = true;
+
   # allow keyboard configure tools to work
   hardware.keyboard.qmk.enable = true;
 
@@ -305,10 +347,9 @@ in
     };
   };
 
-  # 64-bit GL
+  # OpenGL
+  hardware.opengl.enable = true;
   hardware.opengl.driSupport = true;
-
-  # proper lutris gaming for 32-bit stuff
   hardware.opengl.driSupport32Bit = true;
 
   # virus scanner, we only want the updater running
@@ -320,6 +361,9 @@ in
 
   # let's get SSD status
   services.smartd.enable = true;
+
+  # dconf is needed for gtk, see https://nixos.wiki/wiki/KDE
+  programs.dconf.enable = true;
 
   # ensure cron and Co. can send mails
   programs.msmtp = {
@@ -350,28 +394,49 @@ in
     };
   };
 
-  # use ZSH per default
+  # use ZSH per default with a proper config
   users.defaultUserShell = pkgs.zsh;
-
-  # nice zsh config
   programs.zsh = {
     # zsh wanted
     enable = true;
 
     # some env vars I want in all of my shells
-    shellInit = "export MOZ_ENABLE_WAYLAND=1; export POWERLEVEL9K_DISABLE_CONFIGURATION_WIZARD=true;";
+    shellInit = ''
+      export MOZ_ENABLE_WAYLAND=1
+      export POWERLEVEL9K_DISABLE_CONFIGURATION_WIZARD=true
+      export XDG_DATA_DIRS=$XDG_DATA_DIRS:/usr/share:/var/lib/flatpak/exports/share:$HOME/.local/share/flatpak/exports/share
+      '';
 
     # great prompt
-    promptInit = "source ${pkgs.zsh-powerlevel10k}/share/zsh-powerlevel10k/powerlevel10k.zsh-theme; if [ -f ~/.p10k.zsh ]; then source ~/.p10k.zsh; fi;";
+    promptInit = ''
+      source ${pkgs.zsh-powerlevel10k}/share/zsh-powerlevel10k/powerlevel10k.zsh-theme
+      if [ -f ~/.p10k.zsh ]; then
+        source ~/.p10k.zsh;
+      fi
+      '';
+
+    # aliases
+    shellAliases = {
+      ll = "ls -l";
+
+      # system build/update/cleanup
+      update = "sudo nixos-rebuild switch";
+      upgrade = "sudo nixos-rebuild switch --upgrade";
+      gc = "sudo nix-collect-garbage --delete-older-than 7d";
+      verify = "sudo nix --extra-experimental-features nix-command store verify --all";
+      optimize = "sudo nix --extra-experimental-features nix-command store optimise";
+
+      # ssh around in the local network
+      kuro = "ssh kuro.fritz.box";
+      kuroroot = "ssh root@kuro.fritz.box";
+      mini = "ssh mini.fritz.box";
+      miniroot = "ssh root@mini.fritz.box";
+      neko = "ssh neko.fritz.box";
+      nekoroot = "ssh root@neko.fritz.box";
+    };
   };
 
-  # we want steam for gaming
-  programs.steam.enable = true;
-
-  # dconf is needed for gtk, see https://nixos.wiki/wiki/KDE
-  programs.dconf.enable = true;
-
-  # enable VirtualBox
+  # enable VirtualBox for the main user
   virtualisation.virtualbox.host.enable = true;
   users.extraGroups.vboxusers.members = [ "cullmann" ];
 
@@ -405,12 +470,7 @@ in
     home.stateVersion = "22.11";
 
     # generate the shell config
-    programs.zsh = {
-      enable = true;
-      shellAliases = {
-        ll = "ls -l";
-      };
-    };
+    programs.zsh.enable = true;
   };
 
   #
@@ -438,114 +498,17 @@ in
     # initial version
     home.stateVersion = "22.11";
 
-    # extra packages, stuff for work/kde/...
-    home.packages = with pkgs; [
-      calibre
-      emacs
-      falkon
-      ffmpeg
-      gimp
-      go
-      heaptrack
-      hotspot
-      hugo
-      kate
-      kcachegrind
-      kcalc
-      keychain
-      kmail
-      kompare
-      konversation
-      krita
-      libjxl
-      libreoffice
-      neochat
-      nmap
-      okteta
-      okular
-      pulseaudio
-      qmk
-      tcl
-      texlive.combined.scheme-small
-      tigervnc
-      tk
-      tokodon
-      usbutils
-      valgrind
-      vlc
-      vscodium
-      xorg.xhost
-    ];
-
-    # https://github.com/nix-community/nix-direnv
-    programs.direnv.enable = true;
-    programs.direnv.nix-direnv.enable = true;
-
     # generate the shell config
-    programs.zsh = {
-      enable = true;
-      shellAliases = {
-        ll = "ls -l";
-
-        # system build/update/cleanup
-        update = "sudo nixos-rebuild switch";
-        upgrade = "sudo nixos-rebuild switch --upgrade";
-        gc = "sudo nix-collect-garbage --delete-older-than 7d";
-        verify = "sudo nix --extra-experimental-features nix-command store verify --all";
-        optimize = "sudo nix --extra-experimental-features nix-command store optimise";
-
-        # ssh around in the local network
-        kuro = "ssh kuro.fritz.box";
-        kuroroot = "ssh root@kuro.fritz.box";
-        mini = "ssh mini.fritz.box";
-        miniroot = "ssh root@mini.fritz.box";
-        neko = "ssh neko.fritz.box";
-        nekoroot = "ssh root@neko.fritz.box";
-      };
-    };
+    programs.zsh.enable = true;
 
     # enable keychain
     programs.keychain = {
       enable = true;
       keys = [ "id_ed25519" ];
     };
-  };
 
-  #
-  # sandbox user for games
-  #
-
-  users.users.sandbox = {
-    # hard code UID for stability over machines
-    uid = 1001;
-
-    # normal user
-    isNormalUser = true;
-
-    # dummy sand box name for Windows games and Co.
-    description = "Sand Box";
-  };
-
-  home-manager.users.sandbox = { pkgs, ... }: {
-    # initial version
-    home.stateVersion = "22.11";
-
-    # extra packages, stuff for games
-    home.packages = with pkgs; [
-      bottles
-      lutris
-      protonup-qt
-      sqlitebrowser
-      wine64
-      xdotool
-    ];
-
-    # generate the shell config
-    programs.zsh = {
-      enable = true;
-      shellAliases = {
-        ll = "ls -l";
-      };
-    };
+    # https://github.com/nix-community/nix-direnv
+    programs.direnv.enable = true;
+    programs.direnv.nix-direnv.enable = true;
   };
 }
