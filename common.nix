@@ -277,7 +277,7 @@ in
     zsh-powerlevel10k
   ];
 
-  # run some stuff in a sandbox
+  # run browsers in a sandbox
   programs.firejail = {
     enable = true;
 
@@ -291,12 +291,6 @@ in
         executable = "${pkgs.lib.getBin pkgs.firefox}/bin/firefox";
         profile = "${pkgs.firejail}/etc/firejail/firefox.profile";
       };
-
-      signal-desktop = {
-        executable = "${pkgs.signal-desktop}/bin/signal-desktop";
-        profile = "${pkgs.firejail}/etc/firejail/signal-desktop.profile";
-        desktop = "${pkgs.signal-desktop}/share/applications/signal-desktop.desktop";
-      };
     };
   };
 
@@ -309,6 +303,7 @@ in
   # Flatpak to sandbox Steam, Bottles and Co.
   #
   # flatpak remote-add --if-not-exists --user flathub https://dl.flathub.org/repo/flathub.flatpakrepo
+  # flatpak install --user flathub org.signal.Signal
   # flatpak install --user flathub com.usebottles.bottles
   # flatpak install --user flathub com.valvesoftware.Steam
   #
