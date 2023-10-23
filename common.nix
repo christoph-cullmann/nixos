@@ -156,7 +156,6 @@ in
   services.pipewire = {
     enable = true;
     alsa.enable = true;
-    alsa.support32Bit = true;
     jack.enable = true;
     pulse.enable = true;
   };
@@ -350,7 +349,6 @@ in
   # OpenGL
   hardware.opengl.enable = true;
   hardware.opengl.driSupport = true;
-  hardware.opengl.driSupport32Bit = true;
 
   # virus scanner, we only want the updater running
   services.clamav.updater.enable = true;
@@ -373,11 +371,11 @@ in
       default = {
         auth = true;
         tls = true;
-        from = "noreply@home.local";
-        host = "babylon2k.com";
+        from = "christoph@cullmann.io";
+        host = "moon.babylon2k.com";
         port = "587";
         user = builtins.readFile "/data/nixos/mailuser.secret";
-        password = builtins.readFile "/data/nixos/mailpassword.secret";
+        passwordeval = "cat /data/nixos/mailpassword.secret";
       };
     };
     defaults = {
@@ -436,9 +434,8 @@ in
     };
   };
 
-  # enable VirtualBox for the main user
+  # enable VirtualBox
   virtualisation.virtualbox.host.enable = true;
-  users.extraGroups.vboxusers.members = [ "cullmann" ];
 
   # configure sudo
   security.sudo.execWheelOnly = true;
@@ -465,7 +462,7 @@ in
     openssh.authorizedKeys.keys = pkgs.lib.splitString "\n" (builtins.readFile "/home/cullmann/.ssh/authorized_keys");
   };
 
-  home-manager.users.root = { pkgs, ... }: {
+  home-manager.users.root = {
     # initial version
     home.stateVersion = "22.11";
 
@@ -487,14 +484,14 @@ in
     # it's me :P
     description = "Christoph Cullmann";
 
-    # allow sudo for my main user
-    extraGroups = [ "wheel" ];
+    # allow VirtualBox and sudo for my main user
+    extraGroups = [ "vboxusers" "wheel" ];
 
     # init password
     hashedPassword = builtins.readFile "/data/nixos/password.secret";
   };
 
-  home-manager.users.cullmann = { pkgs, ... }: {
+  home-manager.users.cullmann = {
     # initial version
     home.stateVersion = "22.11";
 
