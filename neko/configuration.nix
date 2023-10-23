@@ -22,5 +22,4 @@
 
   # intel graphics
   hardware.opengl.extraPackages = with pkgs; [ intel-media-driver intel-compute-runtime ];
-  hardware.opengl.extraPackages32 = with pkgs.pkgsi686Linux; [ intel-media-driver ];
 }
