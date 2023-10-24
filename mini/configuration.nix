@@ -14,12 +14,21 @@
       /data/nixos/common.nix
     ];
 
-  # host name
-  networking.hostName = "mini";
-
-  # main network interface
-  systemd.network.networks."10-wan".matchConfig.Name = "eno1";
-
   # amd graphics
   hardware.opengl.extraPackages = with pkgs; [ amdvlk rocm-opencl-icd rocm-opencl-runtime ];
+
+  # use systemd-networkd, fixed IPv4, dynamic IPv6
+  networking.hostName = "mini";
+  networking.useDHCP = false;
+  networking.nameservers = [ "192.168.13.1" ];
+  systemd.network = {
+    enable = true;
+    networks."10-wan" = {
+      matchConfig.Name = "eno1";
+      address = [ "192.168.13.100/24" ];
+      routes = [ { routeConfig.Gateway = "192.168.13.1"; } ];
+      networkConfig.IPv6AcceptRA = true;
+      linkConfig.RequiredForOnline = "routable";
+    };
+  };
 }
