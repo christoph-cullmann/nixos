@@ -44,6 +44,9 @@ in
   # setup the console stuff early
   console.earlySetup = true;
 
+  # swap to RAM
+  zramSwap.enable = true;
+
   # keep some stuff persistent
   environment.persistence."/nix/persistent" = {
     directories = [
