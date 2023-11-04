@@ -80,8 +80,8 @@ export QT_QUICK_CONTROLS_STYLE_PATH=/home/cullmann/projects/kde6/usr/lib/qml/QtQ
     perlPackages.XMLParser
     perlPackages.YAMLSyck
     python3Full
-    python310Packages.pyaml
-    python310Packages.python-gitlab
+    python311Packages.pyaml
+    python311Packages.python-gitlab
     pkg-config
     polkit
     qrencode
