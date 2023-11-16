@@ -32,6 +32,7 @@ export QT_QUICK_CONTROLS_STYLE_PATH=/home/cullmann/projects/kde6/usr/lib/qml/QtQ
     curl
     docbook_xml_dtd_45
     docbook_xsl_ns
+    exiv2
     flex
     gdb
     giflib
@@ -56,6 +57,7 @@ export QT_QUICK_CONTROLS_STYLE_PATH=/home/cullmann/projects/kde6/usr/lib/qml/QtQ
     libnl
     libpcap
     libpng
+    libraw
     libselinux
     libsndfile
     libva
