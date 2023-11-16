@@ -313,13 +313,21 @@ in
       # needed for powerlevel10k zsh stuff
       meslo-lgs-nf
 
-      # unicode capable font
+      # unicode capable fonts
+      babelstone-han
+      dejavu_fonts
+      ipafont
+      kochi-substitute
       noto-fonts
+      noto-fonts-cjk
+      noto-fonts-cjk-sans
+      noto-fonts-cjk-serif
       noto-fonts-extra
       noto-fonts-emoji
 
       # nice mono spaced fonts
       fira-code
+      fira-code-symbols
       iosevka-bin
       victor-mono
     ];
@@ -329,6 +337,8 @@ in
       # better default fonts
       defaultFonts = {
         monospace = ["Iosevka"];
+        sansSerif = ["Noto Sans"];
+        serif = ["Noto Serif"];
       };
     };
   };
