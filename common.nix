@@ -310,8 +310,8 @@ in
   fonts = {
     # more fonts
     packages = with pkgs; [
-      # needed for powerlevel10k zsh stuff
-      meslo-lgs-nf
+      # includes nice developer fonts and used by powerlevel10k: https://www.nerdfonts.com/
+      nerdfonts
 
       # unicode capable fonts
       babelstone-han
@@ -324,19 +324,13 @@ in
       noto-fonts-cjk-serif
       noto-fonts-extra
       noto-fonts-emoji
-
-      # nice mono spaced fonts
-      fira-code
-      fira-code-symbols
-      iosevka-bin
-      victor-mono
     ];
 
     # tune fontconfig
     fontconfig = {
       # better default fonts
       defaultFonts = {
-        monospace = ["Iosevka"];
+        monospace = ["IosevkaTerm Nerd Font Mono"];
         sansSerif = ["Noto Sans"];
         serif = ["Noto Serif"];
       };
