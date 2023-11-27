@@ -355,24 +355,24 @@ in
   programs.dconf.enable = true;
 
   # ensure cron and Co. can send mails
-  programs.msmtp = {
-    enable = true;
-    setSendmail = true;
-    accounts = {
-      default = {
-        auth = true;
-        tls = true;
-        from = "christoph@cullmann.io";
-        host = "moon.babylon2k.com";
-        port = "587";
-        user = builtins.readFile "/data/nixos/mailuser.secret";
-        passwordeval = "cat /data/nixos/mailpassword.secret";
-      };
-    };
-    defaults = {
-      aliases = "/etc/aliases";
-    };
-  };
+#   programs.msmtp = {
+#     enable = true;
+#     setSendmail = true;
+#     accounts = {
+#       default = {
+#         auth = true;
+#         tls = true;
+#         from = "christoph@cullmann.io";
+#         host = "moon.babylon2k.com";
+#         port = "587";
+#         user = builtins.readFile "/data/nixos/mailuser.secret";
+#         passwordeval = "cat /data/nixos/mailpassword.secret";
+#       };
+#     };
+#     defaults = {
+#       aliases = "/etc/aliases";
+#     };
+#   };
 
   environment.etc = {
     "aliases" = {
