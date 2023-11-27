@@ -20,24 +20,23 @@
     };
 
   fileSystems."/boot" =
-    { device = "/dev/disk/by-uuid/03B1-533D";
+    { device = "/dev/disk/by-uuid/263D-A89E";
       fsType = "vfat";
     };
 
-  boot.initrd.luks.devices."crypt-disk1".device = "/dev/disk/by-uuid/3009a0b5-3d8a-48e3-88a7-2a27a928b648";
-  boot.initrd.luks.devices."crypt-disk1".allowDiscards = true;
-  boot.initrd.luks.devices."crypt-disk1".bypassWorkqueues = true;
+  # system
+  boot.initrd.luks.devices."crypt-system".device = "/dev/disk/by-uuid/f4af1379-93d2-4903-9fb5-5b767d733c66";
 
   fileSystems."/nix" =
-    { device = "/dev/mapper/crypt-disk1";
+    { device = "/dev/mapper/crypt-system";
       fsType = "btrfs";
-      options = [ "subvol=nix" "noatime" "compress=zstd" ];
+      options = [ "subvol=nix" "noatime" "nodiratime" ];
     };
 
   fileSystems."/data" =
-    { device = "/dev/mapper/crypt-disk1";
+    { device = "/dev/mapper/crypt-system";
       fsType = "btrfs";
-      options = [ "subvol=data" "noatime" "compress=zstd" ];
+      options = [ "subvol=data" "noatime" "nodiratime" ];
     };
 
   fileSystems."/home" =
@@ -57,8 +56,6 @@
       fsType = "none";
       options = [ "bind" ];
     };
-
-  swapDevices = [ ];
 
   nixpkgs.hostPlatform = lib.mkDefault "x86_64-linux";
   hardware.cpu.amd.updateMicrocode = lib.mkDefault config.hardware.enableRedistributableFirmware;

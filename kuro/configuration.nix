@@ -14,19 +14,21 @@
       /data/nixos/common.nix
     ];
 
-  # host name
-  networking.hostName = "kuro";
-
-  # main network interface via systemd-networkd
-  networking.useDHCP = false;
-  systemd.network.enable = true;
-  systemd.network.networks."10-lan" = {
-    matchConfig.Name = "enp2s0";
-    networkConfig.DHCP = "yes";
-    linkConfig.RequiredForOnline = "routable";
-  };
-
   # amd graphics
   hardware.opengl.extraPackages = with pkgs; [ amdvlk rocm-opencl-icd rocm-opencl-runtime ];
-  hardware.opengl.extraPackages32 = with pkgs.pkgsi686Linux; [ amdvlk ];
+
+  # use systemd-networkd, fixed IPv4, dynamic IPv6
+  networking.hostName = "kuro";
+  networking.useDHCP = false;
+  networking.nameservers = [ "192.168.13.1" ];
+  systemd.network = {
+    enable = true;
+    networks."10-wan" = {
+      matchConfig.Name = "enp2s0";
+      address = [ "192.168.13.101/24" ];
+      routes = [ { routeConfig.Gateway = "192.168.13.1"; } ];
+      networkConfig.IPv6AcceptRA = true;
+      linkConfig.RequiredForOnline = "routable";
+    };
+  };
 }
