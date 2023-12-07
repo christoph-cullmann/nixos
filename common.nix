@@ -297,6 +297,7 @@ in
   # flatpak install --user flathub org.signal.Signal
   # flatpak install --user flathub com.usebottles.bottles
   # flatpak install --user flathub com.valvesoftware.Steam
+  # flatpak update --user
   #
   services.flatpak.enable = true;
 
