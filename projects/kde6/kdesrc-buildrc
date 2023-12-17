@@ -28,5 +28,5 @@ global
     build-dir ~/projects/kde6/build
 end global
 
-include ~/projects/kde6/src/kdesrc-build/kf6-frameworks-build-include
-include ~/projects/kde6/src/kdesrc-build/kf6-applications-build-include
+include ~/projects/kde6/src/kdesrc-build/data/build-include/kf6-frameworks.ksb
+include ~/projects/kde6/src/kdesrc-build/data/build-include/kf6-applications.ksb
