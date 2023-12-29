@@ -251,6 +251,7 @@ in
     pciutils
     pulseaudio
     qmk
+    ssh-audit
     tcl
     texlive.combined.scheme-small
     tigervnc
