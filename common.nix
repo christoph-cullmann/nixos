@@ -83,7 +83,12 @@ in
     hostKeys = [{
       path = "/nix/persistent/ssh_host_ed25519_key";
       type = "ed25519";
-    }];
+    }];;
+
+    # only safe ciphers & Co.
+    settings.Ciphers = [ "aes256-gcm@openssh.com" ];
+    settings.KexAlgorithms = [ "sntrup761x25519-sha512@openssh.com" ];
+    settings.Macs = [ "hmac-sha2-512-etm@openssh.com" ];
   };
 
   # guard the ssh service
