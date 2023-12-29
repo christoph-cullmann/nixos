@@ -83,7 +83,7 @@ in
     hostKeys = [{
       path = "/nix/persistent/ssh_host_ed25519_key";
       type = "ed25519";
-    }];;
+    }];
 
     # only safe ciphers & Co.
     settings.Ciphers = [ "aes256-gcm@openssh.com" ];
