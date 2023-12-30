@@ -81,7 +81,7 @@ export QT_QUICK_CONTROLS_STYLE_PATH=/home/cullmann/projects/kde6/usr/lib/qml/QtQ
     perlPackages.NetDBus
     perlPackages.URI
     perlPackages.XMLParser
-    perlPackages.YAMLSyck
+    perlPackages.YAMLPP
     python3Full
     python311Packages.pyaml
     python311Packages.python-gitlab
