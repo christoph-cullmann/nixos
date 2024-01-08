@@ -78,6 +78,7 @@ export QT_QUICK_CONTROLS_STYLE_PATH=/home/cullmann/projects/kde6/usr/lib/qml/QtQ
     pcre
     perl
     perlPackages.IOSocketSSL
+    perlPackages.JSONXS
     perlPackages.NetDBus
     perlPackages.URI
     perlPackages.XMLParser

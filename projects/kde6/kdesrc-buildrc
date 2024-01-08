@@ -18,7 +18,7 @@ global
     directory-layout flat
 
     # Install directory for KDE software
-    kdedir ~/projects/kde6/usr
+    install-dir ~/projects/kde6/usr
 
     # Directory for downloaded source code
     source-dir ~/projects/kde6/src
