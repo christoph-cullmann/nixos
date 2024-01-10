@@ -83,7 +83,7 @@ cp /mnt/etc/nixos/configuration.nix /tmp
 
 # patch some paths there
 
-sudo scp -r /data/nixos root@192.168.13.100:/mnt/data
+sudo scp -r /data/nixos root@192.168.13.101:/mnt/data
 
 # install
 
@@ -95,4 +95,4 @@ umount -Rl /mnt
 
 # sync all /data after the install
 
-sudo -E rsync -va --delete --one-file-system /data root@192.168.13.100:/
+sudo -E rsync -va --delete --one-file-system /data root@192.168.13.101:/
