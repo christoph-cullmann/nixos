@@ -76,7 +76,7 @@ in
     enable = true;
     settings.PasswordAuthentication = true;
     settings.KbdInteractiveAuthentication = true;
-    ettings.PermitRootLogin = "yes";
+    settings.PermitRootLogin = "yes";
 
     # only ed25519 keys, make them persistent
     hostKeys = [{

@@ -126,6 +126,10 @@ nixos-install --no-root-passwd --root /mnt
 
 umount -Rl /mnt
 
+# sync all /data after the install
+
+sudo -E rsync -va --delete --one-file-system /data root@192.168.13.100:/
+
 #
 # after install tasks for extra file systems
 #
