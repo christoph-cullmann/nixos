@@ -1,3 +1,23 @@
+#
+# kill old efi boot stuff
+#
+
+efibootmgr
+efibootmgr -b 0 -B
+efibootmgr -b 1 -B
+efibootmgr -b 2 -B
+efibootmgr -b 3 -B
+efibootmgr -b 4 -B
+efibootmgr
+
+#
+# install script below
+#
+
+# fix unlocking https://nixos.wiki/wiki/Bcachefs
+nix-env -iA nixos.keyutils
+keyctl link @u @s
+
 # Defining some helper variables (these will be used in later code
 # blocks as well, so make sure to use the same terminal session or
 # redefine them later)
@@ -13,7 +33,8 @@ gdisk -l $DISK
 # create partitions
 parted $DISK -- mklabel gpt
 sgdisk -n 1:0:+1024M -c 1:"EFI System Partition" -t 1:EF00 $DISK
-sgdisk -n 2:0:0 -c 2:"Linux" -t 2:8e00 $DISK
+sgdisk -n 2:0:+256G -c 2:"nix" -t 2:8e00 $DISK
+sgdisk -n 3:0:0 -c 3:"data" -t 3:8e00 $DISK
 parted $DISK -- set 1 boot on
 
 sleep 5
@@ -24,33 +45,9 @@ cat /proc/partitions
 # boot partition
 mkfs.fat -F 32 -n EFIBOOT $DISK-part1
 
-# create the crypto containers
-cryptsetup luksFormat --batch-mode --verify-passphrase $DISK-part2
-
-sleep 5
-
-# open them, set right options persistently
-cryptsetup luksOpen --allow-discards --perf-no_read_workqueue --perf-no_write_workqueue --persistent $DISK-part2 crypt-system
-
-sleep 5
-lsblk --fs
-
-# create btrfs with fast & strong checksumming and fast mounting
-mkfs.btrfs -f --csum xxhash --features block-group-tree /dev/mapper/crypt-system
-
-sleep 5
-btrfs filesystem show
-
-# create all the volumes
-mount /dev/mapper/crypt-system /mnt
-btrfs subvolume create /mnt/data
-btrfs subvolume create /mnt/nix
-
-sleep 5
-btrfs subvolume list /mnt
-
-# umount again, we will only use explicit subvolumes
-umount /mnt
+# create encrypted bcachefs
+bcachefs format --block_size=4096 --errors=ro --metadata_checksum=xxhash --data_checksum=xxhash --compression=lz4 --wide_macs --acl --encrypted --fs_label=nix --discard -f $DISK-part2
+bcachefs format --block_size=4096 --errors=ro --metadata_checksum=xxhash --data_checksum=xxhash --compression=lz4 --wide_macs --acl --encrypted --fs_label=data --discard -f $DISK-part3
 
 # prepare install
 mount -t tmpfs none /mnt
@@ -61,9 +58,9 @@ mkdir -p /mnt/{data,nix,home,boot,root,etc/nixos}
 # mount the ESP
 mount $DISK-part1 /mnt/boot
 
-# mount volumes
-mount -o subvol=data,noatime,nodiratime /dev/mapper/crypt-system /mnt/data
-mount -o subvol=nix,noatime,nodiratime /dev/mapper/crypt-system /mnt/nix
+# mount bcachefs stuff
+mount -o noatime,nodiratime $DISK-part2 /mnt/nix
+mount -o noatime,nodiratime $DISK-part3 /mnt/data
 
 # bind mount persistent stuff to data
 mkdir -p /mnt/{data/home,data/root,data/nixos/$HOST}
@@ -82,9 +79,11 @@ nixos-generate-config --root /mnt
 cp /mnt/etc/nixos/hardware-configuration.nix /tmp
 cp /mnt/etc/nixos/configuration.nix /tmp
 
-# copy data
+# copy config data
 
-sudo rsync -va --delete --one-file-system /data root@kuro.fritz.box:/mnt
+# patch some paths there
+
+sudo scp -r /data/nixos root@192.168.13.100:/mnt/data
 
 # install
 
@@ -93,4 +92,7 @@ nixos-install --no-root-passwd --root /mnt
 # unmount all stuff
 
 umount -Rl /mnt
-cryptsetup luksClose crypt-system
+
+# sync all /data after the install
+
+sudo -E rsync -va --delete --one-file-system /data root@192.168.13.100:/

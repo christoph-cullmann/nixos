@@ -11,32 +11,32 @@
   boot.initrd.availableKernelModules = [ "xhci_pci" "ahci" "usbhid" "usb_storage" "sd_mod" ];
   boot.initrd.kernelModules = [ "amdgpu" ];
   boot.kernelModules = [ "kvm-amd" ];
-  boot.extraModulePackages = [ ];
 
   fileSystems."/" =
     { device = "none";
       fsType = "tmpfs";
+      neededForBoot = true;
       options = [ "defaults" "size=8G" "mode=755" ];
     };
 
   fileSystems."/boot" =
-    { device = "/dev/disk/by-uuid/263D-A89E";
+    { device = "/dev/disk/by-id/ata-Samsung_SSD_870_QVO_4TB_S5STNF0W806802J-part1";
       fsType = "vfat";
+      neededForBoot = true;
     };
 
-  # system
-  boot.initrd.luks.devices."crypt-system".device = "/dev/disk/by-uuid/f4af1379-93d2-4903-9fb5-5b767d733c66";
-
   fileSystems."/nix" =
-    { device = "/dev/mapper/crypt-system";
-      fsType = "btrfs";
-      options = [ "subvol=nix" "noatime" "nodiratime" ];
+    { device = "/dev/disk/by-id/ata-Samsung_SSD_870_QVO_4TB_S5STNF0W806802J-part2";
+      fsType = "bcachefs";
+      neededForBoot = true;
+      options = [ "noatime" "nodiratime" ];
     };
 
   fileSystems."/data" =
-    { device = "/dev/mapper/crypt-system";
-      fsType = "btrfs";
-      options = [ "subvol=data" "noatime" "nodiratime" ];
+    { device = "/dev/disk/by-id/ata-Samsung_SSD_870_QVO_4TB_S5STNF0W806802J-part3";
+      fsType = "bcachefs";
+      neededForBoot = true;
+      options = [ "noatime" "nodiratime" ];
     };
 
   fileSystems."/home" =
