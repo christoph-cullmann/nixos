@@ -59,6 +59,9 @@ in
     ];
   };
 
+  # enable fast dbus
+  services.dbus.implementation = "broker";
+
   # ensure we scrub the btrfs sometimes
   services.btrfs.autoScrub = {
     enable = true;
