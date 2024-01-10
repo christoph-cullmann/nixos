@@ -31,7 +31,11 @@ sudo dd if=result/iso/nixos-24.05.20240108.317484b-x86_64-linux.iso of=/dev/sda 
 
 efibootmgr
 efibootmgr -b 0 -B
-...
+efibootmgr -b 1 -B
+efibootmgr -b 2 -B
+efibootmgr -b 3 -B
+efibootmgr -b 4 -B
+efibootmgr
 
 #
 # install script below
@@ -108,9 +112,11 @@ nixos-generate-config --root /mnt
 cp /mnt/etc/nixos/hardware-configuration.nix /tmp
 cp /mnt/etc/nixos/configuration.nix /tmp
 
-# copy data
+# copy config data
 
-rsync --checksum -vaR --delete /data /mnt
+# patch some paths there
+
+sudo scp -r /data/nixos root@192.168.13.100:/mnt/data
 
 # install
 

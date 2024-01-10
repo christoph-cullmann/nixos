@@ -62,12 +62,6 @@ in
   # enable fast dbus
   services.dbus.implementation = "broker";
 
-  # ensure we scrub the btrfs sometimes
-  services.btrfs.autoScrub = {
-    enable = true;
-    interval = "weekly";
-  };
-
   # allow all firmware
   hardware.enableAllFirmware = true;
 
@@ -80,8 +74,9 @@ in
   services.openssh = {
     # enable with public key only auth
     enable = true;
-    settings.PasswordAuthentication = false;
-    settings.KbdInteractiveAuthentication = false;
+    settings.PasswordAuthentication = true;
+    settings.KbdInteractiveAuthentication = true;
+    ettings.PermitRootLogin = "yes";
 
     # only ed25519 keys, make them persistent
     hostKeys = [{
@@ -458,10 +453,10 @@ in
 
   users.users.root = {
     # init password
-    hashedPassword = builtins.readFile "/data/nixos/password.secret";
+    hashedPassword = builtins.readFile "/mnt/data/nixos/password.secret";
 
     # use same keys as my main user
-    openssh.authorizedKeys.keys = pkgs.lib.splitString "\n" (builtins.readFile "/home/cullmann/.ssh/authorized_keys");
+   # openssh.authorizedKeys.keys = pkgs.lib.splitString "\n" (builtins.readFile "/home/cullmann/.ssh/authorized_keys");
   };
 
   home-manager.users.root = {
@@ -490,7 +485,7 @@ in
     extraGroups = [ "vboxusers" "wheel" ];
 
     # init password
-    hashedPassword = builtins.readFile "/data/nixos/password.secret";
+    hashedPassword = builtins.readFile "/mnt/data/nixos/password.secret";
   };
 
   home-manager.users.cullmann = {

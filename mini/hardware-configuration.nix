@@ -13,30 +13,28 @@
   fileSystems."/" =
     { device = "none";
       fsType = "tmpfs";
+      neededForBoot = true;
       options = [ "defaults" "size=8G" "mode=755" ];
     };
 
   fileSystems."/boot" =
-    { device = "/dev/disk/by-uuid/F404-531A";
+    { device = "/dev/disk/by-id/nvme-CT4000P3PSSD8_2325E6E63746-part1";
       fsType = "vfat";
+      neededForBoot = true;
     };
 
-  # system
-  boot.initrd.luks.devices."crypt-system".device = "/dev/disk/by-uuid/22c208e6-579b-4d34-8f83-83aa4a7ab1c3";
-
-  # vms
-  boot.initrd.luks.devices."crypt-vms".device = "/dev/disk/by-id/ata-CT2000MX500SSD1_2138E5D5061F";
-
   fileSystems."/nix" =
-    { device = "/dev/mapper/crypt-system";
-      fsType = "btrfs";
-      options = [ "subvol=nix" "noatime" "nodiratime" ];
+    { device = "/dev/disk/by-id/nvme-CT4000P3PSSD8_2325E6E63746-part2";
+      fsType = "bcachefs";
+      neededForBoot = true;
+      options = [ "noatime" "nodiratime" ];
     };
 
   fileSystems."/data" =
-    { device = "/dev/mapper/crypt-system";
-      fsType = "btrfs";
-      options = [ "subvol=data" "noatime" "nodiratime" ];
+    { device = "/dev/disk/by-id/nvme-CT4000P3PSSD8_2325E6E63746-part3";
+      fsType = "bcachefs";
+      neededForBoot = true;
+      options = [ "noatime" "nodiratime" ];
     };
 
   fileSystems."/home" =
@@ -57,13 +55,13 @@
       options = [ "bind" ];
     };
 
-  fileSystems."/home/cullmann/vms" =
-    {
-      depends = [ "/home" ];
-      device = "/dev/mapper/crypt-vms";
-      fsType = "btrfs";
-      options = [ "noatime" "nodiratime" ];
-    };
+#   fileSystems."/home/cullmann/vms" =
+#     {
+#       depends = [ "/home" ];
+#       device = "/dev/mapper/crypt-vms";
+#       fsType = "btrfs";
+#       options = [ "noatime" "nodiratime" ];
+#     };
 
   nixpkgs.hostPlatform = lib.mkDefault "x86_64-linux";
   hardware.cpu.amd.updateMicrocode = lib.mkDefault config.hardware.enableRedistributableFirmware;
