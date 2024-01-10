@@ -26,8 +26,20 @@ nix build .#nixosConfigurations.exampleIso.config.system.build.isoImage
 sudo dd if=result/iso/nixos-24.05.20240108.317484b-x86_64-linux.iso of=/dev/sda bs=4M conv=fsync
 
 #
+# kill old efi boot stuff
+#
+
+efibootmgr
+efibootmgr -b 0 -B
+...
+
+#
 # install script below
 #
+
+# fix unlocking https://nixos.wiki/wiki/Bcachefs
+nix-env -iA nixos.keyutils
+keyctl link @u @s
 
 # Defining some helper variables (these will be used in later code
 # blocks as well, so make sure to use the same terminal session or
@@ -107,7 +119,6 @@ nixos-install --no-root-passwd --root /mnt
 # unmount all stuff
 
 umount -Rl /mnt
-cryptsetup luksClose crypt-system
 
 #
 # after install tasks for extra file systems
