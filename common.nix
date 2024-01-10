@@ -453,10 +453,10 @@ in
 
   users.users.root = {
     # init password
-    hashedPassword = builtins.readFile "/data/nixos/password.secret";
+    hashedPassword = builtins.readFile "/mnt/data/nixos/password.secret";
 
     # use same keys as my main user
-    openssh.authorizedKeys.keys = pkgs.lib.splitString "\n" (builtins.readFile "/home/cullmann/.ssh/authorized_keys");
+   # openssh.authorizedKeys.keys = pkgs.lib.splitString "\n" (builtins.readFile "/home/cullmann/.ssh/authorized_keys");
   };
 
   home-manager.users.root = {
@@ -485,7 +485,7 @@ in
     extraGroups = [ "vboxusers" "wheel" ];
 
     # init password
-    hashedPassword = builtins.readFile "/data/nixos/password.secret";
+    hashedPassword = builtins.readFile "/mnt/data/nixos/password.secret";
   };
 
   home-manager.users.cullmann = {
