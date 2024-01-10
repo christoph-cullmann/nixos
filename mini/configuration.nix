@@ -11,7 +11,7 @@
       ./hardware-configuration.nix
 
       # Shared config of all machines
-      /mnt/data/nixos/common.nix
+      /data/nixos/common.nix
     ];
 
   # amd graphics
