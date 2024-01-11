@@ -40,19 +40,25 @@
   fileSystems."/home" =
     { device = "/data/home";
       fsType = "none";
+      neededForBoot = true;
       options = [ "bind" ];
+      depends = [ "/data" ];
     };
 
   fileSystems."/root" =
     { device = "/data/root";
       fsType = "none";
+      neededForBoot = true;
       options = [ "bind" ];
+      depends = [ "/data" ];
     };
 
   fileSystems."/etc/nixos" =
     { device = "/data/nixos/kuro";
       fsType = "none";
+      neededForBoot = true;
       options = [ "bind" ];
+      depends = [ "/data" ];
     };
 
   nixpkgs.hostPlatform = lib.mkDefault "x86_64-linux";
