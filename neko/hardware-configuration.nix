@@ -61,21 +61,21 @@
       depends = [ "/data" ];
     };
 
-#   fileSystems."/home/cullmann/vms" =
-#     { device = "/dev/disk/by-id/nvme-CT2000P5PSSD8_213330E4ED05";
-#       fsType = "bcachefs";
-#       neededForBoot = true;
-#       options = [ "noatime" "nodiratime" ];
-#       depends = [ "/home" ];
-#     };
-#
-#   fileSystems."/home/cullmann/projects" =
-#     { device = "/dev/disk/by-id/nvme-Samsung_SSD_980_PRO_2TB_S69ENF0R846614L";
-#       fsType = "bcachefs";
-#       neededForBoot = true;
-#       options = [ "noatime" "nodiratime" ];
-#       depends = [ "/home" ];
-#     };
+  fileSystems."/home/cullmann/vms" =
+    { device = "/dev/disk/by-id/nvme-CT2000P5PSSD8_213330E4ED05";
+      fsType = "bcachefs";
+      neededForBoot = true;
+      options = [ "noatime" "nodiratime" ];
+      depends = [ "/home" ];
+    };
+
+  fileSystems."/home/cullmann/projects" =
+    { device = "/dev/disk/by-id/nvme-Samsung_SSD_980_PRO_2TB_S69ENF0R846614L";
+      fsType = "bcachefs";
+      neededForBoot = true;
+      options = [ "noatime" "nodiratime" ];
+      depends = [ "/home" ];
+    };
 
   nixpkgs.hostPlatform = lib.mkDefault "x86_64-linux";
   hardware.cpu.intel.updateMicrocode = lib.mkDefault config.hardware.enableRedistributableFirmware;
