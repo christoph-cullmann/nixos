@@ -71,9 +71,8 @@ in
   services.openssh = {
     # enable with public key only auth
     enable = true;
-    settings.PasswordAuthentication = true;
-    settings.KbdInteractiveAuthentication = true;
-    settings.PermitRootLogin = "yes";
+    settings.PasswordAuthentication = false;
+    settings.KbdInteractiveAuthentication = false;
 
     # only ed25519 keys, make them persistent
     hostKeys = [{
