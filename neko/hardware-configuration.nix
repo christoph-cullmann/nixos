@@ -13,74 +13,69 @@
   fileSystems."/" =
     { device = "none";
       fsType = "tmpfs";
+      neededForBoot = true;
       options = [ "defaults" "size=8G" "mode=755" ];
     };
 
   fileSystems."/boot" =
-    { device = "/dev/disk/by-uuid/909C-CE7E";
+    { device = "/dev/disk/by-id/nvme-Seagate_FireCuda_530_ZP4000GM30013_7VS01VBM-part1";
       fsType = "vfat";
+      neededForBoot = true;
     };
 
-  # system
-  boot.initrd.luks.devices."crypt-system".device = "/dev/disk/by-uuid/27c4619d-4e60-458e-95ad-e348a7894a14";
-
-  # projects
-  boot.initrd.luks.devices."crypt-projects".device = "/dev/disk/by-id/nvme-Samsung_SSD_980_PRO_2TB_S69ENF0R846614L";
-
-  # vms
-  boot.initrd.luks.devices."crypt-vms".device = "/dev/disk/by-id/nvme-CT2000P5PSSD8_213330E4ED05";
-
   fileSystems."/nix" =
-    { device = "/dev/mapper/crypt-system";
-      fsType = "btrfs";
-      options = [ "subvol=nix" "noatime" "nodiratime" ];
+    { device = "/dev/disk/by-id/nvme-Seagate_FireCuda_530_ZP4000GM30013_7VS01VBM-part2";
+      fsType = "bcachefs";
+      neededForBoot = true;
+      options = [ "noatime" "nodiratime" ];
     };
 
   fileSystems."/data" =
-    { device = "/dev/mapper/crypt-system";
-      fsType = "btrfs";
-      options = [ "subvol=data" "noatime" "nodiratime" ];
+    { device = "/dev/disk/by-id/nvme-Seagate_FireCuda_530_ZP4000GM30013_7VS01VBM-part3";
+      fsType = "bcachefs";
+      neededForBoot = true;
+      options = [ "noatime" "nodiratime" ];
     };
 
   fileSystems."/home" =
-    {
-      depends = [ "/data" ];
-      device = "/data/home";
+    { device = "/data/home";
       fsType = "none";
+      neededForBoot = true;
       options = [ "bind" ];
+      depends = [ "/data" ];
     };
 
   fileSystems."/root" =
-    {
-      depends = [ "/data" ];
-      device = "/data/root";
+    { device = "/data/root";
       fsType = "none";
+      neededForBoot = true;
       options = [ "bind" ];
+      depends = [ "/data" ];
     };
 
   fileSystems."/etc/nixos" =
-    {
-      depends = [ "/data" ];
-      device = "/data/nixos/neko";
+    { device = "/data/nixos/neko";
       fsType = "none";
+      neededForBoot = true;
       options = [ "bind" ];
+      depends = [ "/data" ];
     };
 
-  fileSystems."/home/cullmann/projects" =
-    {
-      depends = [ "/home" ];
-      device = "/dev/mapper/crypt-projects";
-      fsType = "btrfs";
-      options = [ "noatime" "nodiratime" ];
-    };
-
-  fileSystems."/home/cullmann/vms" =
-    {
-      depends = [ "/home" ];
-      device = "/dev/mapper/crypt-vms";
-      fsType = "btrfs";
-      options = [ "noatime" "nodiratime" ];
-    };
+#   fileSystems."/home/cullmann/vms" =
+#     { device = "/dev/disk/by-id/nvme-CT2000P5PSSD8_213330E4ED05";
+#       fsType = "bcachefs";
+#       neededForBoot = true;
+#       options = [ "noatime" "nodiratime" ];
+#       depends = [ "/home" ];
+#     };
+#
+#   fileSystems."/home/cullmann/projects" =
+#     { device = "/dev/disk/by-id/nvme-Samsung_SSD_980_PRO_2TB_S69ENF0R846614L";
+#       fsType = "bcachefs";
+#       neededForBoot = true;
+#       options = [ "noatime" "nodiratime" ];
+#       depends = [ "/home" ];
+#     };
 
   nixpkgs.hostPlatform = lib.mkDefault "x86_64-linux";
   hardware.cpu.intel.updateMicrocode = lib.mkDefault config.hardware.enableRedistributableFirmware;
