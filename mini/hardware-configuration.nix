@@ -40,28 +40,34 @@
   fileSystems."/home" =
     { device = "/data/home";
       fsType = "none";
+      neededForBoot = true;
       options = [ "bind" ];
+      depends = [ "/data" ];
     };
 
   fileSystems."/root" =
     { device = "/data/root";
       fsType = "none";
+      neededForBoot = true;
       options = [ "bind" ];
+      depends = [ "/data" ];
     };
 
   fileSystems."/etc/nixos" =
     { device = "/data/nixos/mini";
       fsType = "none";
+      neededForBoot = true;
       options = [ "bind" ];
+      depends = [ "/data" ];
     };
 
-#   fileSystems."/home/cullmann/vms" =
-#     {
-#       depends = [ "/home" ];
-#       device = "/dev/mapper/crypt-vms";
-#       fsType = "btrfs";
-#       options = [ "noatime" "nodiratime" ];
-#     };
+  fileSystems."/home/cullmann/vms" =
+    { device = "/dev/disk/by-id/ata-CT2000MX500SSD1_2138E5D5061F";
+      fsType = "bcachefs";
+      neededForBoot = true;
+      options = [ "noatime" "nodiratime" ];
+      depends = [ "/home" ];
+    };
 
   nixpkgs.hostPlatform = lib.mkDefault "x86_64-linux";
   hardware.cpu.amd.updateMicrocode = lib.mkDefault config.hardware.enableRedistributableFirmware;
