@@ -39,9 +39,6 @@ in
   # we want to be able to do a memtest
   boot.loader.systemd-boot.memtest86.enable = true;
 
-  # use systemd early
-  boot.initrd.systemd.enable = true;
-
   # setup the console stuff early
   console.earlySetup = true;
 
