@@ -103,6 +103,10 @@ umount -Rl /mnt
 
 sudo -E rsync -va --delete --one-file-system /data root@192.168.13.171:/
 
+# get back the vms
+
+sudo -E rsync -va --delete --one-file-system /home/cullmann/vms/ root@192.168.13.171:/home/cullmann/vms/
+
 #
 # after install tasks for extra file systems
 #
