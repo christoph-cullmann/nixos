@@ -18,15 +18,15 @@ global
     directory-layout flat
 
     # Install directory for KDE software
-    install-dir ~/projects/kde6/usr
+    install-dir ~/projects/kde/usr
 
     # Directory for downloaded source code
-    source-dir ~/projects/kde6/src
+    source-dir ~/projects/kde/src
 
     # Directory to build KDE into before installing
     # relative to source-dir by default
-    build-dir ~/projects/kde6/build
+    build-dir ~/projects/kde/build
 end global
 
-include ~/projects/kde6/src/kdesrc-build/data/build-include/kf6-frameworks.ksb
-include ~/projects/kde6/src/kdesrc-build/data/build-include/kf6-applications.ksb
+include ~/projects/kde/src/kdesrc-build/data/build-include/kf6-frameworks.ksb
+include ~/projects/kde/src/kdesrc-build/data/build-include/kf6-applications.ksb
