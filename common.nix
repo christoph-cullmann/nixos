@@ -247,6 +247,7 @@ in
     pulseaudio
     qmk
     ssh-audit
+    sysstat
     tcl
     texlive.combined.scheme-small
     tigervnc
