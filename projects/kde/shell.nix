@@ -44,6 +44,7 @@ export QT_QUICK_CONTROLS_STYLE_PATH=/home/cullmann/projects/kde/usr/lib/qml/QtQu
     intltool
     isocodes
     lcms2
+    libarchive
     libcanberra
     libcap
     libdisplay-info
