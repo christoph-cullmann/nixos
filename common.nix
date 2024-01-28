@@ -244,6 +244,7 @@ in
     p7zip
     parted
     pciutils
+    pdftk
     pulseaudio
     qmk
     ssh-audit
