@@ -2,6 +2,7 @@
 let
   impermanence = builtins.fetchTarball "https://github.com/nix-community/impermanence/archive/master.tar.gz";
   home-manager = builtins.fetchTarball "https://github.com/nix-community/home-manager/archive/master.tar.gz";
+  kde2nix = builtins.fetchTarball "https://github.com/nix-community/kde2nix/archive/main.tar.gz";
 in
 {
   #
@@ -15,6 +16,9 @@ in
 
       # home manager for per user config
       "${home-manager}/nixos"
+
+      # Provisional, experimental Plasma 6
+      "${kde2nix}/nixos.nix"
   ];
 
   # This value determines the NixOS release from which the default
@@ -123,18 +127,18 @@ in
   services.fwupd.enable = true;
 
   # EurKey layout everywhere
-  services.xserver.layout = "eu";
+  services.xserver.xkb.layout = "eu";
   console.useXkbConfig = true;
 
   # enable the KDE Plasma Desktop Environment
-  services.xserver.desktopManager.plasma5.enable = true;
+  services.xserver.desktopManager.plasma6.enable = true;
 
   # greetd console display manager
   services.greetd = {
     enable = true;
     settings = {
       default_session = {
-        command = "${pkgs.greetd.tuigreet}/bin/tuigreet --time --cmd '${pkgs.plasma-workspace}/libexec/plasma-dbus-run-session-if-needed ${pkgs.plasma-workspace}/bin/startplasma-wayland'";
+        command = "${pkgs.greetd.tuigreet}/bin/tuigreet --time --cmd '${pkgs.kdePackages.plasma-workspace}/libexec/plasma-dbus-run-session-if-needed ${pkgs.kdePackages.plasma-workspace}/bin/startplasma-wayland'";
       };
     };
   };
@@ -193,7 +197,7 @@ in
   # List packages installed in system profile. To search, run:
   # $ nix search wget
   environment.systemPackages = with pkgs; [
-    ark
+    pkgs.kdePackages.ark
     aspellDicts.de
     aspellDicts.en
     borgbackup
@@ -205,11 +209,11 @@ in
     config.boot.kernelPackages.perf
     efibootmgr
     emacs
-    falkon
+    pkgs.kdePackages.falkon
     fdupes
     ffmpeg
     file
-    filelight
+    pkgs.kdePackages.filelight
     gimp
     gitFull
     glxinfo
@@ -221,26 +225,26 @@ in
     hunspellDicts.de_DE
     hunspellDicts.en_US
     inetutils
-    kate
+    pkgs.kdePackages.kate
     kcachegrind
-    kcalc
+    pkgs.kdePackages.kcalc
     keychain
-    kmail
-    kompare
-    konsole
-    konversation
+    pkgs.kdePackages.kmail
+    pkgs.kdePackages.kompare
+    pkgs.kdePackages.konsole
+    pkgs.kdePackages.konversation
     krita
     libjxl
     libreoffice
     libva-utils
     lsof
     mc
-    neochat
+    pkgs.kdePackages.neochat
     nixos-install-tools
     nmap
     nvme-cli
     okteta
-    okular
+    pkgs.kdePackages.okular
     p7zip
     parted
     pciutils
@@ -253,7 +257,7 @@ in
     texlive.combined.scheme-small
     tigervnc
     tk
-    tokodon
+    pkgs.kdePackages.tokodon
     unrar
     unzip
     usbutils
@@ -277,7 +281,7 @@ in
       };
 
       falkon = {
-        executable = "${pkgs.lib.getBin pkgs.falkon}/bin/falkon";
+        executable = "${pkgs.lib.getBin pkgs.kdePackages.falkon}/bin/falkon";
         profile = "${pkgs.firejail}/etc/firejail/falkon.profile";
       };
 
