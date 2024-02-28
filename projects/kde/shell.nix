@@ -32,6 +32,7 @@ export QT_QUICK_CONTROLS_STYLE_PATH=/home/cullmann/projects/kde/usr/lib/qml/QtQu
     curl
     docbook_xml_dtd_45
     docbook_xsl_ns
+    doxygen
     exiv2
     flex
     gdb
@@ -39,6 +40,7 @@ export QT_QUICK_CONTROLS_STYLE_PATH=/home/cullmann/projects/kde/usr/lib/qml/QtQu
     gitFull
     gperf
     gpgme
+    graphviz
     hunspell
     hunspellDicts.en_US
     intltool
@@ -84,7 +86,7 @@ export QT_QUICK_CONTROLS_STYLE_PATH=/home/cullmann/projects/kde/usr/lib/qml/QtQu
     perlPackages.URI
     perlPackages.XMLParser
     perlPackages.YAMLPP
-    python3Full
+    python311Full
     python311Packages.dbus-python
     python311Packages.overrides
     python311Packages.promise
@@ -134,6 +136,7 @@ export QT_QUICK_CONTROLS_STYLE_PATH=/home/cullmann/projects/kde/usr/lib/qml/QtQu
     xcb-util-cursor
     xercesc
     xml2
+    xmlto
     xorg.libSM
     xorg.libX11
     xorg.libXau
