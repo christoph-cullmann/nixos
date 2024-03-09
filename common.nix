@@ -2,7 +2,6 @@
 let
   impermanence = builtins.fetchTarball "https://github.com/nix-community/impermanence/archive/master.tar.gz";
   home-manager = builtins.fetchTarball "https://github.com/nix-community/home-manager/archive/master.tar.gz";
-  kde2nix = builtins.fetchTarball "https://github.com/nix-community/kde2nix/archive/main.tar.gz";
 in
 {
   #
@@ -16,9 +15,6 @@ in
 
       # home manager for per user config
       "${home-manager}/nixos"
-
-      # Provisional, experimental Plasma 6
-      "${kde2nix}/nixos.nix"
   ];
 
   # This value determines the NixOS release from which the default

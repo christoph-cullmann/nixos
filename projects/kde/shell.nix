@@ -27,6 +27,7 @@ export QT_QUICK_CONTROLS_STYLE_PATH=/home/cullmann/projects/kde/usr/lib/qml/QtQu
     bison
     boost
     bzip2
+    clang-tools_16
     cmake
     ctags
     curl
