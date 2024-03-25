@@ -457,8 +457,8 @@ in
     # init password
     hashedPassword = builtins.readFile "/data/nixos/password.secret";
 
-    # use same keys as my main user
-    openssh.authorizedKeys.keys = pkgs.lib.splitString "\n" (builtins.readFile "/home/cullmann/.ssh/authorized_keys");
+    # use fixed auth keys
+    openssh.authorizedKeys.keys = pkgs.lib.splitString "\n" (builtins.readFile "/data/nixos/authorized_keys.secret");
   };
 
   home-manager.users.root = {
@@ -488,6 +488,9 @@ in
 
     # init password
     hashedPassword = builtins.readFile "/data/nixos/password.secret";
+
+    # use fixed auth keys
+    openssh.authorizedKeys.keys = pkgs.lib.splitString "\n" (builtins.readFile "/data/nixos/authorized_keys.secret");
   };
 
   home-manager.users.cullmann = {

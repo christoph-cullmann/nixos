@@ -22,6 +22,13 @@ nix --extra-experimental-features flakes --extra-experimental-features nix-comma
 sudo dd if=result/iso/nixos-24.05.20240108.317484b-x86_64-linux.iso of=/dev/sda bs=4M conv=fsync
 
 #
+# enable ssh for root
+#
+
+sudo bash
+passwd
+
+#
 # kill old efi boot stuff
 #
 
@@ -36,10 +43,6 @@ efibootmgr
 #
 # install script below
 #
-
-# fix unlocking https://nixos.wiki/wiki/Bcachefs
-nix-env -iA nixos.keyutils
-keyctl link @u @s
 
 # Defining some helper variables (these will be used in later code
 # blocks as well, so make sure to use the same terminal session or
@@ -62,8 +65,7 @@ gdisk -l $DISK
 # create partitions
 parted $DISK -- mklabel gpt
 sgdisk -n 1:0:+1024M -c 1:"EFI System Partition" -t 1:EF00 $DISK
-sgdisk -n 2:0:+256G -c 2:"nix" -t 2:8e00 $DISK
-sgdisk -n 3:0:0 -c 3:"data" -t 3:8e00 $DISK
+sgdisk -n 2:0:0 -c 2:"Linux" -t 2:8e00 $DISK
 parted $DISK -- set 1 boot on
 
 sleep 5
@@ -74,12 +76,37 @@ cat /proc/partitions
 # boot partition
 mkfs.fat -F 32 -n EFIBOOT $DISK-part1
 
-# create encrypted bcachefs
-bcachefs format --block_size=4096 --errors=ro --metadata_checksum=xxhash --data_checksum=xxhash --compression=lz4 --wide_macs --acl --encrypted --fs_label=nix --discard -f $DISK-part2
-bcachefs format --block_size=4096 --errors=ro --metadata_checksum=xxhash --data_checksum=xxhash --compression=lz4 --wide_macs --acl --encrypted --fs_label=data --discard -f $DISK-part3
+# create the crypto containers
+cryptsetup luksFormat --sector-size 4096 --batch-mode --verify-passphrase $DISK-part2
+
+sleep 5
+
+# open them, set right options persistently
+cryptsetup luksOpen --allow-discards --perf-no_read_workqueue --perf-no_write_workqueue --persistent $DISK-part2 crypt-system
+
+sleep 5
+lsblk --fs
+
+# create btrfs with fast & strong checksumming and fast mounting
+mkfs.btrfs -f --csum xxhash --features block-group-tree /dev/mapper/crypt-system
+
+sleep 5
+btrfs filesystem show
+
+# create all the volumes
+mount /dev/mapper/crypt-system /mnt
+btrfs subvolume create /mnt/data
+btrfs subvolume create /mnt/nix
+btrfs subvolume create /mnt/root
+
+sleep 5
+btrfs subvolume list /mnt
+
+# umount again, we will only use explicit subvolumes
+umount /mnt
 
 # prepare install
-mount -t tmpfs none /mnt
+mount -o subvol=root,noatime,nodiratime /dev/mapper/crypt-system /mnt
 
 # Create directories to mount file systems on
 mkdir -p /mnt/{data,nix,home,boot,root,etc/nixos}
@@ -87,9 +114,9 @@ mkdir -p /mnt/{data,nix,home,boot,root,etc/nixos}
 # mount the ESP
 mount $DISK-part1 /mnt/boot
 
-# mount bcachefs stuff
-mount -o noatime,nodiratime $DISK-part2 /mnt/nix
-mount -o noatime,nodiratime $DISK-part3 /mnt/data
+# mount volumes
+mount -o subvol=data,noatime,nodiratime /dev/mapper/crypt-system /mnt/data
+mount -o subvol=nix,noatime,nodiratime /dev/mapper/crypt-system /mnt/nix
 
 # bind mount persistent stuff to data
 mkdir -p /mnt/{data/home,data/root,data/nixos/$HOST}
@@ -121,6 +148,7 @@ nixos-install --no-root-passwd --root /mnt
 # unmount all stuff
 
 umount -Rl /mnt
+cryptsetup luksClose crypt-system
 
 # sync all /data after the install
 
@@ -139,5 +167,19 @@ wipefs -a $DD
 
 sleep 5
 
-# create encrypted bcachefs
-bcachefs format --block_size=4096 --errors=ro --metadata_checksum=xxhash --data_checksum=xxhash --compression=lz4 --wide_macs --acl --encrypted --fs_label=vms --discard -f $DD
+# create the crypto containers
+cryptsetup luksFormat --batch-mode --verify-passphrase $DD
+
+sleep 5
+
+# open them, set right options persistently
+cryptsetup luksOpen --allow-discards --perf-no_read_workqueue --perf-no_write_workqueue --persistent $DD crypt-vms
+
+sleep 5
+lsblk --fs
+
+# create btrfs with fast & strong checksumming and fast mounting
+mkfs.btrfs -f --csum xxhash --features block-group-tree /dev/mapper/crypt-vms
+
+sleep 5
+btrfs filesystem show
