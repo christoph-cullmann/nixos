@@ -10,11 +10,17 @@
   boot.initrd.kernelModules = [ "amdgpu" ];
   boot.kernelModules = [ "kvm-amd" ];
 
+   # system
+  boot.initrd.luks.devices."crypt-system".device = "/dev/disk/by-id/nvme-CT4000P3PSSD8_2325E6E63746-part2";
+
+  # vms
+  #boot.initrd.luks.devices."crypt-vms".device = "/dev/disk/by-id/ata-CT2000MX500SSD1_2138E5D5061F";
+
   fileSystems."/" =
-    { device = "none";
-      fsType = "tmpfs";
+    { device = "/dev/mapper/crypt-system";
+      fsType = "btrfs";
       neededForBoot = true;
-      options = [ "defaults" "size=8G" "mode=755" ];
+      options = [ "subvol=root" "noatime" "nodiratime" ];
     };
 
   fileSystems."/boot" =
@@ -24,17 +30,17 @@
     };
 
   fileSystems."/nix" =
-    { device = "/dev/disk/by-id/nvme-CT4000P3PSSD8_2325E6E63746-part2";
-      fsType = "bcachefs";
+    { device = "/dev/mapper/crypt-system";
+      fsType = "btrfs";
       neededForBoot = true;
-      options = [ "noatime" "nodiratime" ];
+      options = [ "subvol=nix" "noatime" "nodiratime" ];
     };
 
   fileSystems."/data" =
-    { device = "/dev/disk/by-id/nvme-CT4000P3PSSD8_2325E6E63746-part3";
-      fsType = "bcachefs";
+    { device = "/dev/mapper/crypt-system";
+      fsType = "btrfs";
       neededForBoot = true;
-      options = [ "noatime" "nodiratime" ];
+      options = [ "subvol=data" "noatime" "nodiratime" ];
     };
 
   fileSystems."/home" =
@@ -61,13 +67,13 @@
       depends = [ "/data" ];
     };
 
-  fileSystems."/home/cullmann/vms" =
-    { device = "/dev/disk/by-id/ata-CT2000MX500SSD1_2138E5D5061F";
-      fsType = "bcachefs";
-      neededForBoot = true;
-      options = [ "noatime" "nodiratime" ];
-      depends = [ "/home" ];
-    };
+#   fileSystems."/home/cullmann/vms" =
+#     { device = "/dev/disk/by-id/ata-CT2000MX500SSD1_2138E5D5061F";
+#       fsType = "bcachefs";
+#       neededForBoot = true;
+#       options = [ "noatime" "nodiratime" ];
+#       depends = [ "/home" ];
+#     };
 
   nixpkgs.hostPlatform = lib.mkDefault "x86_64-linux";
   hardware.cpu.amd.updateMicrocode = lib.mkDefault config.hardware.enableRedistributableFirmware;

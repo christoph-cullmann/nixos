@@ -124,6 +124,10 @@ mount --bind /mnt/data/home /mnt/home
 mount --bind /mnt/data/root /mnt/root
 mount --bind /mnt/data/nixos/$HOST /mnt/etc/nixos
 
+# create fake /data to have the right paths
+mkdir -p /data
+mount --bind /mnt/data /data
+
 # take a look
 mount
 
@@ -137,17 +141,15 @@ cp /mnt/etc/nixos/configuration.nix /tmp
 
 # copy config data
 
-# patch some paths there
-
 sudo scp -r /data/nixos root@192.168.13.100:/mnt/data
 
 # install
 
-nixos-install --no-root-passwd --root /mnt
+nixos-install --option experimental-features 'nix-command flakes' --no-root-passwd --root /mnt
 
 # unmount all stuff
 
-umount -Rl /mnt
+umount -Rl /data /mnt
 cryptsetup luksClose crypt-system
 
 # sync all /data after the install
