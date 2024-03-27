@@ -13,60 +13,15 @@
    # system
   boot.initrd.luks.devices."crypt-system".device = "/dev/disk/by-id/nvme-CT4000P3PSSD8_2325E6E63746-part2";
 
-  # vms
-  boot.initrd.luks.devices."crypt-vms".device = "/dev/disk/by-id/ata-CT2000MX500SSD1_2138E5D5061F";
-
-  fileSystems."/" =
-    { device = "/dev/mapper/crypt-system";
-      fsType = "btrfs";
-      neededForBoot = true;
-      options = [ "subvol=root" "noatime" "nodiratime" ];
-    };
-
+  # efi partition
   fileSystems."/boot" =
     { device = "/dev/disk/by-id/nvme-CT4000P3PSSD8_2325E6E63746-part1";
       fsType = "vfat";
       neededForBoot = true;
     };
 
-  fileSystems."/nix" =
-    { device = "/dev/mapper/crypt-system";
-      fsType = "btrfs";
-      neededForBoot = true;
-      options = [ "subvol=nix" "noatime" "nodiratime" ];
-    };
-
-  fileSystems."/data" =
-    { device = "/dev/mapper/crypt-system";
-      fsType = "btrfs";
-      neededForBoot = true;
-      options = [ "subvol=data" "noatime" "nodiratime" ];
-    };
-
-  fileSystems."/home" =
-    { device = "/data/home";
-      fsType = "none";
-      neededForBoot = true;
-      options = [ "bind" ];
-      depends = [ "/data" ];
-    };
-
-  fileSystems."/root" =
-    { device = "/data/root";
-      fsType = "none";
-      neededForBoot = true;
-      options = [ "bind" ];
-      depends = [ "/data" ];
-    };
-
-  fileSystems."/etc/nixos" =
-    { device = "/data/nixos/mini";
-      fsType = "none";
-      neededForBoot = true;
-      options = [ "bind" ];
-      depends = [ "/data" ];
-    };
-
+  # vms
+  boot.initrd.luks.devices."crypt-vms".device = "/dev/disk/by-id/ata-CT2000MX500SSD1_2138E5D5061F";
   fileSystems."/home/cullmann/vms" =
     { device = "/dev/mapper/crypt-vms";
       fsType = "btrfs";

@@ -13,63 +13,15 @@
    # system
   boot.initrd.luks.devices."crypt-system".device = "/dev/disk/by-id/nvme-Seagate_FireCuda_530_ZP4000GM30013_7VS01VBM-part2";
 
-  # vms
-  boot.initrd.luks.devices."crypt-vms".device = "/dev/disk/by-id/nvme-CT2000P5PSSD8_213330E4ED05";
-
-  # projects
-  boot.initrd.luks.devices."crypt-projects".device = "/dev/disk/by-id/nvme-Samsung_SSD_980_PRO_2TB_S69ENF0R846614L";
-
-  fileSystems."/" =
-    { device = "/dev/mapper/crypt-system";
-      fsType = "btrfs";
-      neededForBoot = true;
-      options = [ "subvol=root" "noatime" "nodiratime" ];
-    };
-
+  # efi partition
   fileSystems."/boot" =
     { device = "/dev/disk/by-id/nvme-Seagate_FireCuda_530_ZP4000GM30013_7VS01VBM-part1";
       fsType = "vfat";
       neededForBoot = true;
     };
 
-  fileSystems."/nix" =
-    { device = "/dev/mapper/crypt-system";
-      fsType = "btrfs";
-      neededForBoot = true;
-      options = [ "subvol=nix" "noatime" "nodiratime" ];
-    };
-
-  fileSystems."/data" =
-    { device = "/dev/mapper/crypt-system";
-      fsType = "btrfs";
-      neededForBoot = true;
-      options = [ "subvol=data" "noatime" "nodiratime" ];
-    };
-
-  fileSystems."/home" =
-    { device = "/data/home";
-      fsType = "none";
-      neededForBoot = true;
-      options = [ "bind" ];
-      depends = [ "/data" ];
-    };
-
-  fileSystems."/root" =
-    { device = "/data/root";
-      fsType = "none";
-      neededForBoot = true;
-      options = [ "bind" ];
-      depends = [ "/data" ];
-    };
-
-  fileSystems."/etc/nixos" =
-    { device = "/data/nixos/neko";
-      fsType = "none";
-      neededForBoot = true;
-      options = [ "bind" ];
-      depends = [ "/data" ];
-    };
-
+  # vms
+  boot.initrd.luks.devices."crypt-vms".device = "/dev/disk/by-id/nvme-CT2000P5PSSD8_213330E4ED05";
   fileSystems."/home/cullmann/vms" =
     { device = "/dev/mapper/crypt-vms";
       fsType = "btrfs";
@@ -78,6 +30,8 @@
       depends = [ "/home" ];
     };
 
+  # projects
+  boot.initrd.luks.devices."crypt-projects".device = "/dev/disk/by-id/nvme-Samsung_SSD_980_PRO_2TB_S69ENF0R846614L";
   fileSystems."/home/cullmann/projects" =
     { device = "/dev/mapper/crypt-projects";
       fsType = "btrfs";

@@ -38,14 +38,88 @@ in
   # we want to be able to do a memtest
   boot.loader.systemd-boot.memtest86.enable = true;
 
-  # use systemd early
-  boot.initrd.systemd.enable = true;
-
   # setup the console stuff early
   console.earlySetup = true;
 
   # swap to RAM
   zramSwap.enable = true;
+
+  # root file system from encrypted disk
+  fileSystems."/" =
+    { device = "/dev/mapper/crypt-system";
+      fsType = "btrfs";
+      neededForBoot = true;
+      options = [ "subvol=root" "noatime" "nodiratime" ];
+    };
+
+  # nix store file system from encrypted disk
+  fileSystems."/nix" =
+    { device = "/dev/mapper/crypt-system";
+      fsType = "btrfs";
+      neededForBoot = true;
+      options = [ "subvol=nix" "noatime" "nodiratime" ];
+    };
+
+  # data store file system from encrypted disk
+  fileSystems."/data" =
+    { device = "/dev/mapper/crypt-system";
+      fsType = "btrfs";
+      neededForBoot = true;
+      options = [ "subvol=data" "noatime" "nodiratime" ];
+    };
+
+  # bind mount to have homes
+  fileSystems."/home" =
+    { device = "/data/home";
+      fsType = "none";
+      neededForBoot = true;
+      options = [ "bind" ];
+      depends = [ "/data" ];
+    };
+
+  # bind mount to have root home
+  fileSystems."/root" =
+    { device = "/data/root";
+      fsType = "none";
+      neededForBoot = true;
+      options = [ "bind" ];
+      depends = [ "/data" ];
+    };
+
+  # bind mount to have NixOS configuration, different per host
+  fileSystems."/etc/nixos" =
+    { device = "/data/nixos/${config.networking.hostName}";
+      fsType = "none";
+      neededForBoot = true;
+      options = [ "bind" ];
+      depends = [ "/data" ];
+    };
+
+  # impermanence root setup
+  boot.initrd.postDeviceCommands = pkgs.lib.mkAfter ''
+    mkdir /btrfs_tmp
+    mount /dev/mapper/crypt-system /btrfs_tmp
+    if [[ -e /btrfs_tmp/root ]]; then
+        mkdir -p /btrfs_tmp/old_roots
+        timestamp=$(date --date="@$(stat -c %Y /btrfs_tmp/root)" "+%Y-%m-%-d_%H:%M:%S")
+        mv /btrfs_tmp/root "/btrfs_tmp/old_roots/$timestamp"
+    fi
+
+    delete_subvolume_recursively() {
+        IFS=$'\n'
+        for i in $(btrfs subvolume list -o "$1" | cut -f 9- -d ' '); do
+            delete_subvolume_recursively "/btrfs_tmp/$i"
+        done
+        btrfs subvolume delete "$1"
+    }
+
+    for i in $(find /btrfs_tmp/old_roots/ -maxdepth 1 -mtime +30); do
+        delete_subvolume_recursively "$i"
+    done
+
+    btrfs subvolume create /btrfs_tmp/root
+    umount /btrfs_tmp
+  '';
 
   # keep some stuff persistent
   environment.persistence."/nix/persistent" = {
