@@ -14,7 +14,7 @@
   boot.initrd.luks.devices."crypt-system".device = "/dev/disk/by-id/nvme-Seagate_FireCuda_530_ZP4000GM30013_7VS01VBM-part2";
 
   # vms
-  boot.initrd.luks.devices."crypt-vms".device = "/dev/disk/by-id/ata-CT2000MX500SSD1_2138E5D5061F";
+  boot.initrd.luks.devices."crypt-vms".device = "/dev/disk/by-id/nvme-CT2000P5PSSD8_213330E4ED05";
 
   # projects
   boot.initrd.luks.devices."crypt-projects".device = "/dev/disk/by-id/nvme-Samsung_SSD_980_PRO_2TB_S69ENF0R846614L";
