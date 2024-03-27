@@ -25,9 +25,8 @@ in
   # (e.g. man configuration.nix or on https://nixos.org/nixos/options.html).
   system.stateVersion = "23.05"; # Did you read the comment?
 
-  # use the latest kernel with bcachefs
+  # use the latest kernel
   boot.kernelPackages = pkgs.linuxPackages_latest;
-  boot.supportedFilesystems = [ "bcachefs" ];
 
   # Use the systemd-boot EFI boot loader.
   boot.loader.systemd-boot.enable = true;
@@ -127,7 +126,7 @@ in
   console.useXkbConfig = true;
 
   # enable the KDE Plasma Desktop Environment
-  services.xserver.desktopManager.plasma6.enable = true;
+  services.desktopManager.plasma6.enable = true;
 
   # greetd console display manager
   services.greetd = {
