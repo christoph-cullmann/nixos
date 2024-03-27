@@ -14,7 +14,10 @@
   boot.initrd.luks.devices."crypt-system".device = "/dev/disk/by-id/nvme-Seagate_FireCuda_530_ZP4000GM30013_7VS01VBM-part2";
 
   # vms
-  #boot.initrd.luks.devices."crypt-vms".device = "/dev/disk/by-id/ata-CT2000MX500SSD1_2138E5D5061F";
+  boot.initrd.luks.devices."crypt-vms".device = "/dev/disk/by-id/ata-CT2000MX500SSD1_2138E5D5061F";
+
+  # projects
+  boot.initrd.luks.devices."crypt-projects".device = "/dev/disk/by-id/nvme-Samsung_SSD_980_PRO_2TB_S69ENF0R846614L";
 
   fileSystems."/" =
     { device = "/dev/mapper/crypt-system";
@@ -60,28 +63,28 @@
     };
 
   fileSystems."/etc/nixos" =
-    { device = "/data/nixos/mini";
+    { device = "/data/nixos/neko";
       fsType = "none";
       neededForBoot = true;
       options = [ "bind" ];
       depends = [ "/data" ];
     };
 
-#   fileSystems."/home/cullmann/vms" =
-#     { device = "/dev/mapper/crypt-vms";
-#       fsType = "btrfs";
-#       neededForBoot = true;
-#       options = [ "noatime" "nodiratime" ];
-#       depends = [ "/home" ];
-#     };
+  fileSystems."/home/cullmann/vms" =
+    { device = "/dev/mapper/crypt-vms";
+      fsType = "btrfs";
+      neededForBoot = true;
+      options = [ "noatime" "nodiratime" ];
+      depends = [ "/home" ];
+    };
 
-#   fileSystems."/home/cullmann/projects" =
-#     { device = "/dev/disk/by-id/nvme-Samsung_SSD_980_PRO_2TB_S69ENF0R846614L";
-#       fsType = "bcachefs";
-#       neededForBoot = true;
-#       options = [ "noatime" "nodiratime" ];
-#       depends = [ "/home" ];
-#     };
+  fileSystems."/home/cullmann/projects" =
+    { device = "/dev/mapper/crypt-projects";
+      fsType = "btrfs";
+      neededForBoot = true;
+      options = [ "noatime" "nodiratime" ];
+      depends = [ "/home" ];
+    };
 
   nixpkgs.hostPlatform = lib.mkDefault "x86_64-linux";
   hardware.cpu.intel.updateMicrocode = lib.mkDefault config.hardware.enableRedistributableFirmware;
