@@ -123,12 +123,16 @@ in
 
   # keep some stuff persistent
   environment.persistence."/nix/persistent" = {
+    hideMounts = true;
     directories = [
       # systemd timers
       { directory = "/var/lib/systemd/timers"; user = "root"; group = "root"; mode = "u=rwx,g=rx,o=rx"; }
 
       # clamav database
       { directory = "/var/lib/clamav"; user = "clamav"; group = "clamav"; mode = "u=rwx,g=rx,o=rx"; }
+    ];
+    files = [
+      "/etc/machine-id"
     ];
   };
 
