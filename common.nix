@@ -166,9 +166,6 @@ in
     settings.Macs = [ "hmac-sha2-512-etm@openssh.com" ];
   };
 
-  # guard the ssh service
-  services.sshguard.enable = true;
-
   # Set your time zone.
   time.timeZone = "Europe/Berlin";
 
@@ -198,9 +195,6 @@ in
   powerManagement.enable = true;
   powerManagement.cpuFreqGovernor = "powersave";
   services.thermald.enable = true;
-
-  # allow firmware updates
-  services.fwupd.enable = true;
 
   # EurKey layout everywhere
   services.xserver.xkb.layout = "eu";
