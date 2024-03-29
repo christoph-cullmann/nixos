@@ -236,12 +236,8 @@ in
       options = "--delete-older-than 7d";
     };
 
-    # avoid that nix hogs all CPUs and enable new stuff
-    settings = {
-      max-jobs = 1;
-      cores = 4;
-      experimental-features = "nix-command flakes";
-    };
+    # enable new stuff
+    settings.experimental-features = "nix-command flakes";
 
     # https://github.com/nix-community/nix-direnv
     extraOptions = ''
