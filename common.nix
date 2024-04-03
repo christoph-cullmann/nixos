@@ -380,6 +380,9 @@ in
 
   # more fonts for all users
   fonts = {
+    # default fonts
+    enableDefaultPackages = true;
+
     # more fonts
     packages = with pkgs; [
       # includes nice developer fonts and used by powerlevel10k: https://www.nerdfonts.com/
