@@ -239,6 +239,12 @@ in
     '';
   };
 
+  # auto update
+  system.autoUpgrade = {
+    enable = true;
+    allowReboot = false;
+  };
+
   # avoid suspend ever to be triggered
   systemd.targets.sleep.enable = false;
   systemd.targets.suspend.enable = false;
