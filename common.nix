@@ -189,14 +189,6 @@ in
   # allow to have all locales
   i18n.supportedLocales = [ "all" ];
 
-  # ensure we see the journal on TTY12
-  services.journald.console = "/dev/tty12";
-
-  # keep power consumption and heat in check
-  powerManagement.enable = true;
-  powerManagement.cpuFreqGovernor = "powersave";
-  services.thermald.enable = true;
-
   # EurKey layout everywhere
   services.xserver.xkb.layout = "eu";
   console.useXkbConfig = true;
