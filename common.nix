@@ -149,8 +149,9 @@ in
 
   # OpenSSH daemon config
   services.openssh = {
-    # enable with public key only auth
+    # enable with public key only auth, start on demand only
     enable = true;
+    startWhenNeeded = true;
     settings.PasswordAuthentication = false;
     settings.KbdInteractiveAuthentication = false;
 
@@ -426,9 +427,6 @@ in
   # try to ensure we can use our network LaserJet
   services.printing.enable = true;
   services.printing.drivers = [ pkgs.hplip ];
-
-  # let's get SSD status
-  services.smartd.enable = true;
 
   # dconf is needed for gtk, see https://nixos.wiki/wiki/KDE
   programs.dconf.enable = true;
