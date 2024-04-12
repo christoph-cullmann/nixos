@@ -193,18 +193,10 @@ in
   services.xserver.xkb.layout = "eu";
   console.useXkbConfig = true;
 
-  # enable the KDE Plasma Desktop Environment
+  # enable SDDM & the KDE Plasma Desktop Environment
+  services.displayManager.sddm.enable = true;
+  services.displayManager.sddm.wayland.enable = true;
   services.desktopManager.plasma6.enable = true;
-
-  # greetd console display manager
-  services.greetd = {
-    enable = true;
-    settings = {
-      default_session = {
-        command = "${pkgs.greetd.tuigreet}/bin/tuigreet --time --cmd '${pkgs.kdePackages.plasma-workspace}/libexec/plasma-dbus-run-session-if-needed ${pkgs.kdePackages.plasma-workspace}/bin/startplasma-wayland'";
-      };
-    };
-  };
 
   # enable sound with PipeWire
   services.pipewire = {
