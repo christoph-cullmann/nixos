@@ -288,7 +288,6 @@ in
     pkgs.kdePackages.kcalc
     keychain
     pkgs.kdePackages.kmail
-    pkgs.kdePackages.kompare
     pkgs.kdePackages.konsole
     pkgs.kdePackages.konversation
     krita
