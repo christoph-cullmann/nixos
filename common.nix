@@ -199,11 +199,50 @@ in
   services.desktopManager.plasma6.enable = true;
 
   # enable sound with PipeWire
+  sound.enable = true;
+  hardware.pulseaudio.enable = false;
   services.pipewire = {
     enable = true;
-    alsa.enable = true;
-    jack.enable = true;
+    alsa = {
+      enable = true;
+      support32Bit = true;
+    };
     pulse.enable = true;
+    wireplumber.configPackages = [
+      (pkgs.writeTextDir "share/wireplumber/wireplumber.conf.d/alsa.conf" ''
+        monitor.alsa.rules = [
+          {
+            matches = [
+              {
+                device.name = "~alsa_card.*"
+              }
+            ]
+            actions = {
+              update-props = {
+                # Device settings
+                api.alsa.use-acp = true
+              }
+            }
+          }
+          {
+            matches = [
+              {
+                node.name = "~alsa_input.pci.*"
+              }
+              {
+                node.name = "~alsa_output.pci.*"
+              }
+            ]
+            actions = {
+            # Node settings
+              update-props = {
+                session.suspend-timeout-seconds = 0
+              }
+            }
+          }
+        ]
+      '')
+    ];
   };
 
   # allow realtime
@@ -485,8 +524,6 @@ in
       optimize = "sudo nix --extra-experimental-features nix-command store optimise";
 
       # ssh around in the local network
-      kuro = "ssh kuro.fritz.box";
-      kuroroot = "ssh root@kuro.fritz.box";
       mini = "ssh mini.fritz.box";
       miniroot = "ssh root@mini.fritz.box";
       neko = "ssh neko.fritz.box";
