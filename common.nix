@@ -306,7 +306,6 @@ in
     config.boot.kernelPackages.perf
     efibootmgr
     emacs
-    pkgs.kdePackages.falkon
     fdupes
     ffmpeg
     file
@@ -374,11 +373,6 @@ in
       chromium = {
         executable = "${pkgs.lib.getBin pkgs.chromium}/bin/chromium";
         profile = "${pkgs.firejail}/etc/firejail/chromium.profile";
-      };
-
-      falkon = {
-        executable = "${pkgs.lib.getBin pkgs.kdePackages.falkon}/bin/falkon";
-        profile = "${pkgs.firejail}/etc/firejail/falkon.profile";
       };
 
       firefox = {
