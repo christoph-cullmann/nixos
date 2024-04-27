@@ -27,6 +27,9 @@ global
     # relative to source-dir by default
     build-dir ~/projects/kde/build
 
+    # Directory to write logs into
+    log-dir ~/projects/kde/log
+
     # use distro stuff for that
      ignore-modules wayland wayland-protocols gpgme appstream
 end global

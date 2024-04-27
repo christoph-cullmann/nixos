@@ -309,6 +309,7 @@ in
     fdupes
     ffmpeg
     file
+    fzf
     pkgs.kdePackages.filelight
     gimp
     gitFull
@@ -361,6 +362,7 @@ in
     vscodium
     vulkan-tools
     wayland-utils
+    zoxide
     zsh
     zsh-powerlevel10k
   ];
