@@ -506,6 +506,7 @@ in
       if [ -f ~/.p10k.zsh ]; then
         source ~/.p10k.zsh;
       fi
+      eval "$(zoxide init zsh)"
       '';
 
     # aliases
