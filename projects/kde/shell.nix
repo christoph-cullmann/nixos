@@ -87,13 +87,12 @@ export QT_QUICK_CONTROLS_STYLE_PATH=/home/cullmann/projects/kde/usr/lib/qml/QtQu
     perlPackages.URI
     perlPackages.XMLParser
     perlPackages.YAMLPP
-    python311Full
-    python311Packages.dbus-python
-    python311Packages.overrides
-    python311Packages.promise
-    python311Packages.pyaml
-    python311Packages.python-gitlab
-    python311Packages.setproctitle
+    python312Full
+    python312Packages.overrides
+    python312Packages.promise
+    python312Packages.pyaml
+    python312Packages.python-gitlab
+    python312Packages.setproctitle
     pkg-config
     polkit
     qrencode
