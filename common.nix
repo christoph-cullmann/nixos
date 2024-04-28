@@ -489,25 +489,17 @@ in
 
   # use ZSH per default with a proper config
   users.defaultUserShell = pkgs.zsh;
+  programs.starship.enable = true;
   programs.zsh = {
     # zsh wanted
     enable = true;
 
-    # some env vars I want in all of my shells
-    shellInit = ''
-      export MOZ_ENABLE_WAYLAND=1
-      export POWERLEVEL9K_DISABLE_CONFIGURATION_WIZARD=true
-      export XDG_DATA_DIRS=$XDG_DATA_DIRS:/usr/share:/var/lib/flatpak/exports/share:$HOME/.local/share/flatpak/exports/share
-      '';
-
-    # great prompt
-    promptInit = ''
-      source ${pkgs.zsh-powerlevel10k}/share/zsh-powerlevel10k/powerlevel10k.zsh-theme
-      if [ -f ~/.p10k.zsh ]; then
-        source ~/.p10k.zsh;
-      fi
-      eval "$(zoxide init zsh)"
-      '';
+     # some env vars I want in all of my shells
+     shellInit = ''
+       export MOZ_ENABLE_WAYLAND=1
+       export XDG_DATA_DIRS=$XDG_DATA_DIRS:/usr/share:/var/lib/flatpak/exports/share:$HOME/.local/share/flatpak/exports/share
+       eval "$(zoxide init zsh)"
+       '';
 
     # aliases
     shellAliases = {
@@ -521,10 +513,10 @@ in
       optimize = "sudo nix --extra-experimental-features nix-command store optimise";
 
       # ssh around in the local network
+      mac = "ssh mac.fritz.box";
+      macroot = "ssh root@mac.fritz.box";
       mini = "ssh mini.fritz.box";
       miniroot = "ssh root@mini.fritz.box";
-      neko = "ssh neko.fritz.box";
-      nekoroot = "ssh root@neko.fritz.box";
     };
   };
 
