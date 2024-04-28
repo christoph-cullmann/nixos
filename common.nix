@@ -517,6 +517,8 @@ in
       macroot = "ssh root@mac.fritz.box";
       mini = "ssh mini.fritz.box";
       miniroot = "ssh root@mini.fritz.box";
+      neko = "ssh neko.fritz.box";
+      nekoroot = "ssh root@neko.fritz.box";
     };
   };
 
