@@ -364,7 +364,6 @@ in
     wayland-utils
     zoxide
     zsh
-    zsh-powerlevel10k
   ];
 
   # run browsers in a sandbox
