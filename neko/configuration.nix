@@ -17,18 +17,10 @@
   # intel graphics
   hardware.opengl.extraPackages = with pkgs; [ intel-media-driver intel-compute-runtime ];
 
-  # use systemd-networkd, fixed IPv4, dynamic IPv6
+  # our hostname
   networking.hostName = "neko";
+
+  # use NetworkManager
   networking.useDHCP = false;
-  networking.nameservers = [ "192.168.13.1" ];
-  systemd.network = {
-    enable = true;
-    networks."10-wan" = {
-      matchConfig.Name = "enp10s0";
-      address = [ "192.168.13.171/24" ];
-      routes = [ { routeConfig.Gateway = "192.168.13.1"; } ];
-      networkConfig.IPv6AcceptRA = true;
-      linkConfig.RequiredForOnline = "routable";
-    };
-  };
+  networking.networkmanager.enable = true;
 }
