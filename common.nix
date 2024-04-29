@@ -348,6 +348,7 @@ in
     pulseaudio
     qmk
     ssh-audit
+    starship
     sysstat
     tcl
     texlive.combined.scheme-small
@@ -486,40 +487,10 @@ in
     };
   };
 
-  # use ZSH per default with a proper config
+  # use ZSH per default
+  programs.zsh.enable = true;
   users.defaultUserShell = pkgs.zsh;
-  programs.starship.enable = true;
-  programs.zsh = {
-    # zsh with extras wanted
-    enable = true;
-    enableCompletion = true;
-    syntaxHighlighting.enable = true;
-
-     # some env vars I want in all of my shells
-     shellInit = ''
-       export MOZ_ENABLE_WAYLAND=1
-       export XDG_DATA_DIRS=$XDG_DATA_DIRS:/usr/share:/var/lib/flatpak/exports/share:$HOME/.local/share/flatpak/exports/share
-       eval "$(zoxide init zsh)"
-       '';
-
-    # aliases
-    shellAliases = {
-      # system build/update/cleanup
-      update = "sudo nixos-rebuild switch";
-      upgrade = "sudo nixos-rebuild switch --upgrade";
-      gc = "sudo nix-collect-garbage --delete-older-than 7d";
-      verify = "sudo nix --extra-experimental-features nix-command store verify --all";
-      optimize = "sudo nix --extra-experimental-features nix-command store optimise";
-
-      # ssh around in the local network
-      mac = "ssh mac.fritz.box";
-      macroot = "ssh root@mac.fritz.box";
-      mini = "ssh mini.fritz.box";
-      miniroot = "ssh root@mini.fritz.box";
-      neko = "ssh neko.fritz.box";
-      nekoroot = "ssh root@neko.fritz.box";
-    };
-  };
+  environment.shells = with pkgs; [ zsh ];
 
   # enable VirtualBox
   virtualisation.virtualbox.host.enable = true;
@@ -553,7 +524,9 @@ in
     # initial version
     home.stateVersion = "22.11";
 
-    # generate the shell config
+    # zsh with some nice prompt
+    programs.starship.enable = true;
+    programs.zoxide.enable = true;
     programs.zsh.enable = true;
   };
 
@@ -585,8 +558,36 @@ in
     # initial version
     home.stateVersion = "22.11";
 
-    # generate the shell config
-    programs.zsh.enable = true;
+    # zsh with some nice prompt and extra main user configuration
+    programs.starship.enable = true;
+    programs.zoxide.enable = true;
+    programs.zsh = {
+      # zsh with extras wanted
+      enable = true;
+      enableCompletion = true;
+      autocd = true;
+      autosuggestion.enable = true;
+      history.share = false;
+      syntaxHighlighting.enable = true;
+
+      # aliases
+      shellAliases = {
+        # system build/update/cleanup
+        update = "sudo nixos-rebuild switch";
+        upgrade = "sudo nixos-rebuild switch --upgrade";
+        gc = "sudo nix-collect-garbage --delete-older-than 7d";
+        verify = "sudo nix --extra-experimental-features nix-command store verify --all";
+        optimize = "sudo nix --extra-experimental-features nix-command store optimise";
+
+        # ssh around in the local network
+        mac = "ssh mac.fritz.box";
+        macroot = "ssh root@mac.fritz.box";
+        mini = "ssh mini.fritz.box";
+        miniroot = "ssh root@mini.fritz.box";
+        neko = "ssh neko.fritz.box";
+        nekoroot = "ssh root@neko.fritz.box";
+      };
+    };
 
     # enable keychain
     programs.keychain = {
