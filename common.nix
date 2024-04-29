@@ -490,8 +490,10 @@ in
   users.defaultUserShell = pkgs.zsh;
   programs.starship.enable = true;
   programs.zsh = {
-    # zsh wanted
+    # zsh with extras wanted
     enable = true;
+    enableCompletion = true;
+    syntaxHighlighting.enable = true;
 
      # some env vars I want in all of my shells
      shellInit = ''
@@ -502,8 +504,6 @@ in
 
     # aliases
     shellAliases = {
-      ll = "ls -l";
-
       # system build/update/cleanup
       update = "sudo nixos-rebuild switch";
       upgrade = "sudo nixos-rebuild switch --upgrade";
