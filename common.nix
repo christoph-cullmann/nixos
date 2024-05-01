@@ -565,7 +565,6 @@ in
       # zsh with extras wanted
       enable = true;
       enableCompletion = true;
-      autocd = true;
       autosuggestion.enable = true;
       history.share = false;
       syntaxHighlighting.enable = true;
