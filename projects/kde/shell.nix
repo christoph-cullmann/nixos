@@ -73,6 +73,7 @@ export QT_QUICK_CONTROLS_STYLE_PATH=/home/cullmann/projects/kde/usr/lib/qml/QtQu
     lmdb
     mesa
     meson
+    modemmanager
     myllvm.libclang.python # git-clang-format
     networkmanager
     ninja
@@ -133,6 +134,7 @@ export QT_QUICK_CONTROLS_STYLE_PATH=/home/cullmann/projects/kde/usr/lib/qml/QtQu
     valgrind
     wayland
     wayland-protocols
+    wayland-scanner
     xcb-util-cursor
     xercesc
     xml2
