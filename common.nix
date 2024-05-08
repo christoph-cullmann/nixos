@@ -130,6 +130,9 @@ in
 
       # clamav database
       { directory = "/var/lib/clamav"; user = "clamav"; group = "clamav"; mode = "u=rwx,g=rx,o=rx"; }
+
+      # alsa state for persistent sound settings
+      { directory = "/var/lib/alsa"; user = "root"; group = "root"; mode = "u=rwx,g=rx,o=rx"; }
     ];
     files = [
       "/etc/machine-id"
