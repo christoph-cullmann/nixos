@@ -10,6 +10,11 @@
   boot.initrd.kernelModules = [ "i915" ];
   boot.kernelModules = [ "kvm-intel" ];
 
+  # use the right soundcard
+  boot.extraModprobeConfig = ''
+    options snd_hda_intel enable=0,1
+  '';
+
    # system
   boot.initrd.luks.devices."crypt-system".device = "/dev/disk/by-id/nvme-Seagate_FireCuda_530_ZP4000GM30013_7VS01VBM-part2";
 
