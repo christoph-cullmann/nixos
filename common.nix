@@ -197,9 +197,16 @@ in
   console.useXkbConfig = true;
 
   # enable SDDM & the KDE Plasma Desktop Environment
+  services.xserver.enable = true;
   services.displayManager.sddm.enable = true;
-  services.displayManager.sddm.wayland.enable = true;
   services.desktopManager.plasma6.enable = true;
+  programs.ssh.askPassword = pkgs.lib.mkForce "${pkgs.ksshaskpass.out}/bin/ksshaskpass";
+
+  # other desktop environments for testing
+  services.xserver.desktopManager.enlightenment.enable = true;
+  services.xserver.desktopManager.gnome.enable = true;
+  services.xserver.desktopManager.mate.enable = true;
+  services.xserver.desktopManager.xfce.enable = true;
 
   # enable sound with PipeWire
   sound.enable = true;
