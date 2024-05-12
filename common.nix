@@ -297,6 +297,7 @@ in
     hunspellDicts.de_DE
     hunspellDicts.en_US
     inetutils
+    inkscape
     pkgs.kdePackages.kate
     pkgs.kdePackages.kcachegrind
     pkgs.kdePackages.kcalc

@@ -89,6 +89,7 @@ export QT_QUICK_CONTROLS_STYLE_PATH=/home/cullmann/projects/kde/usr/lib/qml/QtQu
     perlPackages.XMLParser
     perlPackages.YAMLPP
     python312Full
+    python312Packages.lxml
     python312Packages.overrides
     python312Packages.promise
     python312Packages.pyaml
