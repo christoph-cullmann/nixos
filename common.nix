@@ -263,8 +263,11 @@ in
   # use global pkgs
   home-manager.useGlobalPkgs = true;
 
-  # Allow unfree packages
+  # allow unfree packages
   nixpkgs.config.allowUnfree = true;
+
+  # we want DRM support
+  nixpkgs.config.chromium.enableWideVine = true;
 
   # List packages installed in system profile. To search, run:
   # $ nix search wget
