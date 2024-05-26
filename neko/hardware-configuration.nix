@@ -15,7 +15,10 @@
     options snd_hda_intel enable=0,1
   '';
 
-   # system
+  # don't check for split locks, for KVM and Co.
+  boot.kernelParams = [ "split_lock_detect=off" ];
+
+  # system
   boot.initrd.luks.devices."crypt-system".device = "/dev/disk/by-id/nvme-Seagate_FireCuda_530_ZP4000GM30013_7VS01VBM-part2";
 
   # efi partition

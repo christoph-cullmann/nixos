@@ -470,6 +470,9 @@ in
 
   # enable VirtualBox
   virtualisation.virtualbox.host.enable = true;
+  virtualisation.virtualbox.host.enableKvm = true;
+  virtualisation.virtualbox.host.enableHardening = false;
+  virtualisation.virtualbox.host.addNetworkInterface = false;
 
   # configure sudo
   security.sudo.execWheelOnly = true;

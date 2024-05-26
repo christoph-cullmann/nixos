@@ -31,9 +31,12 @@ export QT_QUICK_CONTROLS_STYLE_PATH=/home/cullmann/projects/kde/usr/lib/qml/QtQu
     cmake
     ctags
     curl
+    discount
+    djvulibre
     docbook_xml_dtd_45
     docbook_xsl_ns
     doxygen
+    ebook_tools
     exiv2
     flex
     gdb
@@ -64,10 +67,12 @@ export QT_QUICK_CONTROLS_STYLE_PATH=/home/cullmann/projects/kde/usr/lib/qml/QtQu
     libraw
     libselinux
     libsndfile
+    libspectre
     libva
     libxkbcommon
     libxml2
     libxslt
+    libzip
     linux-pam
     lm_sensors
     lmdb

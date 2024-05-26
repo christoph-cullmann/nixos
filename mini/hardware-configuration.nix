@@ -10,7 +10,10 @@
   boot.initrd.kernelModules = [ "amdgpu" ];
   boot.kernelModules = [ "kvm-amd" ];
 
-   # system
+  # don't check for split locks, for KVM and Co.
+  boot.kernelParams = [ "split_lock_detect=off" ];
+
+  # system
   boot.initrd.luks.devices."crypt-system".device = "/dev/disk/by-id/nvme-CT4000P3PSSD8_2325E6E63746-part2";
 
   # efi partition
