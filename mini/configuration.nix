@@ -17,10 +17,10 @@
   # amd graphics
   hardware.opengl.extraPackages = with pkgs; [ amdvlk rocm-opencl-icd rocm-opencl-runtime ];
 
-  # our hostname
+  # our hostname and an ID for ZFS
   networking.hostName = "mini";
+  networking.hostId = "e925ccfb";
 
-  # use NetworkManager
-  networking.useDHCP = false;
-  networking.networkmanager.enable = true;
+  # classic dhcpcd
+  networking.networkmanager.enable = false;
 }

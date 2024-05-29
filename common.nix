@@ -25,8 +25,9 @@ in
   # (e.g. man configuration.nix or on https://nixos.org/nixos/options.html).
   system.stateVersion = "23.05"; # Did you read the comment?
 
-  # use the latest kernel
-  boot.kernelPackages = pkgs.linuxPackages_latest;
+  # use the latest kernel with ZFS support and enable that file system
+  boot.kernelPackages = config.boot.zfs.package.latestCompatibleLinuxPackages;
+  boot.supportedFilesystems = [ "zfs" ];
 
   # Use the systemd-boot EFI boot loader.
   boot.loader.systemd-boot.enable = true;
@@ -38,18 +39,21 @@ in
   # we want to be able to do a memtest
   boot.loader.systemd-boot.memtest86.enable = true;
 
+  # use systemd early
+  boot.initrd.systemd.enable = true;
+
   # setup the console stuff early
   console.earlySetup = true;
 
   # swap to RAM
   zramSwap.enable = true;
 
-  # root file system from encrypted disk
+  # root file system in RAM
   fileSystems."/" =
-    { device = "/dev/mapper/crypt-system";
-      fsType = "btrfs";
+    { device = "none";
+      fsType = "tmpfs";
       neededForBoot = true;
-      options = [ "subvol=root" "noatime" "nodiratime" ];
+      options = [ "defaults" "size=8G" "mode=755" ];
     };
 
   # nix store file system from encrypted disk
@@ -94,32 +98,6 @@ in
       options = [ "bind" ];
       depends = [ "/data" ];
     };
-
-  # impermanence root setup
-  boot.initrd.postDeviceCommands = pkgs.lib.mkAfter ''
-    mkdir /btrfs_tmp
-    mount /dev/mapper/crypt-system /btrfs_tmp
-    if [[ -e /btrfs_tmp/root ]]; then
-        mkdir -p /btrfs_tmp/old_roots
-        timestamp=$(date --date="@$(stat -c %Y /btrfs_tmp/root)" "+%Y-%m-%-d_%H:%M:%S")
-        mv /btrfs_tmp/root "/btrfs_tmp/old_roots/$timestamp"
-    fi
-
-    delete_subvolume_recursively() {
-        IFS=$'\n'
-        for i in $(btrfs subvolume list -o "$1" | cut -f 9- -d ' '); do
-            delete_subvolume_recursively "/btrfs_tmp/$i"
-        done
-        btrfs subvolume delete "$1"
-    }
-
-    for i in $(find /btrfs_tmp/old_roots/ -maxdepth 1 -mtime +7); do
-        delete_subvolume_recursively "$i"
-    done
-
-    btrfs subvolume create /btrfs_tmp/root
-    umount /btrfs_tmp
-  '';
 
   # keep some stuff persistent
   environment.persistence."/nix/persistent" = {
@@ -554,8 +532,8 @@ in
       # aliases
       shellAliases = {
         # system build/update/cleanup
-        update = "sudo nixos-rebuild switch";
-        upgrade = "sudo nixos-rebuild switch --upgrade";
+        update = "sudo nixos-rebuild boot";
+        upgrade = "sudo nixos-rebuild boot --upgrade";
         gc = "sudo nix-collect-garbage --delete-older-than 7d";
         verify = "sudo nix --extra-experimental-features nix-command store verify --all";
         optimize = "sudo nix --extra-experimental-features nix-command store optimise";

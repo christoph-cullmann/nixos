@@ -10,11 +10,6 @@
   boot.initrd.kernelModules = [ "i915" ];
   boot.kernelModules = [ "kvm-intel" ];
 
-  # use the right soundcard
-  boot.extraModprobeConfig = ''
-    options snd_hda_intel enable=0,1
-  '';
-
   # don't check for split locks, for KVM and Co.
   boot.kernelParams = [ "split_lock_detect=off" ];
 
