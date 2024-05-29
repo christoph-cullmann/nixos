@@ -2,6 +2,7 @@
 # enable ssh for root
 #
 
+systemctl start sshd
 sudo bash
 passwd
 
