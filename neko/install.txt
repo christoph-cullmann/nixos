@@ -53,37 +53,35 @@ cat /proc/partitions
 # boot partition
 mkfs.fat -F 32 -n EFIBOOT $DISK-part1
 
-# create the crypto containers
-cryptsetup luksFormat --sector-size 4096 --batch-mode --verify-passphrase $DISK-part2
-
 sleep 5
 
-# open them, set right options persistently
-cryptsetup luksOpen --allow-discards --perf-no_read_workqueue --perf-no_write_workqueue --persistent $DISK-part2 crypt-system
+# ZFS zpool creation with encryption
+zpool create \
+    -o ashift=12 \
+    -o autotrim=on \
+    -O acltype=posixacl \
+    -O atime=off \
+    -O canmount=off \
+    -O compression=on \
+    -O dnodesize=auto \
+    -O normalization=formD \
+    -O xattr=sa \
+    -O mountpoint=none \
+    -O encryption=on \
+    -O keylocation=prompt \
+    -O keyformat=passphrase \
+    zpool $DISK-part2
 
 sleep 5
-lsblk --fs
-
-# create btrfs with fast & strong checksumming and fast mounting
-mkfs.btrfs -f --csum xxhash --features block-group-tree /dev/mapper/crypt-system
-
-sleep 5
-btrfs filesystem show
 
 # create all the volumes
-mount /dev/mapper/crypt-system /mnt
-btrfs subvolume create /mnt/data
-btrfs subvolume create /mnt/nix
-btrfs subvolume create /mnt/root
+zfs create -o mountpoint=legacy zpool/data
+zfs create -o mountpoint=legacy zpool/nix
 
 sleep 5
-btrfs subvolume list /mnt
 
-# umount again, we will only use explicit subvolumes
-umount /mnt
-
-# prepare install
-mount -o subvol=root,noatime,nodiratime /dev/mapper/crypt-system /mnt
+# prepare install, tmpfs root
+mount -t tmpfs none /mnt
 
 # Create directories to mount file systems on
 mkdir -p /mnt/{data,nix,home,boot,root,etc/nixos}
@@ -92,8 +90,8 @@ mkdir -p /mnt/{data,nix,home,boot,root,etc/nixos}
 mount $DISK-part1 /mnt/boot
 
 # mount volumes
-mount -o subvol=data,noatime,nodiratime /dev/mapper/crypt-system /mnt/data
-mount -o subvol=nix,noatime,nodiratime /dev/mapper/crypt-system /mnt/nix
+mount -t zfs zpool/data /mnt/data
+mount -t zfs zpool/nix /mnt/nix
 
 # bind mount persistent stuff to data
 mkdir -p /mnt/{data/home,data/root,data/nixos/$HOST}

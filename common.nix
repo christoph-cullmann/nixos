@@ -56,23 +56,21 @@ in
       options = [ "defaults" "size=8G" "mode=755" ];
     };
 
-  # nix store file system from encrypted disk
+  # nix store file system from encrypted ZFS
   fileSystems."/nix" =
-    { device = "/dev/mapper/crypt-system";
-      fsType = "btrfs";
+    { device = "zpool/nix";
+      fsType = "zfs";
       neededForBoot = true;
-      options = [ "subvol=nix" "noatime" "nodiratime" ];
     };
 
-  # data store file system from encrypted disk
+  # data store file system from encrypted ZFS
   fileSystems."/data" =
-    { device = "/dev/mapper/crypt-system";
-      fsType = "btrfs";
+    { device = "zpool/data";
+      fsType = "zfs";
       neededForBoot = true;
-      options = [ "subvol=data" "noatime" "nodiratime" ];
     };
 
-  # bind mount to have homes
+  # bind mount to have user homes
   fileSystems."/home" =
     { device = "/data/home";
       fsType = "none";
