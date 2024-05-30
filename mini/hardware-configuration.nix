@@ -13,16 +13,13 @@
   # don't check for split locks, for KVM and Co.
   boot.kernelParams = [ "split_lock_detect=off" ];
 
-  # system
-  boot.initrd.luks.devices."crypt-system".device = "/dev/disk/by-id/nvme-CT4000P3PSSD8_2325E6E63746-part2";
-
   # efi partition
   fileSystems."/boot" =
     { device = "/dev/disk/by-id/nvme-CT4000P3PSSD8_2325E6E63746-part1";
       fsType = "vfat";
       neededForBoot = true;
     };
-
+/*
   # vms
   boot.initrd.luks.devices."crypt-vms".device = "/dev/disk/by-id/ata-CT2000MX500SSD1_2138E5D5061F";
   fileSystems."/home/cullmann/vms" =
@@ -31,7 +28,7 @@
       neededForBoot = true;
       options = [ "noatime" "nodiratime" ];
       depends = [ "/home" ];
-    };
+    };*/
 
   nixpkgs.hostPlatform = lib.mkDefault "x86_64-linux";
   hardware.cpu.amd.updateMicrocode = lib.mkDefault config.hardware.enableRedistributableFirmware;
