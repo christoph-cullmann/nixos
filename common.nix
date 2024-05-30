@@ -97,6 +97,18 @@ in
       depends = [ "/data" ];
     };
 
+  # keep some stuff persistent
+  environment.persistence."/nix/persistent" = {
+    hideMounts = true;
+    directories = [
+      # systemd timers
+      { directory = "/var/lib/systemd/timers"; user = "root"; group = "root"; mode = "u=rwx,g=rx,o=rx"; }
+
+      # alsa state for persistent sound settings
+      { directory = "/var/lib/alsa"; user = "root"; group = "root"; mode = "u=rwx,g=rx,o=rx"; }
+    ];
+  };
+
   # enable fast dbus
   services.dbus.implementation = "broker";
 
