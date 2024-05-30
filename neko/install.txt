@@ -149,6 +149,28 @@ wipefs -a $DD
 
 sleep 5
 
+# ZFS zpool creation with encryption
+zpool create \
+    -o ashift=12 \
+    -o autotrim=on \
+    -O acltype=posixacl \
+    -O atime=off \
+    -O canmount=off \
+    -O compression=on \
+    -O dnodesize=auto \
+    -O normalization=formD \
+    -O xattr=sa \
+    -O mountpoint=none \
+    -O encryption=on \
+    -O keylocation=file:///data/nixos/key-vms.secret \
+    -O keyformat=passphrase \
+    vpool $DD
+
+sleep 5
+
+# create all the volumes
+zfs create -o mountpoint=legacy vpool/vms
+
 # create projects disk
 
 DD=/dev/disk/by-id/nvme-Samsung_SSD_980_PRO_2TB_S69ENF0R846614L
@@ -157,3 +179,25 @@ blkdiscard -v $DD
 wipefs -a $DD
 
 sleep 5
+
+# ZFS zpool creation with encryption
+zpool create \
+    -o ashift=12 \
+    -o autotrim=on \
+    -O acltype=posixacl \
+    -O atime=off \
+    -O canmount=off \
+    -O compression=on \
+    -O dnodesize=auto \
+    -O normalization=formD \
+    -O xattr=sa \
+    -O mountpoint=none \
+    -O encryption=on \
+    -O keylocation=file:///data/nixos/key-projects.secret \
+    -O keyformat=passphrase \
+    ppool $DD
+
+sleep 5
+
+# create all the volumes
+zfs create -o mountpoint=legacy ppool/projects

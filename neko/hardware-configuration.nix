@@ -19,26 +19,20 @@
       fsType = "vfat";
       neededForBoot = true;
     };
-/*
+
   # vms
-  boot.initrd.luks.devices."crypt-vms".device = "/dev/disk/by-id/nvme-CT2000P5PSSD8_213330E4ED05";
   fileSystems."/home/cullmann/vms" =
-    { device = "/dev/mapper/crypt-vms";
-      fsType = "btrfs";
-      neededForBoot = true;
-      options = [ "noatime" "nodiratime" ];
+    { device = "vpool/vms";
+      fsType = "zfs";
       depends = [ "/home" ];
     };
 
   # projects
-  boot.initrd.luks.devices."crypt-projects".device = "/dev/disk/by-id/nvme-Samsung_SSD_980_PRO_2TB_S69ENF0R846614L";
   fileSystems."/home/cullmann/projects" =
-    { device = "/dev/mapper/crypt-projects";
-      fsType = "btrfs";
-      neededForBoot = true;
-      options = [ "noatime" "nodiratime" ];
+    { device = "ppool/projects";
+      fsType = "zfs";
       depends = [ "/home" ];
-    };*/
+    };
 
   nixpkgs.hostPlatform = lib.mkDefault "x86_64-linux";
   hardware.cpu.intel.updateMicrocode = lib.mkDefault config.hardware.enableRedistributableFirmware;
