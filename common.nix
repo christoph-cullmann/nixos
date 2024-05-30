@@ -398,9 +398,6 @@ in
   hardware.opengl.enable = true;
   hardware.opengl.driSupport = true;
 
-  # virus scanner, we only want the updater running
-  services.clamav.updater.enable = true;
-
   # try to ensure we can use our network LaserJet
   services.printing.enable = true;
   services.printing.drivers = [ pkgs.hplip ];
