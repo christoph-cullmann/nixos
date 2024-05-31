@@ -29,6 +29,19 @@ in
   boot.kernelPackages = config.boot.zfs.package.latestCompatibleLinuxPackages;
   boot.supportedFilesystems = [ "zfs" ];
 
+  # more responsive kernel
+  boot.kernelPatches = [ {
+        name = "enable RT_FULL";
+        patch = null;
+        extraConfig = ''
+            PREEMPT y
+            PREEMPT_BUILD y
+            PREEMPT_VOLUNTARY n
+            PREEMPT_COUNT y
+            PREEMPTION y
+            '';
+     } ];
+
   # Use the systemd-boot EFI boot loader.
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
@@ -75,7 +88,7 @@ in
     { device = "/data/home";
       fsType = "none";
       neededForBoot = true;
-      options = [ "bind" ];
+      options = [ "bind" "x-gvfs-hide" ];
       depends = [ "/data" ];
     };
 
@@ -84,7 +97,7 @@ in
     { device = "/data/root";
       fsType = "none";
       neededForBoot = true;
-      options = [ "bind" ];
+      options = [ "bind" "x-gvfs-hide" ];
       depends = [ "/data" ];
     };
 
@@ -93,7 +106,7 @@ in
     { device = "/data/nixos/${config.networking.hostName}";
       fsType = "none";
       neededForBoot = true;
-      options = [ "bind" ];
+      options = [ "bind" "x-gvfs-hide" ];
       depends = [ "/data" ];
     };
 
@@ -106,6 +119,9 @@ in
 
       # alsa state for persistent sound settings
       { directory = "/var/lib/alsa"; user = "root"; group = "root"; mode = "u=rwx,g=rx,o=rx"; }
+
+      # nix tmp dir for rebuilds, don't fill our tmpfs root with that
+      { directory = "/var/cache/nix"; user = "root"; group = "root"; mode = "u=rwx,g=rx,o=rx"; }
     ];
   };
 
@@ -217,6 +233,19 @@ in
       keep-outputs = true
       keep-derivations = true
     '';
+  };
+
+  # move nix tmp directory off the tmpfs for large updates
+  # for nixos-build we set that directory as tmp dir in the command
+  systemd.services.nix-daemon = {
+    environment = {
+      # Location for temporary files
+      TMPDIR = "/var/cache/nix";
+    };
+    serviceConfig = {
+      # Create /var/cache/nix automatically on Nix Daemon start
+      CacheDirectory = "nix";
+    };
   };
 
   # auto update
@@ -545,8 +574,8 @@ in
       # aliases
       shellAliases = {
         # system build/update/cleanup
-        update = "sudo nixos-rebuild boot";
-        upgrade = "sudo nixos-rebuild boot --upgrade";
+        update = "sudo TMPDIR=/var/cache/nix nixos-rebuild boot";
+        upgrade = "sudo TMPDIR=/var/cache/nix nixos-rebuild boot --upgrade";
         gc = "sudo nix-collect-garbage --delete-older-than 7d";
         verify = "sudo nix --extra-experimental-features nix-command store verify --all";
         optimize = "sudo nix --extra-experimental-features nix-command store optimise";
