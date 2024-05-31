@@ -109,6 +109,10 @@ in
     ];
   };
 
+  # ZFS services
+  services.zfs.autoScrub.enable = true;
+  services.zfs.trim.enable = true;
+
   # enable fast dbus
   services.dbus.implementation = "broker";
 
@@ -423,6 +427,25 @@ in
     defaults = {
       aliases = "/etc/aliases";
     };
+  };
+
+  # send mails on ZFS events
+  services.zfs.zed = {
+    settings = {
+      ZED_DEBUG_LOG = "/tmp/zed.debug.log";
+      ZED_EMAIL_ADDR = [ "root" ];
+      ZED_EMAIL_PROG = "${pkgs.msmtp}/bin/msmtp";
+      ZED_EMAIL_OPTS = "@ADDRESS@";
+
+      ZED_NOTIFY_INTERVAL_SECS = 3600;
+      ZED_NOTIFY_VERBOSE = true;
+
+      ZED_USE_ENCLOSURE_LEDS = true;
+      ZED_SCRUB_AFTER_RESILVER = true;
+    };
+
+    # this option does not work; will return error
+    enableMail = false;
   };
 
   environment.etc = {
