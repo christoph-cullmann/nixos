@@ -135,6 +135,7 @@ export QT_QUICK_CONTROLS_STYLE_PATH=/home/cullmann/projects/kde/usr/lib/qml/QtQu
     qt6.qtwebengine
     qt6.qtwebsockets
     qt6.qtwebview
+    qt6Packages.qgpgme
     udev
     util-linux
     valgrind
