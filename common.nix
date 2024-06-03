@@ -29,19 +29,6 @@ in
   boot.kernelPackages = config.boot.zfs.package.latestCompatibleLinuxPackages;
   boot.supportedFilesystems = [ "zfs" ];
 
-  # more responsive kernel
-  boot.kernelPatches = [ {
-        name = "enable RT_FULL";
-        patch = null;
-        extraConfig = ''
-            PREEMPT y
-            PREEMPT_BUILD y
-            PREEMPT_VOLUNTARY n
-            PREEMPT_COUNT y
-            PREEMPTION y
-            '';
-     } ];
-
   # Use the systemd-boot EFI boot loader.
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
@@ -247,6 +234,7 @@ in
       CacheDirectory = "nix";
     };
   };
+  environment.variables.NIX_REMOTE = "daemon";
 
   # auto update
   system.autoUpgrade = {
