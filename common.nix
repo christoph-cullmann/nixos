@@ -29,8 +29,9 @@ in
   boot.kernelPackages = config.boot.zfs.package.latestCompatibleLinuxPackages;
   boot.supportedFilesystems = [ "zfs" ];
 
+  # no hibernate for ZFS systems
   # don't check for split locks, for KVM and Co.
-  boot.kernelParams = [ "split_lock_detect=off" ];
+  boot.kernelParams = [ "nohibernate" "split_lock_detect=off" ];
 
   # tweak ZFS
   boot.extraModprobeConfig = ''
