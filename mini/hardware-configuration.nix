@@ -10,9 +10,6 @@
   boot.initrd.kernelModules = [ "amdgpu" ];
   boot.kernelModules = [ "kvm-amd" ];
 
-  # don't check for split locks, for KVM and Co.
-  boot.kernelParams = [ "split_lock_detect=off" ];
-
   # efi partition
   fileSystems."/boot" =
     { device = "/dev/disk/by-id/nvme-CT4000P3PSSD8_2325E6E63746-part1";

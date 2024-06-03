@@ -10,9 +10,6 @@
   boot.initrd.kernelModules = [ "i915" ];
   boot.kernelModules = [ "kvm-intel" ];
 
-  # don't check for split locks, for KVM and Co.
-  boot.kernelParams = [ "split_lock_detect=off" ];
-
   # efi partition
   fileSystems."/boot" =
     { device = "/dev/disk/by-id/nvme-Seagate_FireCuda_530_ZP4000GM30013_7VS01VBM-part1";

@@ -49,6 +49,7 @@ export QT_QUICK_CONTROLS_STYLE_PATH=/home/cullmann/projects/kde/usr/lib/qml/QtQu
     hunspellDicts.en_US
     intltool
     isocodes
+    kdePackages.poppler
     lcms2
     libarchive
     libcanberra

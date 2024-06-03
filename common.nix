@@ -29,6 +29,17 @@ in
   boot.kernelPackages = config.boot.zfs.package.latestCompatibleLinuxPackages;
   boot.supportedFilesystems = [ "zfs" ];
 
+  # don't check for split locks, for KVM and Co.
+  boot.kernelParams = [ "split_lock_detect=off" ];
+
+  # tweak ZFS
+  boot.extraModprobeConfig = ''
+    options zfs zfs_prefetch_disable=1
+    options zfs zfs_arc_max=4294967296
+    options zfs zfs_arc_min=134217728
+    options zfs zfs_arc_meta_limit_percent=75
+  '';
+
   # Use the systemd-boot EFI boot loader.
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
