@@ -17,6 +17,9 @@ global
     # flat structure
     directory-layout flat
 
+    # Install directory for Qt
+    qt-install-dir ~/projects/kde/qt
+
     # Install directory for KDE software
     install-dir ~/projects/kde/usr
 

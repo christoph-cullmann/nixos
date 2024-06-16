@@ -10,8 +10,12 @@ myllvm.stdenv.mkDerivation {
   shellHook = ''
 export PATH=/home/cullmann/projects/kde/usr/bin:/home/cullmann/projects/kde:/home/cullmann/projects/kde/src/kdesrc-build:$PATH
 
-# LD_LIBRARY_PATH only needed if you are building without rpath
-# export LD_LIBRARY_PATH=/home/cullmann/projects/kde/usr/lib:/home/cullmann/projects/kde/usr/lib64:$LD_LIBRARY_PATH
+# fix Qt tests for rcc
+unset QT_RCC_SOURCE_DATE_OVERRIDE
+unset SOURCE_DATE_EPOCH
+
+# fix valgrind
+export QT_ENABLE_REGEXP_JIT=0
 
 export QT_PLUGIN_PATH=/home/cullmann/projects/kde/usr/lib/plugins:/home/cullmann/projects/kde/usr/lib64/plugins:${pkgs.qt6.qtbase.qtPluginPrefix}:${pkgs.lib.getBin pkgs.qt6.qtsvg}/${pkgs.qt6.qtbase.qtPluginPrefix}:${pkgs.lib.getBin pkgs.qt6.qtwayland}/${pkgs.qt6.qtbase.qtPluginPrefix}:${pkgs.lib.getBin pkgs.qt6.qtspeech}/${pkgs.qt6.qtbase.qtPluginPrefix}:$QT_PLUGIN_PATH
 export QML2_IMPORT_PATH=/home/cullmann/projects/kde/usr/lib/qml:$QML2_IMPORT_PATH
