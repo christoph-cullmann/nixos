@@ -314,7 +314,6 @@ in
     keychain
     pkgs.kdePackages.kmail
     pkgs.kdePackages.konsole
-    pkgs.kdePackages.konversation
     krita
     lazygit
     libjxl
