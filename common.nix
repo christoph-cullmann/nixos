@@ -291,6 +291,7 @@ in
     efibootmgr
     emacs
     eza
+    fd
     fdupes
     ffmpeg
     file
@@ -336,6 +337,7 @@ in
     pulseaudio
     pwgen
     qmk
+    ripgrep
     scc
     ssh-audit
     starship
