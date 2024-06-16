@@ -538,6 +538,7 @@ in
     # zsh with some nice prompt
     programs.starship.enable = true;
     programs.zoxide.enable = true;
+    programs.zoxide.options = [ "--cmd" "cd" ];
     programs.zsh.enable = true;
   };
 
@@ -572,6 +573,7 @@ in
     # zsh with some nice prompt and extra main user configuration
     programs.starship.enable = true;
     programs.zoxide.enable = true;
+    programs.zoxide.options = [ "--cmd" "cd" ];
     programs.zsh = {
       # zsh with extras wanted
       enable = true;
