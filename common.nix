@@ -279,6 +279,7 @@ in
     aspellDicts.de
     aspellDicts.en
     bat
+    bitwise
     borgbackup
     btop
     calibre
