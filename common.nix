@@ -278,6 +278,7 @@ in
     pkgs.kdePackages.ark
     aspellDicts.de
     aspellDicts.en
+    bat
     borgbackup
     btop
     calibre
@@ -286,6 +287,7 @@ in
     clinfo
     config.boot.kernelPackages.perf
     delta
+    duf
     efibootmgr
     emacs
     eza
@@ -314,6 +316,7 @@ in
     pkgs.kdePackages.konsole
     pkgs.kdePackages.konversation
     krita
+    lazygit
     libjxl
     libreoffice
     libva-utils
@@ -329,9 +332,11 @@ in
     parted
     pciutils
     pdftk
+    procs
     pulseaudio
     pwgen
     qmk
+    scc
     ssh-audit
     starship
     sysstat
