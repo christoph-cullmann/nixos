@@ -320,6 +320,7 @@ in
     libjxl
     libreoffice
     libva-utils
+    lsd
     lsof
     mc
     pkgs.kdePackages.neochat
@@ -589,6 +590,10 @@ in
         gc = "sudo nix-collect-garbage --delete-older-than 7d";
         verify = "sudo nix --extra-experimental-features nix-command store verify --all";
         optimize = "sudo nix --extra-experimental-features nix-command store optimise";
+
+        # overwrite some tools
+        cat = "bat";
+        ls = "lsd";
 
         # ssh around in the local network
         mac = "ssh mac.fritz.box";
