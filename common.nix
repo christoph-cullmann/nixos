@@ -260,6 +260,14 @@ in
   systemd.targets.hibernate.enable = false;
   systemd.targets.hybrid-sleep.enable = false;
 
+  # disable some services that I don't need
+  services.accounts-daemon.enable = pkgs.lib.mkForce false;
+  services.power-profiles-daemon.enable = pkgs.lib.mkForce false;
+  services.upower.enable = pkgs.lib.mkForce false;
+
+  # no need to be able to escalate privileges
+  security.polkit.enable = pkgs.lib.mkForce false;
+
   # let home manager install stuff to /etc/profiles
   home-manager.useUserPackages = true;
 
@@ -411,7 +419,7 @@ in
 
     # more fonts
     packages = with pkgs; [
-      # includes nice developer fonts and used by powerlevel10k: https://www.nerdfonts.com/
+      # includes nice developer fonts and used by starship
       nerdfonts
 
       # unicode capable fonts
