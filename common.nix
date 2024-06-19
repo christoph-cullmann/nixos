@@ -266,9 +266,6 @@ in
   services.power-profiles-daemon.enable = pkgs.lib.mkForce false;
   services.upower.enable = pkgs.lib.mkForce false;
 
-  # no need to be able to escalate privileges
-  security.polkit.enable = pkgs.lib.mkForce false;
-
   # let home manager install stuff to /etc/profiles
   home-manager.useUserPackages = true;
 
