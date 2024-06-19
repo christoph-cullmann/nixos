@@ -262,6 +262,7 @@ in
 
   # disable some services that I don't need
   services.accounts-daemon.enable = pkgs.lib.mkForce false;
+  services.avahi.enable = pkgs.lib.mkForce false;
   services.power-profiles-daemon.enable = pkgs.lib.mkForce false;
   services.upower.enable = pkgs.lib.mkForce false;
 
