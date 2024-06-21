@@ -445,7 +445,7 @@ in
   };
 
   # OpenGL
-  hardware.opengl.enable = true;
+  hardware.graphics.enable = true;
 
   # try to ensure we can use our network LaserJet
   services.printing.enable = true;

@@ -15,7 +15,7 @@
     ];
 
   # intel graphics
-  hardware.opengl.extraPackages = with pkgs; [ intel-media-driver intel-compute-runtime ];
+  hardware.graphics.extraPackages = with pkgs; [ intel-media-driver intel-compute-runtime ];
 
   # our hostname and an ID for ZFS
   networking.hostName = "neko";

@@ -15,7 +15,7 @@
     ];
 
   # amd graphics
-  hardware.opengl.extraPackages = with pkgs; [ amdvlk rocm-opencl-icd rocm-opencl-runtime ];
+  hardware.graphics.extraPackages = with pkgs; [ amdvlk rocm-opencl-icd rocm-opencl-runtime ];
 
   # our hostname and an ID for ZFS
   networking.hostName = "mini";
