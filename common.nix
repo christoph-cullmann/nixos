@@ -446,7 +446,6 @@ in
 
   # OpenGL
   hardware.opengl.enable = true;
-  hardware.opengl.driSupport = true;
 
   # try to ensure we can use our network LaserJet
   services.printing.enable = true;
