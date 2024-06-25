@@ -542,9 +542,7 @@ in
     # initial version
     home.stateVersion = "22.11";
 
-    # zsh with some nice prompt
-    programs.zoxide.enable = true;
-    programs.zoxide.options = [ "--cmd" "cd" ];
+    # basic ZSH
     programs.zsh.enable = true;
   };
 
@@ -576,9 +574,7 @@ in
     # initial version
     home.stateVersion = "22.11";
 
-    # zsh with some nice prompt and extra main user configuration
-    programs.zoxide.enable = true;
-    programs.zoxide.options = [ "--cmd" "cd" ];
+    # ZSH with some nice prompt and extra main user configuration
     programs.zsh = {
       # zsh with extras wanted
       enable = true;
@@ -613,6 +609,12 @@ in
         neko = "ssh neko.fritz.box";
         nekoroot = "ssh root@neko.fritz.box";
       };
+    };
+
+    # nice cd
+    programs.zoxide = {
+      enable = true;
+      options = [ "--cmd" "cd" ];
     };
 
     # enable keychain
