@@ -330,6 +330,7 @@ in
     lsd
     lsof
     mc
+    micro
     pkgs.kdePackages.neochat
     nixos-install-tools
     nmap
@@ -506,6 +507,9 @@ in
   programs.zsh.enable = true;
   users.defaultUserShell = pkgs.zsh;
   environment.shells = with pkgs; [ zsh ];
+
+  # use micro as default terminal editor
+  environment.variables.EDITOR = "micro";
 
   # enable VirtualBox
   virtualisation.virtualbox.host.enable = true;
