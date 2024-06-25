@@ -2,6 +2,58 @@
 let
   impermanence = builtins.fetchTarball "https://github.com/nix-community/impermanence/archive/master.tar.gz";
   home-manager = builtins.fetchTarball "https://github.com/nix-community/home-manager/archive/master.tar.gz";
+
+  # shared user settings
+  sharedUserSettings = {
+    # init password
+    hashedPassword = builtins.readFile "/data/nixos/password.secret";
+
+    # use fixed auth keys
+    openssh.authorizedKeys.keys = pkgs.lib.splitString "\n" (builtins.readFile "/data/nixos/authorized_keys.secret");
+  };
+
+  # shared home manager settings
+  sharedHomeManagerSettings = {
+    # initial version
+    home.stateVersion = "22.11";
+
+    # zsh with some nice prompt and extra main user configuration
+    programs.starship.enable = true;
+    programs.zoxide.enable = true;
+    programs.zoxide.options = [ "--cmd" "cd" ];
+    programs.zsh = {
+      # zsh with extras wanted
+      enable = true;
+      enableCompletion = true;
+      autosuggestion.enable = true;
+      history.share = false;
+      syntaxHighlighting.enable = true;
+
+      # aliases
+      shellAliases = {
+        # system build/update/cleanup
+        update = "sudo TMPDIR=/var/cache/nix nixos-rebuild boot";
+        upgrade = "sudo TMPDIR=/var/cache/nix nixos-rebuild boot --upgrade";
+        updatenow = "sudo TMPDIR=/var/cache/nix nixos-rebuild switch";
+        upgradenow = "sudo TMPDIR=/var/cache/nix nixos-rebuild switch --upgrade";
+        gc = "sudo nix-collect-garbage --delete-older-than 7d";
+        verify = "sudo nix --extra-experimental-features nix-command store verify --all";
+        optimize = "sudo nix --extra-experimental-features nix-command store optimise";
+
+        # overwrite some tools
+        cat = "bat";
+        ls = "lsd";
+
+        # ssh around in the local network
+        mac = "ssh mac.fritz.box";
+        macroot = "ssh root@mac.fritz.box";
+        mini = "ssh mini.fritz.box";
+        miniroot = "ssh root@mini.fritz.box";
+        neko = "ssh neko.fritz.box";
+        nekoroot = "ssh root@neko.fritz.box";
+      };
+    };
+  };
 in
 {
   #
@@ -526,34 +578,12 @@ in
   # all users and passwords are defined here
   users.mutableUsers = false;
 
-  #
-  # administrator
-  #
+  # administrator, just the shared settings
+  users.users.root = sharedUserSettings;
+  home-manager.users.root = sharedHomeManagerSettings;
 
-  users.users.root = {
-    # init password
-    hashedPassword = builtins.readFile "/data/nixos/password.secret";
-
-    # use fixed auth keys
-    openssh.authorizedKeys.keys = pkgs.lib.splitString "\n" (builtins.readFile "/data/nixos/authorized_keys.secret");
-  };
-
-  home-manager.users.root = {
-    # initial version
-    home.stateVersion = "22.11";
-
-    # zsh with some nice prompt
-    programs.starship.enable = true;
-    programs.zoxide.enable = true;
-    programs.zoxide.options = [ "--cmd" "cd" ];
-    programs.zsh.enable = true;
-  };
-
-  #
-  # my main user
-  #
-
-  users.users.cullmann = {
+  # main user
+  users.users.cullmann = sharedUserSettings // {
     # hard code UID for stability over machines
     uid = 1000;
 
@@ -565,55 +595,9 @@ in
 
     # allow VirtualBox and sudo for my main user
     extraGroups = [ "vboxusers" "wheel" ];
-
-    # init password
-    hashedPassword = builtins.readFile "/data/nixos/password.secret";
-
-    # use fixed auth keys
-    openssh.authorizedKeys.keys = pkgs.lib.splitString "\n" (builtins.readFile "/data/nixos/authorized_keys.secret");
   };
 
-  home-manager.users.cullmann = {
-    # initial version
-    home.stateVersion = "22.11";
-
-    # zsh with some nice prompt and extra main user configuration
-    programs.starship.enable = true;
-    programs.zoxide.enable = true;
-    programs.zoxide.options = [ "--cmd" "cd" ];
-    programs.zsh = {
-      # zsh with extras wanted
-      enable = true;
-      enableCompletion = true;
-      autosuggestion.enable = true;
-      history.share = false;
-      syntaxHighlighting.enable = true;
-
-      # aliases
-      shellAliases = {
-        # system build/update/cleanup
-        update = "sudo TMPDIR=/var/cache/nix nixos-rebuild boot";
-        upgrade = "sudo TMPDIR=/var/cache/nix nixos-rebuild boot --upgrade";
-        updatenow = "sudo TMPDIR=/var/cache/nix nixos-rebuild switch";
-        upgradenow = "sudo TMPDIR=/var/cache/nix nixos-rebuild switch --upgrade";
-        gc = "sudo nix-collect-garbage --delete-older-than 7d";
-        verify = "sudo nix --extra-experimental-features nix-command store verify --all";
-        optimize = "sudo nix --extra-experimental-features nix-command store optimise";
-
-        # overwrite some tools
-        cat = "bat";
-        ls = "lsd";
-
-        # ssh around in the local network
-        mac = "ssh mac.fritz.box";
-        macroot = "ssh root@mac.fritz.box";
-        mini = "ssh mini.fritz.box";
-        miniroot = "ssh root@mini.fritz.box";
-        neko = "ssh neko.fritz.box";
-        nekoroot = "ssh root@neko.fritz.box";
-      };
-    };
-
+  home-manager.users.cullmann = sharedHomeManagerSettings // {
     # enable keychain
     programs.keychain = {
       enable = true;
