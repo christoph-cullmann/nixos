@@ -342,12 +342,12 @@ in
     pdftk
     procs
     pulseaudio
+    pure-prompt
     pwgen
     qmk
     ripgrep
     scc
     ssh-audit
-    starship
     sysstat
     tcl
     texlive.combined.scheme-small
@@ -543,7 +543,6 @@ in
     home.stateVersion = "22.11";
 
     # zsh with some nice prompt
-    programs.starship.enable = true;
     programs.zoxide.enable = true;
     programs.zoxide.options = [ "--cmd" "cd" ];
     programs.zsh.enable = true;
@@ -567,10 +566,10 @@ in
     extraGroups = [ "vboxusers" "wheel" ];
 
     # init password
-    hashedPassword = builtins.readFile "/data/nixos/password.secret";
+    hashedPassword = config.users.users.root.hashedPassword;
 
     # use fixed auth keys
-    openssh.authorizedKeys.keys = pkgs.lib.splitString "\n" (builtins.readFile "/data/nixos/authorized_keys.secret");
+    openssh.authorizedKeys.keys = config.users.users.root.openssh.authorizedKeys.keys;
   };
 
   home-manager.users.cullmann = {
@@ -578,7 +577,6 @@ in
     home.stateVersion = "22.11";
 
     # zsh with some nice prompt and extra main user configuration
-    programs.starship.enable = true;
     programs.zoxide.enable = true;
     programs.zoxide.options = [ "--cmd" "cd" ];
     programs.zsh = {
@@ -588,6 +586,9 @@ in
       autosuggestion.enable = true;
       history.share = false;
       syntaxHighlighting.enable = true;
+
+      # use pure prompt
+      initExtra = "prompt pure";
 
       # aliases
       shellAliases = {
