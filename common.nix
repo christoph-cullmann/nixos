@@ -298,6 +298,7 @@ in
     efibootmgr
     emacs
     eza
+    f2
     fd
     fdupes
     ffmpeg
