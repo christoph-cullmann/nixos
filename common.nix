@@ -335,6 +335,7 @@ in
     nixos-install-tools
     nmap
     nvme-cli
+    oh-my-posh
     okteta
     pkgs.kdePackages.okular
     p7zip
@@ -343,7 +344,6 @@ in
     pdftk
     procs
     pulseaudio
-    pure-prompt
     pwgen
     qmk
     ripgrep
@@ -587,9 +587,6 @@ in
       history.share = false;
       syntaxHighlighting.enable = true;
 
-      # use pure prompt
-      initExtra = "prompt pure";
-
       # aliases
       shellAliases = {
         # system build/update/cleanup
@@ -613,6 +610,12 @@ in
         neko = "ssh neko.fritz.box";
         nekoroot = "ssh root@neko.fritz.box";
       };
+    };
+
+    # nice prompt
+    programs.oh-my-posh = {
+      enable = true;
+      useTheme = "slim";
     };
 
     # nice cd
