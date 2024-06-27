@@ -48,6 +48,11 @@
     options = [ "--cmd" "cd" ];
   };
 
+  # integrate fuzzy search
+  programs.fzf = {
+    enable = true;
+  };
+
   # enable keychain, we use the main user key
   programs.keychain = {
     enable = true;
