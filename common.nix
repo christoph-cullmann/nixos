@@ -515,6 +515,9 @@ in
   programs.zsh.enable = true;
   environment.shells = with pkgs; [ zsh ];
 
+  # needed for the ZSH completion
+  environment.pathsToLink = [ "/share/zsh" ];
+
   # use micro as default terminal editor
   environment.variables.EDITOR = "micro";
 
