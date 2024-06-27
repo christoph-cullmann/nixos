@@ -139,10 +139,9 @@ in
   # allow all firmware
   hardware.enableAllFirmware = true;
 
-  # ensure firewall is up, allow ssh and http in
+  # ensure firewall is up, allow ssh in
   networking.firewall.enable = true;
   networking.firewall.allowedTCPPorts = [ 22 ];
-  networking.firewall.logRefusedConnections = false;
 
   # OpenSSH daemon config
   services.openssh = {
