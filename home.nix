@@ -2,14 +2,31 @@
   # initial version
   home.stateVersion = "22.11";
 
-  # ZSH with some nice prompt and extra main user configuration
+  # ZSH with good config
   programs.zsh = {
-    # zsh with extras wanted
+    # ZSH on
     enable = true;
+
+    # we want completion
     enableCompletion = true;
+
+    # we want suggestions of already typed stuff
     autosuggestion.enable = true;
-    history.share = false;
+
+    # we want nice command highlighting
     syntaxHighlighting.enable = true;
+
+    # better history
+    history = {
+      # save timestamps
+      extended = true;
+
+      # kill dupes over full history
+      ignoreAllDups = true;
+
+      # don't share history between sessions
+      share = false;
+    };
 
     # aliases
     shellAliases = {
