@@ -124,8 +124,13 @@ in
     ];
   };
 
-  # ZFS services
-  services.zfs.autoScrub.enable = true;
+  # ensure our data is not rotting
+  services.zfs.autoScrub = {
+    enable = true;
+    interval = "weekly";
+  };
+
+  # trim the stuff, we use SSDs
   services.zfs.trim.enable = true;
 
   # enable fast dbus
