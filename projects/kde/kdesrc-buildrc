@@ -2,8 +2,8 @@ global
     # use the latest KF6 and Qt6-based software.
     branch-group kf6-qt6
 
-    # we want .kateproject files with ninja, turn off some Qt 5 things to have less dependencies
-    cmake-options -G "Kate - Ninja" -DBUILD_WITH_QT6=ON -DQT_MAJOR_VERSION=6 -DPHONON_BUILD_QT5=OFF -DBUILD_QT5=OFF
+    # we want ninja, turn off some Qt 5 things to have less dependencies
+    cmake-options -G "Ninja" -DBUILD_WITH_QT6=ON -DQT_MAJOR_VERSION=6 -DPHONON_BUILD_QT5=OFF -DBUILD_QT5=OFF
 
     # Restrict make and ninja to using no more than 8 separate compile jobs even
     # when more CPU is available, to avoid running out of memory
