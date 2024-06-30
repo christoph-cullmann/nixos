@@ -56,7 +56,7 @@
   # nice prompt
   programs.oh-my-posh = {
     enable = true;
-    useTheme = "slim";
+    useTheme = "tokyo";
   };
 
   # nice cd

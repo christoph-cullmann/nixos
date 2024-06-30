@@ -316,6 +316,7 @@ in
     gitFull
     glxinfo
     go
+    gorilla-bin
     gptfdisk
     heaptrack
     hotspot
