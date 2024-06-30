@@ -42,6 +42,7 @@
       # overwrite some tools
       cat = "bat";
       ls = "lsd";
+      la = "lsd -ahl";
 
       # ssh around in the local network
       mac = "ssh mac.fritz.box";
