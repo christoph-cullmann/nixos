@@ -344,7 +344,6 @@ in
     nixos-install-tools
     nmap
     nvme-cli
-    oh-my-posh
     okteta
     pkgs.kdePackages.okular
     p7zip

@@ -55,9 +55,8 @@
   };
 
   # nice prompt
-  programs.oh-my-posh = {
+  programs.starship = {
     enable = true;
-    useTheme = "unicorn";
   };
 
   # nice cd
