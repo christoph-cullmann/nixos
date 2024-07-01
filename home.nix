@@ -57,7 +57,7 @@
   # nice prompt
   programs.oh-my-posh = {
     enable = true;
-    useTheme = "kushal";
+    useTheme = "unicorn";
   };
 
   # nice cd
