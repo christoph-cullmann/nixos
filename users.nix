@@ -9,6 +9,7 @@ in
       "${home-manager}/nixos"
   ];
 
+  # define the users we have on our systems
   users = {
     # all users and passwords are defined here
     mutableUsers = false;
