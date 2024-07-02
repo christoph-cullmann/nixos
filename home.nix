@@ -39,6 +39,9 @@
       verify = "sudo nix --extra-experimental-features nix-command store verify --all";
       optimize = "sudo nix --extra-experimental-features nix-command store optimise";
 
+      # list latest files last
+      ltr = "eza -l -s modified";
+
       # ssh around in the local network
       mac = "ssh mac.fritz.box";
       macroot = "ssh root@mac.fritz.box";
