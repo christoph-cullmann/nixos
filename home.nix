@@ -90,6 +90,7 @@
   # integrate fuzzy search
   programs.fzf = {
     enable = true;
+    enableZshIntegration = true;
   };
 
   # better ls, adds la and Co. aliases, too
