@@ -272,17 +272,11 @@ in
     allowReboot = false;
   };
 
-  # avoid suspend ever to be triggered
+  # avoid suspend ever to be triggered, ZFS dislikes that
   systemd.targets.sleep.enable = false;
   systemd.targets.suspend.enable = false;
   systemd.targets.hibernate.enable = false;
   systemd.targets.hybrid-sleep.enable = false;
-
-  # disable some services that I don't need
-  services.accounts-daemon.enable = pkgs.lib.mkForce false;
-  services.avahi.enable = pkgs.lib.mkForce false;
-  services.power-profiles-daemon.enable = pkgs.lib.mkForce false;
-  services.upower.enable = pkgs.lib.mkForce false;
 
   # let home manager install stuff to /etc/profiles
   home-manager.useUserPackages = true;
