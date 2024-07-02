@@ -1,6 +1,14 @@
 { config, pkgs, ... }:
-
+let
+  home-manager = builtins.fetchTarball "https://github.com/nix-community/home-manager/archive/master.tar.gz";
+in
 {
+  # get home manager working
+  imports = [
+      # home manager for per user config
+      "${home-manager}/nixos"
+  ];
+
   users = {
     # all users and passwords are defined here
     mutableUsers = false;
@@ -45,7 +53,16 @@
     };
   };
 
-  # use shared home manager settings for all users
-  home-manager.users.root = import ./home.nix;
-  home-manager.users.cullmann = import ./home.nix;
+  # home manager settings
+  home-manager = {
+    # let home manager install stuff to /etc/profiles
+    useUserPackages = true;
+
+    # use global pkgs
+    useGlobalPkgs = true;
+
+    # use shared home manager settings for all users
+    users.root = import ./home.nix;
+    users.cullmann = import ./home.nix;
+  };
 }

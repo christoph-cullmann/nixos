@@ -1,20 +1,16 @@
 { config, pkgs, ... }:
 let
   impermanence = builtins.fetchTarball "https://github.com/nix-community/impermanence/archive/master.tar.gz";
-  home-manager = builtins.fetchTarball "https://github.com/nix-community/home-manager/archive/master.tar.gz";
 in
 {
   #
   # stuff shared between home machines
   #
 
-  # get impermanence & home manager working
+  # get impermanence working & include more shared parts
   imports = [
       # manage persistent files
       "${impermanence}/nixos.nix"
-
-      # home manager for per user config
-      "${home-manager}/nixos"
 
       # our users
       "/data/nixos/users.nix"
@@ -277,12 +273,6 @@ in
   systemd.targets.suspend.enable = false;
   systemd.targets.hibernate.enable = false;
   systemd.targets.hybrid-sleep.enable = false;
-
-  # let home manager install stuff to /etc/profiles
-  home-manager.useUserPackages = true;
-
-  # use global pkgs
-  home-manager.useGlobalPkgs = true;
 
   # allow unfree packages
   nixpkgs.config.allowUnfree = true;
