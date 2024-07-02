@@ -62,7 +62,7 @@ in
     # use global pkgs
     useGlobalPkgs = true;
 
-    # use shared home manager settings for all users
+    # use shared home manager settings
     users.root = import ./home.nix;
     users.cullmann = import ./home.nix;
   };
