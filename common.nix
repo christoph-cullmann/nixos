@@ -38,10 +38,21 @@ in
 
   # tweak ZFS
   boot.extraModprobeConfig = ''
-    options zfs zfs_prefetch_disable=1
-    options zfs zfs_arc_max=4294967296
-    options zfs zfs_arc_min=134217728
     options zfs zfs_arc_meta_limit_percent=75
+    options zfs zfs_arc_min=134217728
+    options zfs zfs_arc_max=4294967296
+    options zfs zfs_txg_timeout=30
+    options zfs zfs_vdev_scrub_min_active=1
+    options zfs zfs_vdev_scrub_max_active=1
+    options zfs zfs_vdev_sync_write_min_active=8
+    options zfs zfs_vdev_sync_write_max_active=32
+    options zfs zfs_vdev_sync_read_min_active=8
+    options zfs zfs_vdev_sync_read_max_active=32
+    options zfs zfs_vdev_async_read_min_active=8
+    options zfs zfs_vdev_async_read_max_active=32
+    options zfs zfs_vdev_async_write_min_active=8
+    options zfs zfs_vdev_async_write_max_active=32
+    options zfs zfs_vdev_def_queue_depth=128
   '';
 
   # Use the systemd-boot EFI boot loader.
