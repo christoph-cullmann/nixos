@@ -286,7 +286,6 @@ in
     pkgs.kdePackages.ark
     aspellDicts.de
     aspellDicts.en
-    bat
     bitwise
     borgbackup
     btop
@@ -299,9 +298,7 @@ in
     duf
     efibootmgr
     emacs
-    eza
     f2
-    fd
     fdupes
     ffmpeg
     file
@@ -331,7 +328,6 @@ in
     libjxl
     libreoffice
     libva-utils
-    lsd
     lsof
     mc
     micro

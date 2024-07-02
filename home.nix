@@ -39,11 +39,6 @@
       verify = "sudo nix --extra-experimental-features nix-command store verify --all";
       optimize = "sudo nix --extra-experimental-features nix-command store optimise";
 
-      # overwrite some tools
-      cat = "bat";
-      ls = "lsd";
-      la = "lsd -ahl";
-
       # ssh around in the local network
       mac = "ssh mac.fritz.box";
       macroot = "ssh root@mac.fritz.box";
@@ -85,11 +80,28 @@
   # nice cd
   programs.zoxide = {
     enable = true;
+    enableZshIntegration = true;
     options = [ "--cmd" "cd" ];
   };
 
   # integrate fuzzy search
   programs.fzf = {
+    enable = true;
+  };
+
+  # better ls, adds la and Co. aliases, too
+  programs.eza = {
+    enable = true;
+    enableZshIntegration = true;
+  };
+
+  # better cat
+  programs.bat = {
+    enable = true;
+  };
+
+  # better find
+  programs.fd = {
     enable = true;
   };
 
