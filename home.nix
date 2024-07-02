@@ -55,9 +55,31 @@
   };
 
   # nice prompt
-  programs.oh-my-posh = {
+  # https://starship.rs/config/
+  # https://draculatheme.com/starship
+  programs.starship = {
     enable = true;
-    useTheme = "unicorn";
+    enableZshIntegration = true;
+    settings = {
+      aws.style = "bold #ffb86c";
+      cmd_duration.style = "bold #f1fa8c";
+      directory.style = "bold #50fa7b";
+      hostname.style = "bold #ff5555";
+      git_branch.style = "bold #ff79c6";
+      git_status.style = "bold #ff5555";
+      username = {
+        format = "[$user]($style) on ";
+        style_user = "bold #bd93f9";
+      };
+      character = {
+        success_symbol = "[❯](bold #f8f8f2)";
+        error_symbol = "[❯](bold #ff5555)";
+      };
+      directory = {
+        truncation_length = 8;
+        truncate_to_repo = false;
+      };
+    };
   };
 
   # nice cd
