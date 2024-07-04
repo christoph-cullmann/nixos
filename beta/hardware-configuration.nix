@@ -12,16 +12,9 @@
 
   # efi partition
   fileSystems."/boot" =
-    { device = "/dev/disk/by-id/nvme-CT4000P3PSSD8_2325E6E63746-part1";
+    { device = "/dev/disk/by-id/nvme-SAMSUNG_MZVLB1T0HBLR-000L2_S4DZNX0R362286-part1";
       fsType = "vfat";
       neededForBoot = true;
-    };
-
-  # vms
-  fileSystems."/home/cullmann/vms" =
-    { device = "vpool/vms";
-      fsType = "zfs";
-      depends = [ "/home" ];
     };
 
   nixpkgs.hostPlatform = lib.mkDefault "x86_64-linux";

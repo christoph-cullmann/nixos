@@ -18,8 +18,8 @@
   hardware.graphics.extraPackages = with pkgs; [ amdvlk rocm-opencl-icd rocm-opencl-runtime ];
 
   # our hostname and an ID for ZFS
-  networking.hostName = "mini";
-  networking.hostId = "e925ccfb";
+  networking.hostName = "beta";
+  networking.hostId = "3f20def9";
 
   # classic dhcpcd
   networking.networkmanager.enable = false;

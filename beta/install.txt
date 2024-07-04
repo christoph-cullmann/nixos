@@ -25,8 +25,8 @@ efibootmgr
 # Defining some helper variables (these will be used in later code
 # blocks as well, so make sure to use the same terminal session or
 # redefine them later)
-DISK=/dev/disk/by-id/nvme-CT4000P3PSSD8_2325E6E63746
-HOST=mini
+DISK=/dev/disk/by-id/nvme-SAMSUNG_MZVLB1T0HBLR-000L2_S4DZNX0R362286
+HOST=beta
 
 # ensure 4k sector size
 nvme format --lbaf=1 --force $DISK
