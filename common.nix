@@ -415,8 +415,8 @@ in
 
     # more fonts
     packages = with pkgs; [
-      # includes nice developer fonts and used by starship
-      nerdfonts
+      # add patched fonts for editor & terminal
+      (nerdfonts.override { fonts = [ "Iosevka" "IosevkaTerm" ]; })
 
       # unicode capable fonts
       babelstone-han
