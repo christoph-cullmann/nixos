@@ -131,6 +131,10 @@ in
 
       # nix tmp dir for rebuilds, don't fill our tmpfs root with that
       { directory = "/var/cache/nix"; user = "root"; group = "root"; mode = "u=rwx,g=rx,o=rx"; }
+
+      # NetworkManager connections
+      { directory = "/etc/NetworkManager"; user = "root"; group = "root"; mode = "u=rwx,g=rx,o=rx"; }
+      { directory = "/var/lib/NetworkManager"; user = "root"; group = "root"; mode = "u=rwx,g=rx,o=rx"; }
     ];
   };
 
