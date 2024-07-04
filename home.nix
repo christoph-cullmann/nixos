@@ -43,6 +43,8 @@
       ltr = "eza -l -s modified";
 
       # ssh around in the local network
+      beta = "ssh beta.fritz.box";
+      betaroot = "ssh root@beta.fritz.box";
       mac = "ssh mac.fritz.box";
       macroot = "ssh root@mac.fritz.box";
       mini = "ssh mini.fritz.box";
