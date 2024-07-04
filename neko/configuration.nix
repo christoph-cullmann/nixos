@@ -23,4 +23,7 @@
 
   # classic dhcpcd
   networking.networkmanager.enable = false;
+
+  # EurKey layout
+  services.xserver.xkb.layout = "eu";
 }

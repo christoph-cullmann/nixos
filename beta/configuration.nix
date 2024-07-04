@@ -23,4 +23,7 @@
 
   # classic dhcpcd
   networking.networkmanager.enable = false;
+
+  # german laptop keyboard
+  services.xserver.xkb.layout = "de";
 }

@@ -195,21 +195,19 @@ in
   # allow to have all locales
   i18n.supportedLocales = [ "all" ];
 
-  # EurKey layout everywhere
-  services.xserver.xkb.layout = "eu";
+  # use X11/wayland layout for console, too
   console.useXkbConfig = true;
 
-  # enable SDDM & the KDE Plasma Desktop Environment
-  services.xserver.enable = true;
-  services.displayManager.sddm.enable = true;
+  # enable greetd & the KDE Plasma Desktop Environment
   services.desktopManager.plasma6.enable = true;
-  programs.ssh.askPassword = pkgs.lib.mkForce "${pkgs.ksshaskpass.out}/bin/ksshaskpass";
-
-  # other desktop environments for testing
-  services.xserver.desktopManager.enlightenment.enable = true;
-  services.xserver.desktopManager.gnome.enable = true;
-  services.xserver.desktopManager.mate.enable = true;
-  services.xserver.desktopManager.xfce.enable = true;
+  services.greetd = {
+    enable = true;
+    settings = {
+      default_session = {
+        command = "${pkgs.greetd.tuigreet}/bin/tuigreet --time --cmd '${pkgs.kdePackages.plasma-workspace}/libexec/plasma-dbus-run-session-if-needed ${pkgs.kdePackages.plasma-workspace}/bin/startplasma-wayland'";
+      };
+    };
+  };
 
   # enable sound with PipeWire
   sound.enable = true;
