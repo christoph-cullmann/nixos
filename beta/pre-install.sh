@@ -1,12 +1,4 @@
 #
-# enable ssh for root
-#
-
-systemctl start sshd
-sudo bash
-passwd
-
-#
 # kill old efi boot stuff
 #
 
@@ -109,63 +101,3 @@ mount
 
 # configure
 nixos-generate-config --root /mnt
-
-# save /mnt/etc/nixos/hardware-configuration.nix /mnt/etc/nixos/configuration.nix
-
-cp /mnt/etc/nixos/hardware-configuration.nix /tmp
-cp /mnt/etc/nixos/configuration.nix /tmp
-
-# copy config data
-
-sudo scp -r /data/nixos root@192.168.13.100:/mnt/data
-
-# install
-
-nixos-install --option experimental-features 'nix-command flakes' --no-root-passwd --root /mnt
-
-# unmount all stuff
-
-umount -Rl /data /mnt
-zpool export -a
-
-# sync all /data after the install
-
-sudo -E rsync -va --delete --one-file-system /data root@192.168.13.100:/
-
-#
-# after install tasks for extra file systems
-#
-
-# create vms disk
-
-DD=/dev/disk/by-id/ata-CT2000MX500SSD1_2138E5D5061F
-sgdisk --zap-all $DD
-blkdiscard -v $DD
-wipefs -a $DD
-
-sleep 5
-
-# ZFS zpool creation with encryption
-zpool create \
-    -o ashift=12 \
-    -o autotrim=on \
-    -O acltype=posixacl \
-    -O atime=off \
-    -O canmount=off \
-    -O compression=on \
-    -O dnodesize=auto \
-    -O normalization=formD \
-    -O xattr=sa \
-    -O mountpoint=none \
-    -O encryption=on \
-    -O keylocation=file:///data/nixos/key-vms.secret \
-    -O keyformat=passphrase \
-    vpool $DD
-
-sleep 5
-
-# create all the volumes
-zfs create -o mountpoint=legacy vpool/vms
-
-# update passphrase later
-# zfs change-key -o keylocation=file:///data/nixos/key-vms.secret vpool
