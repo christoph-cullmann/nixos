@@ -149,6 +149,9 @@ in
   # allow all firmware
   hardware.enableAllFirmware = true;
 
+  # use NetworkManager, works well for WiFi, too
+  networking.networkmanager.enable = true;
+
   # ensure firewall is up, allow ssh in
   networking.firewall.enable = true;
   networking.firewall.allowedTCPPorts = [ 22 ];

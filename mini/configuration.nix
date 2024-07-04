@@ -14,15 +14,9 @@
       /data/nixos/common.nix
     ];
 
-  # amd graphics
-  hardware.graphics.extraPackages = with pkgs; [ amdvlk rocm-opencl-icd rocm-opencl-runtime ];
-
   # our hostname and an ID for ZFS
   networking.hostName = "mini";
   networking.hostId = "e925ccfb";
-
-  # classic dhcpcd
-  networking.networkmanager.enable = false;
 
   # EurKey layout
   services.xserver.xkb.layout = "eu";
