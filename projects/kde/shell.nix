@@ -70,6 +70,7 @@ export QT_QUICK_CONTROLS_STYLE_PATH=/home/cullmann/projects/kde/usr/lib/qml/QtQu
     libpcap
     libpng
     libraw
+    libsecret
     libselinux
     libsndfile
     libspectre
@@ -87,6 +88,7 @@ export QT_QUICK_CONTROLS_STYLE_PATH=/home/cullmann/projects/kde/usr/lib/qml/QtQu
     myllvm.libclang.python # git-clang-format
     networkmanager
     ninja
+    olm
     openal
     openjpeg
     openssl
