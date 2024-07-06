@@ -45,6 +45,8 @@
       # ssh around in the local network
       beta = "ssh beta.fritz.box";
       betaroot = "ssh root@beta.fritz.box";
+      bsd = "ssh bsd.fritz.box";
+      bsdroot = "ssh root@bsd.fritz.box";
       mac = "ssh mac.fritz.box";
       macroot = "ssh root@mac.fritz.box";
       mini = "ssh mini.fritz.box";
