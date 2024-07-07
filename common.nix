@@ -468,7 +468,7 @@ in
     serverConfiguration = ''
       table aliases file:/etc/mail/aliases
       table secrets file:/etc/mail/secrets
-      listen on lo
+      listen on localhost
       action "local" mda "procmail -f -" virtual <aliases>
       action "relay" relay host smtps://smtp@moon.babylon2k.com auth <secrets> mail-from bot@cullmann.io
       match for local action "local"
