@@ -334,12 +334,14 @@ in
     libreoffice
     libva-utils
     lsof
+    mailutils
     mc
     micro
     pkgs.kdePackages.neochat
     nixos-install-tools
     nmap
     nvme-cli
+    procmail
     okteta
     pkgs.kdePackages.okular
     p7zip
@@ -459,24 +461,27 @@ in
   # dconf is needed for gtk, see https://nixos.wiki/wiki/KDE
   programs.dconf.enable = true;
 
-  # ensure cron and Co. can send mails
-  programs.msmtp = {
+  # ensure machine can send mails
+  services.opensmtpd = {
     enable = true;
     setSendmail = true;
-    accounts = {
-      default = {
-        auth = true;
-        tls = true;
-        from = "christoph@cullmann.io";
-        host = "moon.babylon2k.com";
-        port = "587";
-        user = builtins.readFile "/data/nixos/mailuser.secret";
-        passwordeval = "cat /data/nixos/mailpassword.secret";
-      };
-    };
-    defaults = {
-      aliases = "/etc/aliases";
-    };
+    serverConfiguration = ''
+      table aliases file:/etc/mail/aliases
+      table secrets file:/etc/mail/secrets
+      listen on lo
+      action "local" mda "procmail -f -" virtual <aliases>
+      action "relay" relay host smtps://smtp@moon.babylon2k.com auth <secrets> mail-from bot@cullmann.io
+      match for local action "local"
+      match for any action "relay"
+    '';
+  };
+  environment.etc."mail/aliases" = {
+    text = "@ christoph@cullmann.io";
+    mode = "0400";
+  };
+  environment.etc."mail/secrets" = {
+    text = builtins.readFile "/data/nixos/mail.secret";
+    mode = "0400";
   };
 
   # send mails on ZFS events
@@ -484,7 +489,7 @@ in
     settings = {
       ZED_DEBUG_LOG = "/tmp/zed.debug.log";
       ZED_EMAIL_ADDR = [ "root" ];
-      ZED_EMAIL_PROG = "${pkgs.msmtp}/bin/msmtp";
+      ZED_EMAIL_PROG = "/run/wrappers/bin/sendmail";
       ZED_EMAIL_OPTS = "@ADDRESS@";
 
       ZED_NOTIFY_INTERVAL_SECS = 3600;
@@ -496,15 +501,6 @@ in
 
     # this option does not work; will return error
     enableMail = false;
-  };
-
-  environment.etc = {
-    "aliases" = {
-      text = ''
-        root: christoph@cullmann.io
-      '';
-      mode = "0644";
-    };
   };
 
   # use ZSH per default
