@@ -279,6 +279,10 @@ in
   systemd.targets.hibernate.enable = false;
   systemd.targets.hybrid-sleep.enable = false;
 
+  # save power
+  powerManagement.enable = true;
+  services.thermald.enable = true;
+
   # allow unfree packages
   nixpkgs.config.allowUnfree = true;
 
