@@ -126,9 +126,6 @@ in
       # systemd timers
       { directory = "/var/lib/systemd/timers"; user = "root"; group = "root"; mode = "u=rwx,g=rx,o=rx"; }
 
-      # alsa state for persistent sound settings
-      { directory = "/var/lib/alsa"; user = "root"; group = "root"; mode = "u=rwx,g=rx,o=rx"; }
-
       # nix tmp dir for rebuilds, don't fill our tmpfs root with that
       { directory = "/var/cache/nix"; user = "root"; group = "root"; mode = "u=rwx,g=rx,o=rx"; }
 
