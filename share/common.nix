@@ -13,7 +13,7 @@ in
       "${impermanence}/nixos.nix"
 
       # our users
-      "/data/nixos/users.nix"
+      "/data/nixos/share/users.nix"
   ];
 
   # This value determines the NixOS release from which the default
