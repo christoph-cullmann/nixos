@@ -123,20 +123,23 @@ in
   environment.persistence."/nix/persistent" = {
     hideMounts = true;
     directories = [
+      # tmp dir, don't fill our tmpfs root with that
+      { directory = "/tmp"; user = "root"; group = "root"; mode = "1777"; }
+
       # systemd timers
       { directory = "/var/lib/systemd/timers"; user = "root"; group = "root"; mode = "u=rwx,g=rx,o=rx"; }
 
       # alsa state for persistent sound settings
       { directory = "/var/lib/alsa"; user = "root"; group = "root"; mode = "u=rwx,g=rx,o=rx"; }
 
-      # nix tmp dir for rebuilds, don't fill our tmpfs root with that
-      { directory = "/var/cache/nix"; user = "root"; group = "root"; mode = "u=rwx,g=rx,o=rx"; }
-
       # NetworkManager connections
       { directory = "/etc/NetworkManager"; user = "root"; group = "root"; mode = "u=rwx,g=rx,o=rx"; }
       { directory = "/var/lib/NetworkManager"; user = "root"; group = "root"; mode = "u=rwx,g=rx,o=rx"; }
     ];
   };
+
+  # kill the tmp content on reboots, we mount that to /nix/persistent to avoid memory fill-up
+  boot.tmp.cleanOnBoot = true;
 
   # ensure our data is not rotting
   services.zfs.autoScrub = {
@@ -253,20 +256,6 @@ in
     '';
   };
 
-  # move nix tmp directory off the tmpfs for large updates
-  # for nixos-build we set that directory as tmp dir in the command
-  systemd.services.nix-daemon = {
-    environment = {
-      # Location for temporary files
-      TMPDIR = "/var/cache/nix";
-    };
-    serviceConfig = {
-      # Create /var/cache/nix automatically on Nix Daemon start
-      CacheDirectory = "nix";
-    };
-  };
-  environment.variables.NIX_REMOTE = "daemon";
-
   # auto update
   system.autoUpgrade = {
     enable = true;
@@ -300,7 +289,6 @@ in
     btop
     calibre
     chromium
-    clamav
     clinfo
     config.boot.kernelPackages.perf
     delta

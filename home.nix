@@ -31,10 +31,10 @@
     # aliases
     shellAliases = {
       # system build/update/cleanup
-      update = "sudo TMPDIR=/var/cache/nix nixos-rebuild boot";
-      upgrade = "sudo TMPDIR=/var/cache/nix nixos-rebuild boot --upgrade";
-      updatenow = "sudo TMPDIR=/var/cache/nix nixos-rebuild switch";
-      upgradenow = "sudo TMPDIR=/var/cache/nix nixos-rebuild switch --upgrade";
+      update = "sudo nixos-rebuild boot";
+      upgrade = "sudo nixos-rebuild boot --upgrade";
+      updatenow = "sudo nixos-rebuild switch";
+      upgradenow = "sudo nixos-rebuild switch --upgrade";
       gc = "sudo nix-collect-garbage --delete-older-than 7d";
       verify = "sudo nix --extra-experimental-features nix-command store verify --all";
       optimize = "sudo nix --extra-experimental-features nix-command store optimise";
