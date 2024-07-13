@@ -97,6 +97,12 @@
     enableZshIntegration = true;
   };
 
+  # better completion
+  programs.carapace = {
+    enable = true;
+    enableZshIntegration = true;
+  };
+
   # better ls, adds la and Co. aliases, too
   programs.eza = {
     enable = true;
