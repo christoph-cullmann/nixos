@@ -67,6 +67,9 @@ in
   # setup the console stuff early
   console.earlySetup = true;
 
+  # boot splash
+  boot.plymouth.enable = true;
+
   # swap to RAM
   zramSwap.enable = true;
 
