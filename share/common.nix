@@ -208,19 +208,14 @@ in
   # use X11/wayland layout for console, too
   console.useXkbConfig = true;
 
-  # enable greetd & the KDE Plasma Desktop Environment
+  # enable SDDM & the KDE Plasma Desktop Environment with Wayland
   services.desktopManager.plasma6.enable = true;
-  services.greetd = {
+  services.displayManager.sddm = {
     enable = true;
-    settings = {
-      default_session = {
-        command = "${pkgs.greetd.tuigreet}/bin/tuigreet --time --cmd '${pkgs.kdePackages.plasma-workspace}/libexec/plasma-dbus-run-session-if-needed ${pkgs.kdePackages.plasma-workspace}/bin/startplasma-wayland'";
-      };
-    };
+    wayland.enable = true;
   };
 
   # enable sound with PipeWire
-  sound.enable = true;
   hardware.pulseaudio.enable = false;
   services.pipewire = {
     enable = true;
