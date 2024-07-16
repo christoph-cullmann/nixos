@@ -109,6 +109,12 @@
     enableZshIntegration = true;
   };
 
+  # tmux replacement
+  programs.zellij = {
+    enable = true;
+    enableZshIntegration = true;
+  };
+
   # better cat
   programs.bat = {
     enable = true;

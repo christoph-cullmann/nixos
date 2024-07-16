@@ -351,7 +351,6 @@ in
     tigervnc
     tk
     tldr
-    tmux
     pkgs.kdePackages.tokodon
     unrar
     unzip
