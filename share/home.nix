@@ -2,31 +2,19 @@
   # initial version
   home.stateVersion = "22.11";
 
-  # ZSH with good config
-  programs.zsh = {
-    # ZSH on
+  # my nushell config
+  programs.nushell = {
+    # we use nushell
     enable = true;
 
-    # we want completion
-    enableCompletion = true;
-
-    # we want suggestions of already typed stuff
-    autosuggestion.enable = true;
-
-    # we want nice command highlighting
-    syntaxHighlighting.enable = true;
-
-    # better history
-    history = {
-      # save timestamps
-      extended = true;
-
-      # kill dupes over full history
-      ignoreAllDups = true;
-
-      # don't share history between sessions
-      share = false;
-    };
+    # shell config
+    extraConfig = ''
+       $env.config = {
+        table: {
+        mode: none
+    }
+       }
+       '';
 
     # aliases
     shellAliases = {
@@ -54,14 +42,14 @@
       neko = "ssh neko.fritz.box";
       nekoroot = "ssh root@neko.fritz.box";
     };
-  };
+   };
 
   # nice prompt
   # https://starship.rs/config/
   # https://draculatheme.com/starship
   programs.starship = {
     enable = true;
-    enableZshIntegration = true;
+    enableNushellIntegration = true;
     settings = {
       aws.style = "bold #ffb86c";
       cmd_duration.style = "bold #f1fa8c";
@@ -87,37 +75,20 @@
   # nice cd
   programs.zoxide = {
     enable = true;
-    enableZshIntegration = true;
+    enableNushellIntegration = true;
     options = [ "--cmd" "cd" ];
-  };
-
-  # integrate fuzzy search
-  programs.fzf = {
-    enable = true;
-    enableZshIntegration = true;
   };
 
   # better completion
   programs.carapace = {
     enable = true;
-    enableZshIntegration = true;
+    enableNushellIntegration = true;
   };
 
   # better ls, adds la and Co. aliases, too
   programs.eza = {
     enable = true;
-    enableZshIntegration = true;
-  };
-
-  # tmux replacement
-  programs.zellij = {
-    enable = true;
-    enableZshIntegration = true;
-    settings = {
-      theme = "catppuccin-mocha";
-      pane_frames = false;
-      on_force_close = "quit";
-    };
+    enableNushellIntegration = true;
   };
 
   # better cat

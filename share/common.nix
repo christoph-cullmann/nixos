@@ -330,6 +330,7 @@ in
     pkgs.kdePackages.neochat
     nixos-install-tools
     nmap
+    nushell
     nvme-cli
     procmail
     okteta
@@ -493,12 +494,8 @@ in
     enableMail = false;
   };
 
-  # use ZSH per default
-  programs.zsh.enable = true;
-  environment.shells = with pkgs; [ zsh ];
-
-  # needed for the ZSH completion
-  environment.pathsToLink = [ "/share/zsh" ];
+  # add nushell and zsh to allowed shells
+  environment.shells = with pkgs; [ nushell zsh ];
 
   # use micro as default terminal editor
   environment.variables.EDITOR = "micro";

@@ -14,8 +14,8 @@ in
     # all users and passwords are defined here
     mutableUsers = false;
 
-    # default shell is ZSH
-    defaultUserShell = pkgs.zsh;
+    # default shell is nushell
+    defaultUserShell = pkgs.nushell;
 
     #
     # administrator
