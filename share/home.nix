@@ -58,6 +58,7 @@
     enable = true;
     enableNushellIntegration = true;
     settings = {
+      command_timeout = 10000;
       aws.style = "bold #ffb86c";
       cmd_duration.style = "bold #f1fa8c";
       directory.style = "bold #50fa7b";

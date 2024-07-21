@@ -319,6 +319,7 @@ in
     pkgs.kdePackages.kmail
     pkgs.kdePackages.konsole
     krita
+    ladybird
     lazygit
     libjxl
     libreoffice
@@ -412,6 +413,9 @@ in
   fonts = {
     # default fonts
     enableDefaultPackages = true;
+
+    # ensure we have an emulated global fontdir
+    fontDir.enable = true;
 
     # more fonts
     packages = with pkgs; [
