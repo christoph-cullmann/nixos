@@ -100,7 +100,7 @@ in
     { device = "/data/home";
       fsType = "none";
       neededForBoot = true;
-      options = [ "bind" "x-gvfs-hide" ];
+      options = [ "bind" ];
       depends = [ "/data" ];
     };
 
@@ -109,7 +109,7 @@ in
     { device = "/data/root";
       fsType = "none";
       neededForBoot = true;
-      options = [ "bind" "x-gvfs-hide" ];
+      options = [ "bind" ];
       depends = [ "/data" ];
     };
 
@@ -118,7 +118,7 @@ in
     { device = "/data/nixos/${config.networking.hostName}";
       fsType = "none";
       neededForBoot = true;
-      options = [ "bind" "x-gvfs-hide" ];
+      options = [ "bind" ];
       depends = [ "/data" ];
     };
 
