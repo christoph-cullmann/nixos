@@ -328,6 +328,7 @@ in
     mailutils
     mc
     micro
+    mission-center
     pkgs.kdePackages.neochat
     nixos-install-tools
     nmap
