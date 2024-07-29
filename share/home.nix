@@ -8,10 +8,8 @@
     enable = true;
 
     # shell config
-    # see https://github.com/nushell/nushell/blob/main/crates/nu-utils/src/sample_config/default_config.nu for defaults
     extraConfig = ''
       $env.config = {
-        show_banner: false
         history: {
           max_size: 100_000
           file_format: "sqlite"
