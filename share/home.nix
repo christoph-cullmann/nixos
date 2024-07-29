@@ -110,17 +110,6 @@
     enableZshIntegration = true;
   };
 
-  # tmux replacement
-  programs.zellij = {
-    enable = true;
-    enableZshIntegration = true;
-    settings = {
-      theme = "catppuccin-mocha";
-      pane_frames = false;
-      on_force_close = "quit";
-    };
-  };
-
   # better cat
   programs.bat = {
     enable = true;
