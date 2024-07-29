@@ -134,20 +134,20 @@
   # file manager
   programs.yazi = {
     enable = true;
-    enableNushellIntegration = true;
+    enableZshIntegration = true;
   };
 
   # enable keychain, we use the main user key
   programs.keychain = {
     enable = true;
-    enableNushellIntegration = true;
+    enableZshIntegration = true;
     keys = [ "/home/cullmann/.ssh/id_ed25519" ];
   };
 
   # https://github.com/nix-community/nix-direnv
   programs.direnv = {
     enable = true;
-    enableNushellIntegration = true;
+    enableZshIntegration = true;
     nix-direnv.enable = true;
   };
 }
