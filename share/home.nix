@@ -9,17 +9,12 @@
 
     # shell config
     extraConfig = ''
-      $env.config = {
-        history: {
-          max_size: 100_000
-          file_format: "sqlite"
-          isolation: true
-        }
+       $env.config = {
         table: {
-          mode: none
-        }
-      }
-    '';
+        mode: none
+    }
+       }
+       '';
 
     # aliases
     shellAliases = {
