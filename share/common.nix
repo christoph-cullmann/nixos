@@ -319,7 +319,6 @@ in
     pkgs.kdePackages.kmail
     pkgs.kdePackages.konsole
     krita
-    ladybird
     lazygit
     libjxl
     libreoffice
@@ -419,8 +418,8 @@ in
 
     # more fonts
     packages = with pkgs; [
-      # add patched fonts for editor & terminal
-      (nerdfonts.override { fonts = [ "Iosevka" "IosevkaTerm" ]; })
+      # good mono font for coding and terminal
+      cascadia-code
 
       # unicode capable fonts
       babelstone-han
@@ -439,7 +438,7 @@ in
     fontconfig = {
       # better default fonts
       defaultFonts = {
-        monospace = ["IosevkaTerm Nerd Font Mono"];
+        monospace = ["Cascadia Code"];
         sansSerif = ["Noto Sans"];
         serif = ["Noto Serif"];
       };
