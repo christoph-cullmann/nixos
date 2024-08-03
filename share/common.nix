@@ -418,8 +418,11 @@ in
 
     # more fonts
     packages = with pkgs; [
-      # good mono font for coding and terminal
+      # good coding and terminal font
       cascadia-code
+
+      # good UI font
+      inter
 
       # unicode capable fonts
       babelstone-han
@@ -439,8 +442,7 @@ in
       # better default fonts
       defaultFonts = {
         monospace = ["Cascadia Code"];
-        sansSerif = ["Noto Sans"];
-        serif = ["Noto Serif"];
+        sansSerif = ["Inter"];
       };
     };
   };
