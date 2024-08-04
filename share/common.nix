@@ -423,7 +423,7 @@ in
     fontconfig = {
       # better default fonts
       defaultFonts = {
-        monospace = ["JetBrainsMono Nerd Font Mono"];
+        monospace = ["M+1Code Nerd Font Mono"];
         sansSerif = ["M+1 Nerd Font"];
       };
     };
