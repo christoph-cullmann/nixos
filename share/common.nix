@@ -408,41 +408,23 @@ in
   # add ~/bin to PATH
   environment.homeBinInPath = true;
 
-  # more fonts for all users
+  # fonts for all users
   fonts = {
-    # default fonts
-    enableDefaultPackages = true;
+    # no default fonts
+    enableDefaultPackages = false;
 
     # ensure we have an emulated global fontdir
     fontDir.enable = true;
 
-    # more fonts
-    packages = with pkgs; [
-      # good coding and terminal font
-      cascadia-code
-
-      # good UI font
-      inter
-
-      # unicode capable fonts
-      babelstone-han
-      dejavu_fonts
-      ipafont
-      kochi-substitute
-      noto-fonts
-      noto-fonts-cjk
-      noto-fonts-cjk-sans
-      noto-fonts-cjk-serif
-      noto-fonts-extra
-      noto-fonts-emoji
-    ];
+    # Nerd Fonts for the win
+    packages = [ pkgs.nerdfonts ];
 
     # tune fontconfig
     fontconfig = {
       # better default fonts
       defaultFonts = {
-        monospace = ["Cascadia Code"];
-        sansSerif = ["Inter"];
+        monospace = ["JetBrainsMono Nerd Font Mono"];
+        sansSerif = ["M+1 Nerd Font"];
       };
     };
   };
