@@ -432,17 +432,13 @@ in
       # good monospace coding and terminal font
       jetbrains-mono
 
-      # unicode capable fonts for fallbacks
-      babelstone-han
-      dejavu_fonts
-      ipafont
-      kochi-substitute
+      # unicode capable fonts for glyph fallback
       noto-fonts
       noto-fonts-cjk
       noto-fonts-cjk-sans
       noto-fonts-cjk-serif
-      noto-fonts-extra
       noto-fonts-emoji
+      noto-fonts-extra
     ];
 
     # tune fontconfig
