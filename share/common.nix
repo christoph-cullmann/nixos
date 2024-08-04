@@ -216,6 +216,7 @@ in
   services.displayManager.sddm = {
     enable = true;
     wayland.enable = true;
+    theme = "catppuccin-mocha";
   };
 
   # enable sound with PipeWire
@@ -286,6 +287,7 @@ in
     borgbackup
     btop
     calibre
+    catppuccin-sddm
     chromium
     clinfo
     config.boot.kernelPackages.perf
