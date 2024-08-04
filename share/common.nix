@@ -416,17 +416,42 @@ in
     enableDefaultPackages = false;
 
     # ensure we have an emulated global fontdir
-    fontDir.enable = true;
+    fontDir = {
+      enable = true;
+      decompressFonts = true;
+    };
 
-    # Nerd Fonts for the win
-    packages = [ pkgs.nerdfonts ];
+    # fonts I use
+    packages = with pkgs; [
+      # good serif ui font
+      alegreya
+
+      # good sans-serif ui font
+      inter
+
+      # good monospace coding and terminal font
+      jetbrains-mono
+
+      # unicode capable fonts for fallbacks
+      babelstone-han
+      dejavu_fonts
+      ipafont
+      kochi-substitute
+      noto-fonts
+      noto-fonts-cjk
+      noto-fonts-cjk-sans
+      noto-fonts-cjk-serif
+      noto-fonts-extra
+      noto-fonts-emoji
+    ];
 
     # tune fontconfig
     fontconfig = {
-      # better default fonts
+      enable = true;
       defaultFonts = {
-        monospace = ["M+1Code Nerd Font Mono"];
-        sansSerif = ["M+1 Nerd Font"];
+        monospace = [ "JetBrains Mono" ];
+        sansSerif = [ "Inter" ];
+        serif = [ "Alegreya" ];
       };
     };
   };
