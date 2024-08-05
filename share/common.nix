@@ -423,22 +423,14 @@ in
 
     # fonts I use
     packages = with pkgs; [
-      # good serif ui font
-      alegreya
-
       # good sans-serif ui font
       inter
 
+      # contains good serif ui font and support for Japanese
+      ibm-plex
+
       # good monospace coding and terminal font
       jetbrains-mono
-
-      # unicode capable fonts for glyph fallback
-      noto-fonts
-      noto-fonts-cjk
-      noto-fonts-cjk-sans
-      noto-fonts-cjk-serif
-      noto-fonts-emoji
-      noto-fonts-extra
     ];
 
     # tune fontconfig
@@ -446,8 +438,8 @@ in
       enable = true;
       defaultFonts = {
         monospace = [ "JetBrains Mono" ];
-        sansSerif = [ "Inter" ];
-        serif = [ "Alegreya" ];
+        sansSerif = [ "Inter Display" ];
+        serif = [ "IBM Plex Serif" ];
       };
     };
   };
