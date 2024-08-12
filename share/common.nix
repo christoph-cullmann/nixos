@@ -216,7 +216,8 @@ in
   services.displayManager.sddm = {
     enable = true;
     wayland.enable = true;
-    theme = "catppuccin-mocha";
+    theme = "sddm-astronaut-theme";
+    extraPackages = [ pkgs.sddm-astronaut ];
   };
 
   # enable sound with PipeWire
@@ -269,7 +270,8 @@ in
 
   # save power
   powerManagement.enable = true;
-  services.thermald.enable = true;
+  powerManagement.cpuFreqGovernor = "ondemand";
+  powerManagement.powertop.enable = true;
 
   # allow unfree packages
   nixpkgs.config.allowUnfree = true;
@@ -421,24 +423,13 @@ in
       decompressFonts = true;
     };
 
-    # fonts I use
-    packages = with pkgs; [
-      # good sans-serif ui font
-      inter
-
-      # contains good serif ui font and support for Japanese
-      ibm-plex
-
-      # good monospace coding and terminal font
-      jetbrains-mono
-    ];
-
-    # tune fontconfig
+    # use the IBM Plex family of fonts as defaults
+    packages = with pkgs; [ ibm-plex ];
     fontconfig = {
       enable = true;
       defaultFonts = {
-        monospace = [ "JetBrains Mono" ];
-        sansSerif = [ "Inter Display" ];
+        monospace = [ "IBM Plex Mono" ];
+        sansSerif = [ "IBM Plex Sans" ];
         serif = [ "IBM Plex Serif" ];
       };
     };
@@ -508,7 +499,7 @@ in
 
   # enable VirtualBox
   virtualisation.virtualbox.host.enable = true;
-  virtualisation.virtualbox.host.enableKvm = true;
+  #virtualisation.virtualbox.host.enableKvm = true;
   virtualisation.virtualbox.host.enableHardening = false;
   virtualisation.virtualbox.host.addNetworkInterface = false;
 
