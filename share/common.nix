@@ -425,21 +425,28 @@ in
 
     # install a list of useful fonts
     packages = with pkgs; [
-      # large family of sans, serif and mono fonts with good unicode coverage
-      ibm-plex
+      # good UI sans serif fonts family
+      inter
 
-      # fonts patched with all needed symbols my shell prompt needs:
-      # cullmann on 🌐 neko in /data/nixos on  master [!?]
-      nerdfonts
+      # get large parts of unicode covered with the Google Noto fonts family
+      # all needed symbols that my shell prompt needs
+      # example: cullmann on 🌐 neko in /data/nixos on  master [!?]
+      # contains serif font that nicely matches with Inter
+      noto-fonts
+      noto-fonts-cjk
+      noto-fonts-emoji
+
+      # contains monospace fonts that match well with Inter
+      recursive
     ];
 
     # use some proper default fonts
     fontconfig = {
       enable = true;
       defaultFonts = {
-        monospace = [ "IBM Plex Mono" ];
-        sansSerif = [ "IBM Plex Sans" ];
-        serif = [ "IBM Plex Serif" ];
+        monospace = [ "Recursive Mono Linear Static" ];
+        sansSerif = [ "Inter" ];
+        serif = [ "Noto Serif" ];
       };
     };
   };
