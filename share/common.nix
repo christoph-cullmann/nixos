@@ -423,8 +423,17 @@ in
       decompressFonts = true;
     };
 
-    # use the IBM Plex family of fonts as defaults
-    packages = with pkgs; [ ibm-plex ];
+    # install a list of useful fonts
+    packages = with pkgs; [
+      # large family of sans, serif and mono fonts with good unicode coverage
+      ibm-plex
+
+      # fonts patched with all needed symbols my shell prompt needs:
+      # cullmann on 🌐 neko in /data/nixos on  master [!?]
+      nerdfonts
+    ];
+
+    # use some proper default fonts
     fontconfig = {
       enable = true;
       defaultFonts = {
