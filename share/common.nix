@@ -423,22 +423,8 @@ in
       decompressFonts = true;
     };
 
-    # install a list of useful fonts
-    packages = with pkgs; [
-      # good UI sans serif fonts family
-      inter
-
-      # get large parts of unicode covered with the Google Noto fonts family
-      # all needed symbols that my shell prompt needs
-      # example: cullmann on 🌐 neko in /data/nixos on  master [!?]
-      # contains serif font that nicely matches with Inter
-      noto-fonts
-      noto-fonts-cjk
-      noto-fonts-emoji
-
-      # contains monospace fonts that match well with Inter
-      recursive
-    ];
+    # just get all Google & Nerd Fonts, we have the space
+    packages = [ pkgs.google-fonts pkgs.nerdfonts ];
 
     # use some proper default fonts
     fontconfig = {
