@@ -430,6 +430,7 @@ in
     fontconfig = {
       enable = true;
       defaultFonts = {
+        emoji = [ "Noto Emoji" ];
         monospace = [ "RecMonoLinear Nerd Font" "Noto Sans Mono" ];
         sansSerif = [ "Inter" "Noto Sans" ];
         serif = [ "Noto Serif" ];
