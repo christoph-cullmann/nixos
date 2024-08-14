@@ -430,8 +430,8 @@ in
     fontconfig = {
       enable = true;
       defaultFonts = {
-        monospace = [ "Recursive Mono Linear Static" ];
-        sansSerif = [ "Inter" ];
+        monospace = [ "RecMonoLinear Nerd Font" "Noto Sans Mono" ];
+        sansSerif = [ "Inter" "Noto Sans" ];
         serif = [ "Noto Serif" ];
       };
     };
