@@ -431,7 +431,7 @@ in
       enable = true;
       defaultFonts = {
         emoji = [ "Noto Emoji" ];
-        monospace = [ "RecMonoLinear Nerd Font" "Noto Sans Mono" ];
+        monospace = [ "MonaspiceNe Nerd Font Mono" "Noto Sans Mono" ];
         sansSerif = [ "Inter" "Noto Sans" ];
         serif = [ "Noto Serif" ];
       };
