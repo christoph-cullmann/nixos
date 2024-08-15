@@ -293,7 +293,7 @@ in
     chromium
     clinfo
     config.boot.kernelPackages.perf
-    delta
+    #delta
     duf
     efibootmgr
     emacs
@@ -332,6 +332,7 @@ in
     mc
     micro
     mission-center
+    mplayer
     pkgs.kdePackages.neochat
     nixos-install-tools
     nmap
@@ -432,8 +433,8 @@ in
       defaultFonts = {
         emoji = [ "Noto Emoji" ];
         monospace = [ "MonaspiceNe Nerd Font Mono" "Noto Sans Mono" ];
-        sansSerif = [ "Public Sans" "Noto Sans" ];
-        serif = [ "Merriweather" "Noto Serif" ];
+        sansSerif = [ "Figtree" "Noto Sans" ];
+        serif = [ "Spectral" "Noto Serif" ];
       };
     };
   };
