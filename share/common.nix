@@ -366,6 +366,7 @@ in
     vscodium
     vulkan-tools
     wayland-utils
+    xorg.xlsclients
     zoxide
     zsh
   ];
@@ -463,7 +464,10 @@ in
       oldstandard
       paratype-pt-serif
 
-      # unicode coverage
+      # monospace coding and terminal fonts
+      cascadia-code
+
+      # fonts with good unicode coverage as fallback
       noto-fonts
       noto-fonts-cjk-sans
       noto-fonts-cjk-serif
@@ -478,9 +482,9 @@ in
       enable = true;
       defaultFonts = {
         emoji = [ "Noto Color Emoji" ];
-        monospace = [ "MonaspiceNe Nerd Font Mono" "Noto Sans Mono" ];
-        sansSerif = [ "Figtree" "Noto Sans" ];
-        serif = [ "Spectral" "Noto Serif" ];
+        monospace = [ "Cascadia Code" "Noto Sans Mono" ];
+        sansSerif = [ "Inter" "Noto Sans" ];
+        serif = [ "Crimson" "Noto Serif" ];
       };
     };
   };
@@ -494,6 +498,9 @@ in
 
   # dconf is needed for gtk, see https://nixos.wiki/wiki/KDE
   programs.dconf.enable = true;
+
+  # https://nixos.wiki/wiki/Chromium - Wayland support on
+  environment.sessionVariables.NIXOS_OZONE_WL = "1";
 
   # ensure machine can send mails
   services.opensmtpd = {
