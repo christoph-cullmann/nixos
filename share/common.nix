@@ -447,6 +447,7 @@ in
       montserrat
       nacelle
       open-sans
+      paratype-pt-sans
       public-sans
       roboto
       source-sans
@@ -463,6 +464,8 @@ in
       merriweather
       oldstandard
       paratype-pt-serif
+      roboto-serif
+      source-serif
 
       # monospace coding and terminal fonts
       cascadia-code
