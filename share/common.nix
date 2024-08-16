@@ -424,14 +424,60 @@ in
       decompressFonts = true;
     };
 
-    # just get all Google & Nerd Fonts, we have the space
-    packages = [ pkgs.google-fonts pkgs.nerdfonts ];
+    # get a small list of curated fonts
+    # internet hints
+    # https://biz-mastercreationz.medium.com/the-7-must-have-fonts-for-ruling-ui-ux-design-in-2024-e98c3b8ede31
+    # https://www.untitledui.com/blog/best-free-fonts
+    # https://medium.com/@iamakashjaggi/the-5-best-google-serif-fonts-of-2024-d1505543cb02
+    # https://www.halo-lab.com/blog/best-serif-fonts
+    # https://hootdesigncompany.com/resources/best-serif-google-fonts
+    # https://muz.li/blog/best-free-google-fonts
+    packages = with pkgs; [
+      # good sans serif fonts
+      aileron
+      dm-sans
+      fira-sans
+      hubot-sans
+      inter
+      lato
+      lexend
+      manrope
+      mona-sans
+      montserrat
+      nacelle
+      open-sans
+      public-sans
+      roboto
+      source-sans
+      work-sans
+
+      # good serif fonts
+      alegreya
+      crimson
+      eb-garamond
+      fraunces
+      libre-baskerville
+      libre-bodoni
+      libre-caslon
+      merriweather
+      oldstandard
+      paratype-pt-serif
+
+      # unicode coverage
+      noto-fonts
+      noto-fonts-cjk-sans
+      noto-fonts-cjk-serif
+      noto-fonts-lgc-plus
+
+      # emoji in Farbe und bunt
+      noto-fonts-color-emoji
+    ];
 
     # use some proper default fonts
     fontconfig = {
       enable = true;
       defaultFonts = {
-        emoji = [ "Noto Emoji" ];
+        emoji = [ "Noto Color Emoji" ];
         monospace = [ "MonaspiceNe Nerd Font Mono" "Noto Sans Mono" ];
         sansSerif = [ "Figtree" "Noto Sans" ];
         serif = [ "Spectral" "Noto Serif" ];
