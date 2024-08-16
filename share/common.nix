@@ -486,7 +486,7 @@ in
       defaultFonts = {
         emoji = [ "Noto Color Emoji" ];
         monospace = [ "Cascadia Code" "Noto Sans Mono" ];
-        sansSerif = [ "Inter" "Noto Sans" ];
+        sansSerif = [ "Lexend" "Noto Sans" ];
         serif = [ "Crimson" "Noto Serif" ];
       };
     };
