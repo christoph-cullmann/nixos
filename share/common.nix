@@ -24,9 +24,8 @@ in
   # (e.g. man configuration.nix or on https://nixos.org/nixos/options.html).
   system.stateVersion = "23.05"; # Did you read the comment?
 
-  # use the latest kernel and enable bcachefs file system
+  # use the latest kernel
   boot.kernelPackages = pkgs.linuxPackages_latest;
-  boot.supportedFilesystems = [ "bcachefs" ];
 
   # don't check for split locks, for KVM and Co.
   boot.kernelParams = [ "split_lock_detect=off" ];
