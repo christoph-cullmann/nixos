@@ -10,10 +10,6 @@ passwd
 # install script below
 #
 
-# fix unlocking https://nixos.wiki/wiki/Bcachefs
-nix-env -iA nixos.keyutils
-keyctl link @u @s
-
 #
 # kill old efi boot stuff
 #
@@ -68,8 +64,16 @@ mkfs.fat -F 32 -n EFIBOOT $DISK-part1
 
 sleep 5
 
-# create encrypted bcachefs over all disks, use only fast lz4 compression
-bcachefs format --block_size=4096 --errors=ro --compression=lz4 --wide_macs --acl --encrypted --fs_label=nix --discard -f $DISK-part2 $DISK2
+# create the crypto containers with proper 4k sectors
+cryptsetup luksFormat --sector-size 4096 --batch-mode --verify-passphrase $DISK-part2
+cryptsetup luksFormat --sector-size 4096 --batch-mode --verify-passphrase $DISK2
+
+# open the containers
+cryptsetup luksOpen $DISK-part2 crypt0
+cryptsetup luksOpen $DISK2 crypt1
+
+# create one large btrfs on them, RAID0 with strong checksum
+mkfs.btrfs -f -d raid0 -m raid0 --checksum blake2 --features block-group-tree --label nix /dev/mapper/crypt0 /dev/mapper/crypt1
 
 sleep 5
 
@@ -82,8 +86,8 @@ mkdir -p /mnt/{nix,home,boot,root,etc/nixos}
 # mount the ESP
 mount $DISK-part1 /mnt/boot
 
-# mount large bcachefs
-mount -t bcachefs $DISK-part2:$DISK2 /mnt/nix
+# mount large btrfs
+mount -t btrfs /dev/mapper/crypt0 -o device=/dev/mapper/crypt1 /mnt/nix
 
 # ensure tmp fills not the RAM
 mkdir -p /mnt/tmp /mnt/nix/tmp
@@ -118,6 +122,8 @@ nixos-install --option experimental-features 'nix-command flakes' --no-root-pass
 # unmount all stuff and sync
 
 umount -Rl /nix/data /mnt
+cryptsetup luksClose crypt0
+cryptsetup luksClose crypt1
 sync
 
 # sync all /data after the install

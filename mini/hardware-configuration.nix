@@ -14,13 +14,17 @@
   fileSystems."/boot" =
     { device = "/dev/disk/by-id/nvme-CT4000P3PSSD8_2325E6E63746-part1";
       fsType = "vfat";
+      options = [ "fmask=0022" "dmask=0022" ];
       neededForBoot = true;
     };
 
-  # /nix encrypted bcachefs for the remaining space
+  # /nix encrypted btrfs for the remaining space
+  boot.initrd.luks.devices."crypt0".device = "/dev/disk/by-id/nvme-CT4000P3PSSD8_2325E6E63746-part2";
+  boot.initrd.luks.devices."crypt1".device = "/dev/disk/by-id/ata-CT2000MX500SSD1_2138E5D5061F";
   fileSystems."/nix" =
-    { device = "/dev/disk/by-id/nvme-CT4000P3PSSD8_2325E6E63746-part2:/dev/disk/by-id/ata-CT2000MX500SSD1_2138E5D5061F";
-      fsType = "bcachefs";
+    { device = "/dev/mapper/crypt0";
+      fsType = "btrfs";
+      options = [ "device=/dev/mapper/crypt1" ];
       neededForBoot = true;
     };
 
