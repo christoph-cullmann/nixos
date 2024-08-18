@@ -8,11 +8,7 @@
       exampleIso = nixos.lib.nixosSystem {
         system = "x86_64-linux";
         modules = [
-          "${nixos}/nixos/modules/installer/cd-dvd/installation-cd-minimal-new-kernel-no-zfs.nix"
-          ({ lib, pkgs, ... }: {
-            boot.supportedFilesystems = [ "bcachefs" ];
-            boot.kernelPackages = lib.mkOverride 0 pkgs.linuxPackages_latest;
-          })
+          "${nixos}/nixos/modules/installer/cd-dvd/installation-cd-graphical-calamares-plasma6.nix"
         ];
       };
     };
