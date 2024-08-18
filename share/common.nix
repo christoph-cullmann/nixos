@@ -13,7 +13,7 @@ in
       "${impermanence}/nixos.nix"
 
       # our users
-      "/data/nixos/share/users.nix"
+      "/nix/data/nixos/share/users.nix"
   ];
 
   # This value determines the NixOS release from which the default
@@ -24,32 +24,12 @@ in
   # (e.g. man configuration.nix or on https://nixos.org/nixos/options.html).
   system.stateVersion = "23.05"; # Did you read the comment?
 
-  # use the latest kernel with ZFS support and enable that file system
-  boot.kernelPackages = config.boot.zfs.package.latestCompatibleLinuxPackages;
-  boot.supportedFilesystems = [ "zfs" ];
+  # use the latest kernel and enable bcachefs file system
+  boot.kernelPackages = pkgs.linuxPackages_latest;
+  boot.supportedFilesystems = [ "bcachefs" ];
 
-  # no hibernate for ZFS systems
   # don't check for split locks, for KVM and Co.
-  boot.kernelParams = [ "nohibernate" "split_lock_detect=off" ];
-
-  # tweak ZFS
-  boot.extraModprobeConfig = ''
-    options zfs zfs_arc_meta_limit_percent=75
-    options zfs zfs_arc_min=134217728
-    options zfs zfs_arc_max=4294967296
-    options zfs zfs_txg_timeout=30
-    options zfs zfs_vdev_scrub_min_active=1
-    options zfs zfs_vdev_scrub_max_active=1
-    options zfs zfs_vdev_sync_write_min_active=8
-    options zfs zfs_vdev_sync_write_max_active=32
-    options zfs zfs_vdev_sync_read_min_active=8
-    options zfs zfs_vdev_sync_read_max_active=32
-    options zfs zfs_vdev_async_read_min_active=8
-    options zfs zfs_vdev_async_read_max_active=32
-    options zfs zfs_vdev_async_write_min_active=8
-    options zfs zfs_vdev_async_write_max_active=32
-    options zfs zfs_vdev_def_queue_depth=128
-  '';
+  boot.kernelParams = [ "split_lock_detect=off" ];
 
   # Use the systemd-boot EFI boot loader.
   boot.loader.systemd-boot.enable = true;
@@ -81,54 +61,46 @@ in
       options = [ "defaults" "size=8G" "mode=755" ];
     };
 
-  # nix store file system from encrypted ZFS
-  fileSystems."/nix" =
-    { device = "zpool/nix";
-      fsType = "zfs";
+  # tmp on /nix to not fill RAM
+  fileSystems."/tmp" =
+    { device = "/nix/tmp";
+      fsType = "none";
       neededForBoot = true;
-    };
-
-  # data store file system from encrypted ZFS
-  fileSystems."/data" =
-    { device = "zpool/data";
-      fsType = "zfs";
-      neededForBoot = true;
+      options = [ "bind" ];
+      depends = [ "/nix" ];
     };
 
   # bind mount to have user homes
   fileSystems."/home" =
-    { device = "/data/home";
+    { device = "/nix/data/home";
       fsType = "none";
       neededForBoot = true;
       options = [ "bind" ];
-      depends = [ "/data" ];
+      depends = [ "/nix" ];
     };
 
   # bind mount to have root home
   fileSystems."/root" =
-    { device = "/data/root";
+    { device = "/nix/data/root";
       fsType = "none";
       neededForBoot = true;
       options = [ "bind" ];
-      depends = [ "/data" ];
+      depends = [ "/nix" ];
     };
 
   # bind mount to have NixOS configuration, different per host
   fileSystems."/etc/nixos" =
-    { device = "/data/nixos/${config.networking.hostName}";
+    { device = "/nix/data/nixos/${config.networking.hostName}";
       fsType = "none";
       neededForBoot = true;
       options = [ "bind" ];
-      depends = [ "/data" ];
+      depends = [ "/nix" ];
     };
 
   # keep some stuff persistent
   environment.persistence."/nix/persistent" = {
     hideMounts = true;
     directories = [
-      # tmp dir, don't fill our tmpfs root with that
-      { directory = "/tmp"; user = "root"; group = "root"; mode = "1777"; }
-
       # systemd timers
       { directory = "/var/lib/systemd/timers"; user = "root"; group = "root"; mode = "u=rwx,g=rx,o=rx"; }
 
@@ -143,15 +115,6 @@ in
 
   # kill the tmp content on reboots, we mount that to /nix/persistent to avoid memory fill-up
   boot.tmp.cleanOnBoot = true;
-
-  # ensure our data is not rotting
-  services.zfs.autoScrub = {
-    enable = true;
-    interval = "weekly";
-  };
-
-  # trim the stuff, we use SSDs
-  services.zfs.trim.enable = true;
 
   # enable fast dbus
   services.dbus.implementation = "broker";
@@ -260,7 +223,7 @@ in
     allowReboot = false;
   };
 
-  # avoid suspend ever to be triggered, ZFS dislikes that
+  # avoid suspend ever to be triggered
   systemd.targets.sleep.enable = false;
   systemd.targets.suspend.enable = false;
   systemd.targets.hibernate.enable = false;
@@ -522,27 +485,8 @@ in
     mode = "0400";
   };
   environment.etc."mail/secrets" = {
-    text = builtins.readFile "/data/nixos/mail.secret";
+    text = builtins.readFile "/nix/data/nixos/mail.secret";
     mode = "0400";
-  };
-
-  # send mails on ZFS events
-  services.zfs.zed = {
-    settings = {
-      ZED_DEBUG_LOG = "/tmp/zed.debug.log";
-      ZED_EMAIL_ADDR = [ "root" ];
-      ZED_EMAIL_PROG = "/run/wrappers/bin/sendmail";
-      ZED_EMAIL_OPTS = "@ADDRESS@";
-
-      ZED_NOTIFY_INTERVAL_SECS = 3600;
-      ZED_NOTIFY_VERBOSE = true;
-
-      ZED_USE_ENCLOSURE_LEDS = true;
-      ZED_SCRUB_AFTER_RESILVER = true;
-    };
-
-    # this option does not work; will return error
-    enableMail = false;
   };
 
   # use ZSH per default

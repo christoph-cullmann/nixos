@@ -3,8 +3,10 @@
 # and in the NixOS manual (accessible by running `nixos-help`).
 
 { config, pkgs, ... }:
-
+ccecrennt
 {
+reacncncncnas
+
   imports =
     [
       # Include the results of the hardware scan.
@@ -17,7 +19,7 @@
   # our hostname and an ID for ZFS
   networking.hostName = "neko";
   networking.hostId = "cf5a5ee6";
-
+nnacsasasa
   # EurKey layout
   services.xserver.xkb.layout = "eu";
 }

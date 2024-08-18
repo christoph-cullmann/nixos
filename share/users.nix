@@ -23,10 +23,10 @@ in
 
     users.root = {
       # init password
-      hashedPassword = builtins.readFile "/data/nixos/password.secret";
+      hashedPassword = builtins.readFile "/nix/data/nixos/password.secret";
 
       # use fixed auth keys
-      openssh.authorizedKeys.keys = pkgs.lib.splitString "\n" (builtins.readFile "/data/nixos/authorized_keys.secret");
+      openssh.authorizedKeys.keys = pkgs.lib.splitString "\n" (builtins.readFile "/nix/data/nixos/authorized_keys.secret");
     };
 
     #

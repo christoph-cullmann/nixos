@@ -10,18 +10,18 @@
   boot.initrd.kernelModules = [ "amdgpu" ];
   boot.kernelModules = [ "kvm-amd" ];
 
-  # efi partition
+  # /boot efi partition to boot in UEFI mode
   fileSystems."/boot" =
     { device = "/dev/disk/by-id/nvme-CT4000P3PSSD8_2325E6E63746-part1";
       fsType = "vfat";
       neededForBoot = true;
     };
 
-  # vms
-  fileSystems."/home/cullmann/vms" =
-    { device = "vpool/vms";
-      fsType = "zfs";
-      depends = [ "/home" ];
+  # /nix encrypted bcachefs for the remaining space
+  fileSystems."/nix" =
+    { device = "/dev/disk/by-id/nvme-CT4000P3PSSD8_2325E6E63746-part2:/dev/disk/by-id/ata-CT2000MX500SSD1_2138E5D5061F";
+      fsType = "bcachefs";
+      neededForBoot = true;
     };
 
   nixpkgs.hostPlatform = lib.mkDefault "x86_64-linux";
