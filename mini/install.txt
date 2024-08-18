@@ -126,6 +126,10 @@ cryptsetup luksClose crypt0
 cryptsetup luksClose crypt1
 sync
 
+# shutdown once
+
+shutdown -h now
+
 # sync all /data after the install
 
 sudo -E rsync -va --delete --one-file-system /nix/data/ root@192.168.13.100:/nix/data/
