@@ -100,6 +100,10 @@ in
   environment.persistence."/nix/persistent" = {
     hideMounts = true;
     directories = [
+      # user and group mappings
+      # Either "/var/lib/nixos" has to be persisted, or all users and groups must have a uid/gid specified. The following users are missing a uid
+      "/var/lib/nixos"
+
       # systemd timers
       { directory = "/var/lib/systemd/timers"; user = "root"; group = "root"; mode = "u=rwx,g=rx,o=rx"; }
 
@@ -329,6 +333,11 @@ in
     xorg.xlsclients
     zoxide
     zsh
+  ];
+
+  # olm is insecure
+  nixpkgs.config.permittedInsecurePackages = [
+    "olm-3.2.16"
   ];
 
   # run browsers in a sandbox
