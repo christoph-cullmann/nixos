@@ -10,25 +10,23 @@
   boot.initrd.kernelModules = [ "i915" ];
   boot.kernelModules = [ "kvm-intel" ];
 
-  # efi partition
+  # /boot efi partition to boot in UEFI mode
   fileSystems."/boot" =
     { device = "/dev/disk/by-id/nvme-Seagate_FireCuda_530_ZP4000GM30013_7VS01VBM-part1";
       fsType = "vfat";
+      options = [ "fmask=0022" "dmask=0022" ];
       neededForBoot = true;
     };
 
-  # vms
-  fileSystems."/home/cullmann/vms" =
-    { device = "vpool/vms";
-      fsType = "zfs";
-      depends = [ "/home" ];
-    };
-
-  # projects
-  fileSystems."/home/cullmann/projects" =
-    { device = "ppool/projects";
-      fsType = "zfs";
-      depends = [ "/home" ];
+  # /nix encrypted btrfs for the remaining space
+  boot.initrd.luks.devices."crypt0".device = "/dev/disk/by-id/nvme-Seagate_FireCuda_530_ZP4000GM30013_7VS01VBM-part2";
+  boot.initrd.luks.devices."crypt1".device = "/dev/disk/by-id/nvme-CT2000P5PSSD8_213330E4ED05";
+  boot.initrd.luks.devices."crypt2".device = "/dev/disk/by-id/nvme-Samsung_SSD_980_PRO_2TB_S69ENF0R846614L";
+  fileSystems."/nix" =
+    { device = "/dev/mapper/crypt0";
+      fsType = "btrfs";
+      options = [ "device=/dev/mapper/crypt1" "device=/dev/mapper/crypt2" ];
+      neededForBoot = true;
     };
 
   nixpkgs.hostPlatform = lib.mkDefault "x86_64-linux";

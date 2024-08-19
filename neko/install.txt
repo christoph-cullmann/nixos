@@ -2,9 +2,13 @@
 # enable ssh for root
 #
 
-systemctl start sshd
 sudo bash
+systemctl start sshd
 passwd
+
+#
+# install script below
+#
 
 #
 # kill old efi boot stuff
@@ -18,14 +22,12 @@ efibootmgr -b 3 -B
 efibootmgr -b 4 -B
 efibootmgr
 
-#
-# install script below
-#
-
 # Defining some helper variables (these will be used in later code
 # blocks as well, so make sure to use the same terminal session or
 # redefine them later)
 DISK=/dev/disk/by-id/nvme-Seagate_FireCuda_530_ZP4000GM30013_7VS01VBM
+DISK2=/dev/disk/by-id/nvme-CT2000P5PSSD8_213330E4ED05
+DISK3=/dev/disk/by-id/nvme-Samsung_SSD_980_PRO_2TB_S69ENF0R846614L
 HOST=neko
 
 # ensure 4k sector size
@@ -39,6 +41,18 @@ sgdisk --zap-all $DISK
 blkdiscard -v $DISK
 wipefs -a $DISK
 gdisk -l $DISK
+
+# wipe second disk
+sgdisk --zap-all $DISK2
+blkdiscard -v $DISK2
+wipefs -a $DISK2
+
+# wipe third disk
+sgdisk --zap-all $DISK3
+blkdiscard -v $DISK3
+wipefs -a $DISK3
+
+sleep 5
 
 # create partitions
 parted $DISK -- mklabel gpt
@@ -56,28 +70,18 @@ mkfs.fat -F 32 -n EFIBOOT $DISK-part1
 
 sleep 5
 
-# ZFS zpool creation with encryption
-zpool create \
-    -o ashift=12 \
-    -o autotrim=on \
-    -O acltype=posixacl \
-    -O atime=off \
-    -O canmount=off \
-    -O compression=on \
-    -O dnodesize=auto \
-    -O normalization=formD \
-    -O xattr=sa \
-    -O mountpoint=none \
-    -O encryption=on \
-    -O keylocation=prompt \
-    -O keyformat=passphrase \
-    zpool $DISK-part2
+# create the crypto containers with proper 4k sectors
+cryptsetup luksFormat --sector-size 4096 --batch-mode --verify-passphrase $DISK-part2
+cryptsetup luksFormat --sector-size 4096 --batch-mode --verify-passphrase $DISK2
+cryptsetup luksFormat --sector-size 4096 --batch-mode --verify-passphrase $DISK3
 
-sleep 5
+# open the containers
+cryptsetup luksOpen $DISK-part2 crypt0
+cryptsetup luksOpen $DISK2 crypt1
+cryptsetup luksOpen $DISK3 crypt2
 
-# create all the volumes
-zfs create -o mountpoint=legacy zpool/data
-zfs create -o mountpoint=legacy zpool/nix
+# create one large btrfs on them, RAID0 with strong checksum
+mkfs.btrfs -f -d raid0 -m raid0 --checksum blake2 --features block-group-tree --label nix /dev/mapper/crypt0 /dev/mapper/crypt1 /dev/mapper/crypt2
 
 sleep 5
 
@@ -85,24 +89,27 @@ sleep 5
 mount -t tmpfs none /mnt
 
 # Create directories to mount file systems on
-mkdir -p /mnt/{data,nix,home,boot,root,etc/nixos}
+mkdir -p /mnt/{nix,home,boot,root,etc/nixos}
 
 # mount the ESP
 mount $DISK-part1 /mnt/boot
 
-# mount volumes
-mount -t zfs zpool/data /mnt/data
-mount -t zfs zpool/nix /mnt/nix
+# mount large btrfs
+mount -t btrfs /dev/mapper/crypt0 -o device=/dev/mapper/crypt1 -o device=/dev/mapper/crypt2 /mnt/nix
+
+# ensure tmp fills not the RAM
+mkdir -p /mnt/tmp /mnt/nix/tmp
+mount --bind /mnt/nix/tmp /mnt/tmp
 
 # bind mount persistent stuff to data
-mkdir -p /mnt/{data/home,data/root,data/nixos/$HOST}
-mount --bind /mnt/data/home /mnt/home
-mount --bind /mnt/data/root /mnt/root
-mount --bind /mnt/data/nixos/$HOST /mnt/etc/nixos
+mkdir -p /mnt/nix/data/{home,root,nixos/$HOST}
+mount --bind /mnt/nix/data/home /mnt/home
+mount --bind /mnt/nix/data/root /mnt/root
+mount --bind /mnt/nix/data/nixos/$HOST /mnt/etc/nixos
 
-# create fake /data to have the right paths
-mkdir -p /data
-mount --bind /mnt/data /data
+# create fake /nix/data to have the right paths
+mkdir -p /nix/data
+mount --bind /mnt/nix/data /nix/data
 
 # take a look
 mount
@@ -110,100 +117,28 @@ mount
 # configure
 nixos-generate-config --root /mnt
 
-# save /mnt/etc/nixos/hardware-configuration.nix /mnt/etc/nixos/configuration.nix
+# check /mnt/etc/nixos/hardware-configuration.nix /mnt/etc/nixos/configuration.nix
 
-cp /mnt/etc/nixos/hardware-configuration.nix /tmp
-cp /mnt/etc/nixos/configuration.nix /tmp
+# copy config data from another machine including secrets
 
-# copy config data
-
-sudo scp -r /data/nixos root@192.168.13.171:/mnt/data
+sudo scp -r /nix/data/nixos root@192.168.13.171:/mnt/nix/data
 
 # install
 
 nixos-install --option experimental-features 'nix-command flakes' --no-root-passwd --root /mnt
 
-# unmount all stuff
+# unmount all stuff and sync
 
-umount -Rl /data /mnt
-zpool export -a
+umount -Rl /nix/data /mnt
+cryptsetup luksClose crypt0
+cryptsetup luksClose crypt1
+cryptsetup luksClose crypt2
+sync
+
+# shutdown once
+
+shutdown -h now
 
 # sync all /data after the install
 
-sudo -E rsync -va --delete --one-file-system /data root@192.168.13.171:/
-
-# get back the vms
-
-sudo -E rsync -va --delete --one-file-system /home/cullmann/vms/ root@192.168.13.171:/home/cullmann/vms/
-
-#
-# after install tasks for extra file systems
-#
-
-# create vms disk
-
-DD=/dev/disk/by-id/nvme-CT2000P5PSSD8_213330E4ED05
-sgdisk --zap-all $DD
-blkdiscard -v $DD
-wipefs -a $DD
-
-sleep 5
-
-# ZFS zpool creation with encryption
-zpool create \
-    -o ashift=12 \
-    -o autotrim=on \
-    -O acltype=posixacl \
-    -O atime=off \
-    -O canmount=off \
-    -O compression=on \
-    -O dnodesize=auto \
-    -O normalization=formD \
-    -O xattr=sa \
-    -O mountpoint=none \
-    -O encryption=on \
-    -O keylocation=file:///data/nixos/key-vms.secret \
-    -O keyformat=passphrase \
-    vpool $DD
-
-sleep 5
-
-# create all the volumes
-zfs create -o mountpoint=legacy vpool/vms
-
-# update passphrase later
-# zfs change-key -o keylocation=file:///data/nixos/key-vms.secret vpool
-
-# create projects disk
-
-DD=/dev/disk/by-id/nvme-Samsung_SSD_980_PRO_2TB_S69ENF0R846614L
-sgdisk --zap-all $DD
-blkdiscard -v $DD
-wipefs -a $DD
-
-sleep 5
-
-# ZFS zpool creation with encryption
-zpool create \
-    -o ashift=12 \
-    -o autotrim=on \
-    -O acltype=posixacl \
-    -O atime=off \
-    -O canmount=off \
-    -O compression=on \
-    -O dnodesize=auto \
-    -O normalization=formD \
-    -O xattr=sa \
-    -O mountpoint=none \
-    -O encryption=on \
-    -O keylocation=file:///data/nixos/key-projects.secret \
-    -O keyformat=passphrase \
-    ppool $DD
-
-sleep 5
-
-# create all the volumes
-zfs create -o mountpoint=legacy ppool/projects
-
-# update passphrase later
-# zfs change-key -o keylocation=file:///data/nixos/key-projects.secret ppool
+sudo -E rsync -va --delete --one-file-system /nix/data/ root@192.168.13.171:/nix/data/
