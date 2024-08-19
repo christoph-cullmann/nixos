@@ -105,14 +105,14 @@ in
       "/var/lib/nixos"
 
       # systemd timers
-      { directory = "/var/lib/systemd/timers"; user = "root"; group = "root"; mode = "u=rwx,g=rx,o=rx"; }
+      "/var/lib/systemd/timers"
 
       # alsa state for persistent sound settings
-      { directory = "/var/lib/alsa"; user = "root"; group = "root"; mode = "u=rwx,g=rx,o=rx"; }
+      "/var/lib/alsa"
 
       # NetworkManager connections
-      { directory = "/etc/NetworkManager"; user = "root"; group = "root"; mode = "u=rwx,g=rx,o=rx"; }
-      { directory = "/var/lib/NetworkManager"; user = "root"; group = "root"; mode = "u=rwx,g=rx,o=rx"; }
+      "/etc/NetworkManager"
+      "/var/lib/NetworkManager"
     ];
   };
 
