@@ -405,6 +405,7 @@ in
     packages = with pkgs; [
       # good sans serif fonts
       aileron
+      cabin
       dm-sans
       fira-sans
       hubot-sans
@@ -437,9 +438,17 @@ in
       source-serif
 
       # monospace coding and terminal fonts
+      _0xproto
       cascadia-code
+      commit-mono
+      geist-font
+      mononoki
+      paratype-pt-mono
+      recursive
+      source-code-pro
 
       # fonts with good unicode coverage as fallback
+      ibm-plex
       noto-fonts
       noto-fonts-cjk-sans
       noto-fonts-cjk-serif
@@ -454,9 +463,9 @@ in
       enable = true;
       defaultFonts = {
         emoji = [ "Noto Color Emoji" ];
-        monospace = [ "Cascadia Code" "Noto Sans Mono" ];
-        sansSerif = [ "Lexend" "Noto Sans" ];
-        serif = [ "Crimson" "Noto Serif" ];
+        monospace = [ "Cascadia Code" "IBM Plex Mono" "Noto Sans Mono" ];
+        sansSerif = [ "Lexend" "IBM Plex Sans" "Noto Sans" ];
+        serif = [ "Crimson" "IBM Plex Serif" "Noto Serif" ];
       };
     };
   };
