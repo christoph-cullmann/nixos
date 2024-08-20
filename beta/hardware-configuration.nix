@@ -10,10 +10,19 @@
   boot.initrd.kernelModules = [ "amdgpu" ];
   boot.kernelModules = [ "kvm-amd" ];
 
-  # efi partition
+  # /boot efi partition to boot in UEFI mode
   fileSystems."/boot" =
     { device = "/dev/disk/by-id/nvme-SAMSUNG_MZVLB1T0HBLR-000L2_S4DZNX0R362286-part1";
       fsType = "vfat";
+      options = [ "fmask=0022" "dmask=0022" ];
+      neededForBoot = true;
+    };
+
+  # /nix encrypted btrfs for the remaining space
+  boot.initrd.luks.devices."crypt0".device = "/dev/disk/by-id/nvme-SAMSUNG_MZVLB1T0HBLR-000L2_S4DZNX0R362286-part2";
+  fileSystems."/nix" =
+    { device = "/dev/mapper/crypt0";
+      fsType = "btrfs";
       neededForBoot = true;
     };
 

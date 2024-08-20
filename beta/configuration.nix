@@ -11,7 +11,7 @@
       ./hardware-configuration.nix
 
       # Shared config of all machines
-      /data/nixos/share/common.nix
+      /nix/data/nixos/share/common.nix
     ];
 
   # our hostname and an ID for ZFS

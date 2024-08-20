@@ -1,0 +1,122 @@
+#
+# enable ssh for root
+#
+
+sudo bash
+systemctl start sshd
+passwd
+
+#
+# install script below
+#
+
+#
+# kill old efi boot stuff
+#
+
+efibootmgr
+efibootmgr -b 0 -B
+efibootmgr -b 1 -B
+efibootmgr -b 2 -B
+efibootmgr -b 3 -B
+efibootmgr -b 4 -B
+efibootmgr
+
+# Defining some helper variables (these will be used in later code
+# blocks as well, so make sure to use the same terminal session or
+# redefine them later)
+DISK=/dev/disk/by-id/nvme-SAMSUNG_MZVLB1T0HBLR-000L2_S4DZNX0R362286
+HOST=beta
+
+# ensure 4k sector size
+nvme format --lbaf=1 --force $DISK
+nvme id-ns -H $DISK
+
+sleep 5
+
+# kill old data
+sgdisk --zap-all $DISK
+blkdiscard -v $DISK
+wipefs -a $DISK
+gdisk -l $DISK
+
+sleep 5
+
+# create partitions
+parted $DISK -- mklabel gpt
+sgdisk -n 1:0:+1024M -c 1:"EFI System Partition" -t 1:EF00 $DISK
+sgdisk -n 2:0:0 -c 2:"Linux" -t 2:8e00 $DISK
+parted $DISK -- set 1 boot on
+
+sleep 5
+
+# take a look
+cat /proc/partitions
+
+# boot partition
+mkfs.fat -F 32 -n EFIBOOT $DISK-part1
+
+sleep 5
+
+# create the crypto containers with proper 4k sectors
+cryptsetup luksFormat --sector-size 4096 --batch-mode --verify-passphrase $DISK-part2
+
+# open the containers
+cryptsetup luksOpen $DISK-part2 crypt0
+
+# create one large btrfs on them, RAID0 with strong checksum
+mkfs.btrfs -f -d raid0 -m raid0 --checksum blake2 --features block-group-tree --label nix /dev/mapper/crypt0
+
+sleep 5
+
+# prepare install, tmpfs root
+mount -t tmpfs none /mnt
+
+# Create directories to mount file systems on
+mkdir -p /mnt/{nix,home,boot,root,etc/nixos}
+
+# mount the ESP
+mount $DISK-part1 /mnt/boot
+
+# mount large btrfs
+mount -t btrfs /dev/mapper/crypt0 /mnt/nix
+
+# ensure tmp fills not the RAM
+mkdir -p /mnt/tmp /mnt/nix/tmp
+mount --bind /mnt/nix/tmp /mnt/tmp
+
+# bind mount persistent stuff to data
+mkdir -p /mnt/nix/data/{home,root,nixos/$HOST}
+mount --bind /mnt/nix/data/home /mnt/home
+mount --bind /mnt/nix/data/root /mnt/root
+mount --bind /mnt/nix/data/nixos/$HOST /mnt/etc/nixos
+
+# create fake /nix/data to have the right paths
+mkdir -p /nix/data
+mount --bind /mnt/nix/data /nix/data
+
+# take a look
+mount
+
+# configure
+nixos-generate-config --root /mnt
+
+# check /mnt/etc/nixos/hardware-configuration.nix /mnt/etc/nixos/configuration.nix
+
+# copy config data from another machine including secrets
+
+sudo scp -r /nix/data/nixos root@192.168.13.xxx:/mnt/nix/data
+
+# install
+
+nixos-install --option experimental-features 'nix-command flakes' --no-root-passwd --root /mnt
+
+# unmount all stuff and sync
+
+umount -Rl /nix/data /mnt
+cryptsetup luksClose crypt0
+sync
+
+# shutdown once
+
+shutdown -h now
