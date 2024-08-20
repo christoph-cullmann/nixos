@@ -442,6 +442,7 @@ in
       cascadia-code
       commit-mono
       geist-font
+      monaspace
       mononoki
       paratype-pt-mono
       recursive
@@ -463,7 +464,7 @@ in
       enable = true;
       defaultFonts = {
         emoji = [ "Noto Color Emoji" ];
-        monospace = [ "Cascadia Code" "IBM Plex Mono" "Noto Sans Mono" ];
+        monospace = [ "Monaspace Argon" "IBM Plex Mono" "Noto Sans Mono" ];
         sansSerif = [ "Lexend" "IBM Plex Sans" "Noto Sans" ];
         serif = [ "Crimson" "IBM Plex Serif" "Noto Serif" ];
       };
