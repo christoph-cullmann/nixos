@@ -442,6 +442,7 @@ in
       cascadia-code
       commit-mono
       geist-font
+      martian-mono
       monaspace
       mononoki
       paratype-pt-mono
