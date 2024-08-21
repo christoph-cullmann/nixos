@@ -442,6 +442,8 @@ in
       cascadia-code
       commit-mono
       geist-font
+      jetbrains-mono
+      maple-mono
       martian-mono
       monaspace
       mononoki
