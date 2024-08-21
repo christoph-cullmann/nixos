@@ -257,7 +257,7 @@ in
     chromium
     clinfo
     config.boot.kernelPackages.perf
-    #delta
+    delta
     duf
     efibootmgr
     emacs
