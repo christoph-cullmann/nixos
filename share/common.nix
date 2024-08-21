@@ -253,7 +253,6 @@ in
     borgbackup
     btop
     calibre
-    catppuccin-sddm
     chromium
     clinfo
     config.boot.kernelPackages.perf
