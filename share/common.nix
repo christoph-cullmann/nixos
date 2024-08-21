@@ -437,17 +437,28 @@ in
 
       # monospace coding and terminal fonts
       _0xproto
+      anonymousPro
       cascadia-code
       commit-mono
+      fantasque-sans-mono
+      fira-code
       geist-font
+      hack-font
+      hasklig
+      inconsolata
       jetbrains-mono
+      julia-mono
       maple-mono
       martian-mono
+      meslo-lg
       monaspace
+      monoid
       mononoki
       paratype-pt-mono
       recursive
+      roboto-mono
       source-code-pro
+      victor-mono
 
       # fonts with good unicode coverage as fallback
       ibm-plex
