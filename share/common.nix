@@ -286,7 +286,6 @@ in
     keychain
     pkgs.kdePackages.kmail
     pkgs.kdePackages.konsole
-    krita
     lazygit
     libjxl
     libreoffice
