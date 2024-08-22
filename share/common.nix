@@ -408,6 +408,7 @@ in
       fira-sans
       hubot-sans
       inter
+      kanit-font
       lato
       lexend
       manrope
