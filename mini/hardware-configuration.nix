@@ -22,10 +22,12 @@
   boot.initrd.luks.devices."crypt0" = {
     device = "/dev/disk/by-id/nvme-CT4000P3PSSD8_2325E6E63746-part2";
     allowDiscards = true;
+    bypassWorkqueues = true;
   };
   boot.initrd.luks.devices."crypt1" = {
     device = "/dev/disk/by-id/ata-CT2000MX500SSD1_2138E5D5061F";
     allowDiscards = true;
+    bypassWorkqueues = true;
   };
   fileSystems."/nix" =
     { device = "/dev/mapper/crypt0";
