@@ -478,8 +478,24 @@ in
       defaultFonts = {
         emoji = [ "Noto Color Emoji" ];
         monospace = [ "Monaspace Argon" "IBM Plex Mono" "Noto Sans Mono" ];
-        sansSerif = [ "Lexend" "IBM Plex Sans" "Noto Sans" ];
+        sansSerif = [ "Inter" "IBM Plex Sans" "Noto Sans" ];
         serif = [ "Crimson" "IBM Plex Serif" "Noto Serif" ];
+      };
+
+      # fixes pixelation
+      antialias = true;
+
+      # fixes antialiasing blur
+      hinting = {
+        enable = true;
+        style = "full";
+        autohint = true;
+      };
+
+      # makes it bolder
+      subpixel = {
+        rgba = "rgb";
+        lcdfilter = "default";
       };
     };
   };
