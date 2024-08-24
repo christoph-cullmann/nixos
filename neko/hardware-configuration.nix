@@ -19,9 +19,18 @@
     };
 
   # /nix encrypted btrfs for the remaining space
-  boot.initrd.luks.devices."crypt0".device = "/dev/disk/by-id/nvme-Seagate_FireCuda_530_ZP4000GM30013_7VS01VBM-part2";
-  boot.initrd.luks.devices."crypt1".device = "/dev/disk/by-id/nvme-CT2000P5PSSD8_213330E4ED05";
-  boot.initrd.luks.devices."crypt2".device = "/dev/disk/by-id/nvme-Samsung_SSD_980_PRO_2TB_S69ENF0R846614L";
+  boot.initrd.luks.devices."crypt0" = {
+    device = "/dev/disk/by-id/nvme-Seagate_FireCuda_530_ZP4000GM30013_7VS01VBM-part2";
+    allowDiscards = true;
+  };
+  boot.initrd.luks.devices."crypt1" = {
+    device = "/dev/disk/by-id/nvme-CT2000P5PSSD8_213330E4ED05";
+    allowDiscards = true;
+  };
+  boot.initrd.luks.devices."crypt2" = {
+    device = "/dev/disk/by-id/nvme-Samsung_SSD_980_PRO_2TB_S69ENF0R846614L";
+    allowDiscards = true;
+  };
   fileSystems."/nix" =
     { device = "/dev/mapper/crypt0";
       fsType = "btrfs";
