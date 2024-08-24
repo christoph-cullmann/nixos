@@ -477,7 +477,7 @@ in
       enable = true;
       defaultFonts = {
         emoji = [ "Noto Color Emoji" ];
-        monospace = [ "Monaspace Argon" "IBM Plex Mono" "Noto Sans Mono" ];
+        monospace = [ "MonoLisa" "IBM Plex Mono" "Noto Sans Mono" ];
         sansSerif = [ "Inter" "IBM Plex Sans" "Noto Sans" ];
         serif = [ "Crimson" "IBM Plex Serif" "Noto Serif" ];
       };
