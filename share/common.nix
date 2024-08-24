@@ -232,6 +232,12 @@ in
     interval = "weekly";
   };
 
+  # scrub the disks weekly
+  services.btrfs.autoScrub = {
+    enable = true;
+    interval = "weekly";
+  };
+
   # avoid suspend ever to be triggered
   systemd.targets.sleep.enable = false;
   systemd.targets.suspend.enable = false;
