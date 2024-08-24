@@ -415,6 +415,7 @@ in
     packages = with pkgs; [
       # good sans serif fonts
       aileron
+      atkinson-hyperlegible
       cabin
       dm-sans
       fira-sans
