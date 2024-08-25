@@ -304,6 +304,7 @@ in
     lsof
     mailutils
     mc
+    pkgs.kdePackages.merkuro
     micro
     mission-center
     mplayer
