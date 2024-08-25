@@ -150,6 +150,7 @@ export QT_QUICK_CONTROLS_STYLE_PATH=/home/cullmann/projects/kde/usr/lib/qml/QtQu
     wayland-protocols
     wayland-scanner
     xcb-util-cursor
+    xdotool
     xercesc
     xml2
     xmlto
@@ -161,6 +162,7 @@ export QT_QUICK_CONTROLS_STYLE_PATH=/home/cullmann/projects/kde/usr/lib/qml/QtQu
     xorg.libXdmcp
     xorg.libXext
     xorg.libXfixes
+    xorg.libXft
     xorg.xcbutil
     xorg.xcbutilimage
     xorg.xcbutilkeysyms
