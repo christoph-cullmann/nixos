@@ -405,76 +405,14 @@ in
     };
 
     # get a small list of curated fonts
-    # internet hints
-    # https://biz-mastercreationz.medium.com/the-7-must-have-fonts-for-ruling-ui-ux-design-in-2024-e98c3b8ede31
-    # https://www.untitledui.com/blog/best-free-fonts
-    # https://medium.com/@iamakashjaggi/the-5-best-google-serif-fonts-of-2024-d1505543cb02
-    # https://www.halo-lab.com/blog/best-serif-fonts
-    # https://hootdesigncompany.com/resources/best-serif-google-fonts
-    # https://muz.li/blog/best-free-google-fonts
     packages = with pkgs; [
-      # good sans serif fonts
-      aileron
-      atkinson-hyperlegible
-      cabin
-      dm-sans
-      fira-sans
-      hubot-sans
+      # default sans serif font family
       inter
-      kanit-font
-      lato
-      lexend
-      manrope
-      mona-sans
-      montserrat
-      nacelle
-      open-sans
-      paratype-pt-sans
-      public-sans
-      roboto
-      source-sans
-      work-sans
 
-      # good serif fonts
-      alegreya
-      crimson
-      eb-garamond
-      fraunces
-      libre-baskerville
-      libre-bodoni
-      libre-caslon
+      # default serif font family
       merriweather
-      oldstandard
-      paratype-pt-serif
-      roboto-serif
-      source-serif
 
-      # monospace coding and terminal fonts
-      _0xproto
-      anonymousPro
-      cascadia-code
-      commit-mono
-      fantasque-sans-mono
-      fira-code
-      geist-font
-      hack-font
-      hasklig
-      inconsolata
-      jetbrains-mono
-      julia-mono
-      maple-mono
-      martian-mono
-      meslo-lg
-      monaspace
-      monoid
-      mononoki
-      paratype-pt-mono
-      recursive
-      roboto-mono
-      source-code-pro
-      victor-mono
-
-      # fonts with good unicode coverage as fallback
+      # font families with good unicode coverage as fallback
       ibm-plex
       noto-fonts
       noto-fonts-cjk-sans
@@ -492,7 +430,7 @@ in
         emoji = [ "Noto Color Emoji" ];
         monospace = [ "MonoLisa" "IBM Plex Mono" "Noto Sans Mono" ];
         sansSerif = [ "Inter" "IBM Plex Sans" "Noto Sans" ];
-        serif = [ "Crimson" "IBM Plex Serif" "Noto Serif" ];
+        serif = [ "Merriweather" "IBM Plex Serif" "Noto Serif" ];
       };
 
       # fixes pixelation
