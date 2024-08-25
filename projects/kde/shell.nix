@@ -69,6 +69,7 @@ export QT_QUICK_CONTROLS_STYLE_PATH=/home/cullmann/projects/kde/usr/lib/qml/QtQu
     libnl
     libpcap
     libpng
+    libqalculate
     libraw
     libsecret
     libselinux
