@@ -198,6 +198,9 @@ in
   # allow realtime
   security.rtkit.enable = true;
 
+  # no need to replace the kernel at runtime
+  security.protectKernelImage = true;
+
   # package manager config
   nix = {
     # auto optimize the store
