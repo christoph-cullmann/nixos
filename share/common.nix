@@ -27,8 +27,14 @@ in
   # use the latest kernel
   boot.kernelPackages = pkgs.linuxPackages_latest;
 
-  # don't check for split locks, for KVM and Co.
-  boot.kernelParams = [ "split_lock_detect=off" ];
+  # my kernel parameters
+  boot.kernelParams = [
+    # don't check for split locks, for KVM and Co.
+    "split_lock_detect=off"
+
+    # avoid that my USB stuff sleeps
+    "usbcore.autosuspend=-1"
+  ];
 
   # Use the systemd-boot EFI boot loader.
   boot.loader.systemd-boot.enable = true;
@@ -246,11 +252,6 @@ in
   systemd.targets.suspend.enable = false;
   systemd.targets.hibernate.enable = false;
   systemd.targets.hybrid-sleep.enable = false;
-
-  # save power
-  powerManagement.enable = true;
-  powerManagement.cpuFreqGovernor = "ondemand";
-  powerManagement.powertop.enable = true;
 
   # allow unfree packages
   nixpkgs.config.allowUnfree = true;
