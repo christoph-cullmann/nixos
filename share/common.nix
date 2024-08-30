@@ -411,10 +411,6 @@ in
 
     # get a small list of curated fonts
     packages = with pkgs; [
-      # default sans serif and serif font families that match well
-      source-sans
-      source-serif
-
       # font families with good unicode coverage as fallback
       ibm-plex
       noto-fonts
@@ -432,8 +428,8 @@ in
       defaultFonts = {
         emoji = [ "Noto Color Emoji" ];
         monospace = [ "MonoLisa" "IBM Plex Mono" "Noto Sans Mono" ];
-        sansSerif = [ "Source Sans 3" "IBM Plex Sans" "Noto Sans" ];
-        serif = [ "Source Serif 4" "IBM Plex Serif" "Noto Serif" ];
+        sansSerif = [ "Bespoke Sans Variable" "IBM Plex Sans" "Noto Sans" ];
+        serif = [ "Bespoke Serif Variable" "IBM Plex Serif" "Noto Serif" ];
       };
 
       # fixes pixelation
