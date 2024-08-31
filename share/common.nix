@@ -418,7 +418,6 @@ in
       nerdfonts
 
       # font families with good unicode coverage as fallback
-      ibm-plex
       noto-fonts
       noto-fonts-cjk-sans
       noto-fonts-cjk-serif
@@ -436,9 +435,9 @@ in
       # use some proper default fonts
       defaultFonts = {
         emoji = [ "Noto Color Emoji" ];
-        monospace = [ "MonoLisa" "IBM Plex Mono" "Noto Sans Mono" ];
-        sansSerif = [ "IBM Plex Sans" "Noto Sans" ];
-        serif = [ "IBM Plex Serif" "Noto Serif" ];
+        monospace = [ "MonoLisa" "Noto Sans Mono" ];
+        sansSerif = [ "Roboto" "Noto Sans" ];
+        serif = [ "Roboto Serif" "Noto Serif" ];
       };
 
       # don't look like ancient X11
