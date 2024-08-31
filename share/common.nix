@@ -409,8 +409,14 @@ in
       decompressFonts = true;
     };
 
-    # get a small list of curated fonts
+    # system fonts
     packages = with pkgs; [
+      # large collection of free fonts
+      google-fonts
+
+      # large collection of patched programming fonts
+      nerdfonts
+
       # font families with good unicode coverage as fallback
       ibm-plex
       noto-fonts
@@ -422,30 +428,32 @@ in
       noto-fonts-color-emoji
     ];
 
-    # use some proper default fonts
+    # proper default config for fonts
     fontconfig = {
+      # we use fontconfig
       enable = true;
+
+      # use some proper default fonts
       defaultFonts = {
         emoji = [ "Noto Color Emoji" ];
         monospace = [ "MonoLisa" "IBM Plex Mono" "Noto Sans Mono" ];
-        sansSerif = [ "Bespoke Sans Variable" "IBM Plex Sans" "Noto Sans" ];
-        serif = [ "Bespoke Serif Variable" "IBM Plex Serif" "Noto Serif" ];
+        sansSerif = [ "IBM Plex Sans" "Noto Sans" ];
+        serif = [ "IBM Plex Serif" "Noto Serif" ];
       };
 
-      # fixes pixelation
+      # don't look like ancient X11
       antialias = true;
 
-      # fixes antialiasing blur
+      # enable proper hinting
       hinting = {
         enable = true;
         style = "full";
-        autohint = true;
       };
 
-      # makes it bolder
+      # enable proper subpixel handling
       subpixel = {
         rgba = "rgb";
-        lcdfilter = "default";
+        lcdfilter = "light";
       };
     };
   };
