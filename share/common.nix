@@ -411,11 +411,9 @@ in
 
     # system fonts
     packages = with pkgs; [
-      # large collection of free fonts
-      google-fonts
-
-      # large collection of patched programming fonts
-      nerdfonts
+      # Inter & Merriweather as main fonts
+      inter
+      merriweather
 
       # font families with good unicode coverage as fallback
       noto-fonts
@@ -436,8 +434,8 @@ in
       defaultFonts = {
         emoji = [ "Noto Color Emoji" ];
         monospace = [ "MonoLisa" "Noto Sans Mono" ];
-        sansSerif = [ "Roboto" "Noto Sans" ];
-        serif = [ "Roboto Serif" "Noto Serif" ];
+        sansSerif = [ "Inter" "Noto Sans" ];
+        serif = [ "Merriweather" "Noto Serif" ];
       };
 
       # don't look like ancient X11
