@@ -445,12 +445,13 @@ in
       hinting = {
         enable = true;
         style = "full";
+        autohint = true;
       };
 
-      # enable proper subpixel handling
+      # disable subpixel rendering to avoid color blurr
       subpixel = {
-        rgba = "rgb";
-        lcdfilter = "light";
+        rgba = "none";
+        lcdfilter = "none";
       };
     };
   };
