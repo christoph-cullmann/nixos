@@ -413,6 +413,9 @@ in
     # system fonts
     packages = with pkgs; [
       # personal paid fonts
+      # https://www.monolisa.dev/
+      # https://www.lucasfonts.com/fonts/the-sans
+      # https://www.lucasfonts.com/fonts/the-serif
       cullmann-fonts
 
       # font families with good unicode coverage as fallback
