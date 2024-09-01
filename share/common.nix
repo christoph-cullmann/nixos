@@ -488,7 +488,7 @@ in
     mode = "0400";
   };
   environment.etc."mail/secrets" = {
-    text = builtins.readFile "/nix/data/nixos/mail.secret";
+    text = builtins.readFile "/nix/data/nixos/secret/mail.secret";
     mode = "0400";
   };
 
