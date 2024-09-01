@@ -1,6 +1,7 @@
 { config, pkgs, ... }:
 let
   impermanence = builtins.fetchTarball "https://github.com/nix-community/impermanence/archive/master.tar.gz";
+  cullmann-fonts = pkgs.callPackage "/nix/data/nixos/packages/cullmann-fonts.nix" {};
 in
 {
   #
@@ -411,9 +412,8 @@ in
 
     # system fonts
     packages = with pkgs; [
-      # Inter & Merriweather as main fonts
-      inter
-      merriweather
+      # personal paid fonts
+      cullmann-fonts
 
       # font families with good unicode coverage as fallback
       noto-fonts
