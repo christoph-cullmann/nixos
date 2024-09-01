@@ -434,8 +434,8 @@ in
       defaultFonts = {
         emoji = [ "Noto Color Emoji" ];
         monospace = [ "MonoLisa" "Noto Sans Mono" ];
-        sansSerif = [ "Inter" "Noto Sans" ];
-        serif = [ "Merriweather" "Noto Serif" ];
+        sansSerif = [ "TheSansOffice" "Noto Sans" ];
+        serif = [ "TheSerifOffice" "Noto Serif" ];
       };
 
       # don't look like ancient X11
