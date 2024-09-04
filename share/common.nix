@@ -25,16 +25,13 @@ in
   # (e.g. man configuration.nix or on https://nixos.org/nixos/options.html).
   system.stateVersion = "23.05"; # Did you read the comment?
 
-  # use the latest kernel
-  boot.kernelPackages = pkgs.linuxPackages_latest;
+  # use the ZEN kernel
+  boot.kernelPackages = pkgs.linuxPackages_zen;
 
   # my kernel parameters
   boot.kernelParams = [
     # don't check for split locks, for KVM and Co.
     "split_lock_detect=off"
-
-    # avoid that my USB stuff sleeps
-    "usbcore.autosuspend=-1"
   ];
 
   # Use the systemd-boot EFI boot loader.
@@ -507,7 +504,7 @@ in
 
   # enable VirtualBox
   virtualisation.virtualbox.host.enable = true;
-  #virtualisation.virtualbox.host.enableKvm = true;
+  virtualisation.virtualbox.host.enableKvm = true;
   virtualisation.virtualbox.host.enableHardening = false;
   virtualisation.virtualbox.host.addNetworkInterface = false;
 
