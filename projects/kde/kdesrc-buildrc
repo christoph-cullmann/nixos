@@ -34,7 +34,7 @@ global
     log-dir ~/projects/kde/log
 
     # use distro stuff for that
-     ignore-modules wayland wayland-protocols gpgme appstream packagekit-qt poppler
+    ignore-modules wayland wayland-protocols gpgme appstream packagekit-qt poppler
 end global
 
 include ${module-definitions-dir}/kf6-qt6.ksb
