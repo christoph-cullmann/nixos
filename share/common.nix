@@ -228,12 +228,6 @@ in
     '';
   };
 
-  # auto update
-  system.autoUpgrade = {
-    enable = true;
-    allowReboot = false;
-  };
-
   # trim the disks weekly
   services.fstrim = {
     enable = true;
