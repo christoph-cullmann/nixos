@@ -189,7 +189,7 @@ in
     settings = {
       General = {
         # ensure we have proper scaling
-        GreeterEnvironment = "QT_WAYLAND_SHELL_INTEGRATION=layer-shell,QT_SCREEN_SCALE_FACTORS=1.5";
+        GreeterEnvironment = "QT_WAYLAND_SHELL_INTEGRATION=layer-shell,QT_SCREEN_SCALE_FACTORS=1.25";
       };
     };
   };
