@@ -186,12 +186,6 @@ in
   services.displayManager.sddm = {
     enable = true;
     wayland.enable = true;
-    settings = {
-      General = {
-        # ensure we have proper scaling
-        GreeterEnvironment = "QT_WAYLAND_SHELL_INTEGRATION=layer-shell,QT_SCREEN_SCALE_FACTORS=1.25";
-      };
-    };
   };
 
   # enable sound with PipeWire
