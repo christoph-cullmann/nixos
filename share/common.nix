@@ -292,6 +292,7 @@ in
     pkgs.kdePackages.kcachegrind
     pkgs.kdePackages.kcalc
     keychain
+    pkgs.kdePackages.kleopatra
     pkgs.kdePackages.kmail
     pkgs.kdePackages.konsole
     lazygit
