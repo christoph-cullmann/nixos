@@ -273,8 +273,9 @@ in
     fdupes
     ffmpeg
     file
-    fzf
     pkgs.kdePackages.filelight
+    fooyin
+    fzf
     gimp
     gitFull
     glxinfo
