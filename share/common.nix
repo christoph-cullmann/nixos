@@ -383,7 +383,7 @@ in
   # flatpak remote-add --if-not-exists --user flathub https://dl.flathub.org/repo/flathub.flatpakrepo
   # flatpak install --user flathub com.usebottles.bottles
   # flatpak install --user flathub com.valvesoftware.Steam
-  # flatpak update --user
+  # flatpak update --user -y
   #
   services.flatpak.enable = true;
 
