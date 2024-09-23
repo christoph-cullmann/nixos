@@ -25,8 +25,8 @@ in
   # (e.g. man configuration.nix or on https://nixos.org/nixos/options.html).
   system.stateVersion = "23.05"; # Did you read the comment?
 
-  # use the ZEN kernel
-  boot.kernelPackages = pkgs.linuxPackages_zen;
+  # use the latest kernel
+  boot.kernelPackages = pkgs.linuxPackages_latest;
 
   # my kernel parameters
   boot.kernelParams = [
