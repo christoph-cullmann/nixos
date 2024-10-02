@@ -91,10 +91,20 @@ zpool create \
 
 sleep 5
 
+# show the pool
+zpool status
+
+sleep 5
+
 # create all the volumes
 zfs create -o mountpoint=legacy zpool/data
 zfs create -o mountpoint=legacy zpool/nix
 zfs create -o mountpoint=legacy zpool/tmp
+
+sleep 5
+
+# show the pool
+zpool status
 
 sleep 5
 
