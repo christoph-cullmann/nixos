@@ -18,29 +18,6 @@
       neededForBoot = true;
     };
 
-  # /nix encrypted btrfs for the remaining space
-  boot.initrd.luks.devices."crypt0" = {
-    device = "/dev/disk/by-id/nvme-Seagate_FireCuda_530_ZP4000GM30013_7VS01VBM-part2";
-    allowDiscards = true;
-    bypassWorkqueues = true;
-  };
-  boot.initrd.luks.devices."crypt1" = {
-    device = "/dev/disk/by-id/nvme-CT2000P5PSSD8_213330E4ED05";
-    allowDiscards = true;
-    bypassWorkqueues = true;
-  };
-  boot.initrd.luks.devices."crypt2" = {
-    device = "/dev/disk/by-id/nvme-Samsung_SSD_980_PRO_2TB_S69ENF0R846614L";
-    allowDiscards = true;
-    bypassWorkqueues = true;
-  };
-  fileSystems."/nix" =
-    { device = "/dev/mapper/crypt0";
-      fsType = "btrfs";
-      options = [ "device=/dev/mapper/crypt1" "device=/dev/mapper/crypt2" ];
-      neededForBoot = true;
-    };
-
   nixpkgs.hostPlatform = lib.mkDefault "x86_64-linux";
   hardware.cpu.intel.updateMicrocode = lib.mkDefault config.hardware.enableRedistributableFirmware;
 

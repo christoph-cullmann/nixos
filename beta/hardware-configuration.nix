@@ -18,18 +18,6 @@
       neededForBoot = true;
     };
 
-  # /nix encrypted btrfs for the remaining space
-  boot.initrd.luks.devices."crypt0" = {
-    device = "/dev/disk/by-id/nvme-SAMSUNG_MZVLB1T0HBLR-000L2_S4DZNX0R362286-part2";
-    allowDiscards = true;
-    bypassWorkqueues = true;
-  };
-  fileSystems."/nix" =
-    { device = "/dev/mapper/crypt0";
-      fsType = "btrfs";
-      neededForBoot = true;
-    };
-
   nixpkgs.hostPlatform = lib.mkDefault "x86_64-linux";
   hardware.cpu.amd.updateMicrocode = lib.mkDefault config.hardware.enableRedistributableFirmware;
 

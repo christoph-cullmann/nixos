@@ -1,7 +1,7 @@
 { config, pkgs, ... }:
 let
   impermanence = builtins.fetchTarball "https://github.com/nix-community/impermanence/archive/master.tar.gz";
-  cullmann-fonts = pkgs.callPackage "/nix/data/nixos/packages/cullmann-fonts.nix" {};
+  cullmann-fonts = pkgs.callPackage "/data/nixos/packages/cullmann-fonts.nix" {};
 in
 {
   #
@@ -14,7 +14,7 @@ in
       "${impermanence}/nixos.nix"
 
       # our users
-      "/nix/data/nixos/share/users.nix"
+      "/data/nixos/share/users.nix"
   ];
 
   # This value determines the NixOS release from which the default
@@ -25,8 +25,9 @@ in
   # (e.g. man configuration.nix or on https://nixos.org/nixos/options.html).
   system.stateVersion = "23.05"; # Did you read the comment?
 
-  # use the latest kernel
-  boot.kernelPackages = pkgs.linuxPackages_latest;
+  # use the latest kernel with ZFS support and enable that file system
+  boot.kernelPackages = config.boot.zfs.package.latestCompatibleLinuxPackages;
+  boot.supportedFilesystems = [ "zfs" ];
 
   # my kernel parameters
   boot.kernelParams = [
@@ -64,40 +65,52 @@ in
       options = [ "defaults" "size=8G" "mode=755" ];
     };
 
-  # tmp on /nix to not fill RAM
-  fileSystems."/tmp" =
-    { device = "/nix/tmp";
-      fsType = "none";
+  # my data
+  fileSystems."/data" =
+    { device = "zpool/data";
+      fsType = "zfs";
       neededForBoot = true;
-      options = [ "bind" ];
-      depends = [ "/nix" ];
+    };
+
+  # the system
+  fileSystems."/nix" =
+    { device = "zpool/nix";
+      fsType = "zfs";
+      neededForBoot = true;
+    };
+
+  # tmp to not fill RAM
+  fileSystems."/tmp" =
+    { device = "zpool/tmp";
+      fsType = "zfs";
+      neededForBoot = true;
     };
 
   # bind mount to have user homes
   fileSystems."/home" =
-    { device = "/nix/data/home";
+    { device = "/data/home";
       fsType = "none";
       neededForBoot = true;
       options = [ "bind" ];
-      depends = [ "/nix" ];
+      depends = [ "/data" ];
     };
 
   # bind mount to have root home
   fileSystems."/root" =
-    { device = "/nix/data/root";
+    { device = "/data/root";
       fsType = "none";
       neededForBoot = true;
       options = [ "bind" ];
-      depends = [ "/nix" ];
+      depends = [ "/data" ];
     };
 
   # bind mount to have NixOS configuration, different per host
   fileSystems."/etc/nixos" =
-    { device = "/nix/data/nixos/${config.networking.hostName}";
+    { device = "/data/nixos/${config.networking.hostName}";
       fsType = "none";
       neededForBoot = true;
       options = [ "bind" ];
-      depends = [ "/nix" ];
+      depends = [ "/data" ];
     };
 
   # keep some stuff persistent
@@ -226,18 +239,6 @@ in
       keep-outputs = true
       keep-derivations = true
     '';
-  };
-
-  # trim the disks weekly
-  services.fstrim = {
-    enable = true;
-    interval = "weekly";
-  };
-
-  # scrub the disks weekly
-  services.btrfs.autoScrub = {
-    enable = true;
-    interval = "weekly";
   };
 
   # avoid suspend ever to be triggered
@@ -485,7 +486,7 @@ in
     mode = "0400";
   };
   environment.etc."mail/secrets" = {
-    text = builtins.readFile "/nix/data/nixos/secret/mail.secret";
+    text = builtins.readFile "/data/nixos/secret/mail.secret";
     mode = "0400";
   };
 

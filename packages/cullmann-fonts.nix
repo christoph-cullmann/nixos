@@ -5,7 +5,7 @@
 stdenvNoCC.mkDerivation {
   pname = "cullmann-fonts";
   version = "1.0";
-  src = /nix/data/nixos/secret/fonts;
+  src = /data/nixos/secret/fonts;
 
   installPhase = ''
     mkdir -p $out/share/fonts/truetype/
