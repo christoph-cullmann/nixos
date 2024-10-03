@@ -33,6 +33,10 @@ in
     # no hibernate for ZFS systems
     "nohibernate"
 
+    # make ARC fast
+    "init_on_alloc=0"
+    "init_on_free=0"
+
     # don't check for split locks, for KVM and Co.
     "split_lock_detect=off"
   ];
@@ -42,6 +46,8 @@ in
     options zfs zfs_arc_meta_limit_percent=75
     options zfs zfs_arc_min=134217728
     options zfs zfs_arc_max=4294967296
+    options zfs zfs_compressed_arc_enabled=0
+    options zfs zfs_abd_scatter_enabled=0
     options zfs zfs_txg_timeout=30
     options zfs zfs_vdev_scrub_min_active=1
     options zfs zfs_vdev_scrub_max_active=1
