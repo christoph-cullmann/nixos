@@ -73,7 +73,6 @@ sleep 5
 # ZFS zpool creation with encryption
 zpool create \
     -o ashift=13 \
-    -o recordsize=64K \
     -o autotrim=off \
     -O acltype=posixacl \
     -O atime=off \
@@ -100,6 +99,11 @@ sleep 5
 zfs create -o mountpoint=legacy zpool/data
 zfs create -o mountpoint=legacy zpool/nix
 zfs create -o mountpoint=legacy zpool/tmp
+
+# we want 64 KB recordsize
+zfs set recordsize=64K zpool/data
+zfs set recordsize=64K zpool/nix
+zfs set recordsize=64K zpool/tmp
 
 sleep 5
 
