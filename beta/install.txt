@@ -6,6 +6,9 @@ sudo bash
 systemctl start sshd
 passwd
 
+# get wlan
+nmtui
+
 #
 # install script below
 #
