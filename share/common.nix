@@ -299,7 +299,6 @@ in
   # List packages installed in system profile. To search, run:
   # $ nix search wget
   environment.systemPackages = with pkgs; [
-    pkgs.kdePackages.ark
     aspellDicts.de
     aspellDicts.en
     bitwise
@@ -317,7 +316,6 @@ in
     fdupes
     ffmpeg
     file
-    pkgs.kdePackages.filelight
     fooyin
     fzf
     gimp
@@ -333,13 +331,20 @@ in
     hunspellDicts.en_US
     inetutils
     inkscape
-    pkgs.kdePackages.kate
-    pkgs.kdePackages.kcachegrind
-    pkgs.kdePackages.kcalc
+    kdePackages.ark
+    kdePackages.calligra
+    kdePackages.filelight
+    kdePackages.kate
+    kdePackages.kcachegrind
+    kdePackages.kcalc
+    kdePackages.kleopatra
+    kdePackages.kmail
+    kdePackages.konsole
+    kdePackages.merkuro
+    kdePackages.neochat
+    kdePackages.okular
+    kdePackages.tokodon
     keychain
-    pkgs.kdePackages.kleopatra
-    pkgs.kdePackages.kmail
-    pkgs.kdePackages.konsole
     lazygit
     libjxl
     libreoffice
@@ -347,17 +352,14 @@ in
     lsof
     mailutils
     mc
-    pkgs.kdePackages.merkuro
     micro
     mission-center
     mplayer
-    pkgs.kdePackages.neochat
     nixos-install-tools
     nmap
     nvme-cli
     procmail
     okteta
-    pkgs.kdePackages.okular
     p7zip
     parted
     pciutils
@@ -375,7 +377,6 @@ in
     tigervnc
     tk
     tldr
-    pkgs.kdePackages.tokodon
     unrar
     unzip
     usbutils
