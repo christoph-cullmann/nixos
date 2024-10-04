@@ -257,6 +257,9 @@ in
 
   # package manager config
   nix = {
+    # don't hog all cores, might OOM, too
+    settings.max-jobs = 4;
+
     # auto optimize the store
     settings.auto-optimise-store = true;
 
