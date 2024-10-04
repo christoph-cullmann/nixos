@@ -257,11 +257,18 @@ in
 
   # package manager config
   nix = {
-    # don't hog all cores, might OOM, too
-    settings.max-jobs = 4;
+    # general settings
+    settings = {
+      # don't hog all cores, might OOM, too
+      cores = 2;
+      max-jobs = 2;
 
-    # auto optimize the store
-    settings.auto-optimise-store = true;
+      # auto optimize the store
+      auto-optimise-store = true;
+
+      # enable new stuff
+      experimental-features = "nix-command flakes";
+    };
 
     # cleanup the store from time to time
     gc = {
@@ -269,9 +276,6 @@ in
       dates = "daily";
       options = "--delete-older-than 7d";
     };
-
-    # enable new stuff
-    settings.experimental-features = "nix-command flakes";
 
     # https://github.com/nix-community/nix-direnv
     extraOptions = ''
