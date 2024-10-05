@@ -376,6 +376,7 @@ in
     vscodium
     vulkan-tools
     wayland-utils
+    xorg.xhost
     xorg.xlsclients
     zoxide
     zsh
@@ -489,8 +490,11 @@ in
     };
   };
 
-  # OpenGL
-  hardware.graphics.enable = true;
+  # OpenGL, 32-bit for steam
+  hardware.graphics = {
+    enable = true;
+    enable32Bit = true;
+  };
 
   # try to ensure we can use our network LaserJet
   services.printing.enable = true;
@@ -560,9 +564,15 @@ in
   virtualisation.virtualbox.host.enableHardening = false;
   virtualisation.virtualbox.host.addNetworkInterface = false;
 
-  # configure sudo
-  security.sudo.execWheelOnly = true;
-  security.sudo.extraConfig = ''
-    Defaults lecture = never
-  '';
+  # use doas instead of sudo
+  security.sudo.enable = false;
+  security.doas.enable = true;
+  security.doas.extraRules = [
+    # wheel users are allowed to become all users
+    { groups = [ "wheel" ]; noPass = false; keepEnv = true; persist = true; }
+
+    # wheel users can use sandbox stuff without password
+    { groups = [ "wheel" ]; runAs = "sandbox-games"; noPass = true; }
+    { groups = [ "wheel" ]; runAs = "sandbox-kde"; noPass = true; }
+  ];
 }

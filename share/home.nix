@@ -31,13 +31,13 @@
     # aliases
     shellAliases = {
       # system build/update/cleanup
-      update = "sudo nixos-rebuild boot";
-      upgrade = "sudo nixos-rebuild boot --upgrade";
-      updatenow = "sudo nixos-rebuild switch";
-      upgradenow = "sudo nixos-rebuild switch --upgrade";
-      gc = "sudo nix-collect-garbage --delete-older-than 7d";
-      verify = "sudo nix --extra-experimental-features nix-command store verify --all";
-      optimize = "sudo nix --extra-experimental-features nix-command store optimise";
+      update = "doas nixos-rebuild boot";
+      upgrade = "doas nixos-rebuild boot --upgrade";
+      updatenow = "doas nixos-rebuild switch";
+      upgradenow = "doas nixos-rebuild switch --upgrade";
+      gc = "doas nix-collect-garbage --delete-older-than 7d";
+      verify = "doas nix --extra-experimental-features nix-command store verify --all";
+      optimize = "doas nix --extra-experimental-features nix-command store optimise";
 
       # list latest files last
       ltr = "eza -l -s modified";
