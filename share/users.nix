@@ -55,7 +55,7 @@ in
     };
 
     #
-    # sandbox for lutris and steam games
+    # sandbox for lutris and steam games and Co.
     #
     users.sandbox-games = {
       # home on persistent volume
@@ -110,7 +110,7 @@ in
       # shared config
       imports = [ ./home.nix ];
 
-      # enable keychain, we use the main user key
+      # enable keychain
       programs.keychain = {
         enable = true;
         enableZshIntegration = true;
@@ -122,6 +122,12 @@ in
     users.sandbox-games = {
       # shared config
       imports = [ ./home.nix ];
+
+      # install gaming stuff
+      home.packages = with pkgs; [
+        lutris
+        steam
+      ];
     };
 
     # kde user with extra settings
