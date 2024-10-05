@@ -359,6 +359,7 @@ in
     pulseaudio
     pwgen
     qmk
+    restic
     ripgrep
     scc
     ssh-audit
