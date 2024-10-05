@@ -127,7 +127,8 @@ in
       home.packages = with pkgs; [
         lutris
         steam
-        wine64
+        wineWowPackages.stable
+        winetricks
       ];
     };
 
