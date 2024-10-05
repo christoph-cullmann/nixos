@@ -113,15 +113,6 @@ in
       neededForBoot = true;
     };
 
-  # bind mount to have user homes
-  fileSystems."/home" =
-    { device = "/data/home";
-      fsType = "none";
-      neededForBoot = true;
-      options = [ "bind" ];
-      depends = [ "/data" ];
-    };
-
   # bind mount to have root home
   fileSystems."/root" =
     { device = "/data/root";

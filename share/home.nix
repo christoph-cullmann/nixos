@@ -126,13 +126,6 @@
     enableZshIntegration = true;
   };
 
-  # enable keychain, we use the main user key
-  programs.keychain = {
-    enable = true;
-    enableZshIntegration = true;
-    keys = [ "/home/cullmann/.ssh/id_ed25519" ];
-  };
-
   # https://github.com/nix-community/nix-direnv
   programs.direnv = {
     enable = true;

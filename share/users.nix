@@ -20,7 +20,6 @@ in
     #
     # administrator
     #
-
     users.root = {
       # init password
       hashedPassword = builtins.readFile "/data/nixos/secret/password.secret";
@@ -32,8 +31,10 @@ in
     #
     # my main user
     #
-
     users.cullmann = {
+      # home on persistent volume
+      home = "/data/home/cullmann";
+
       # hard code UID for stability over machines
       uid = 1000;
 
@@ -52,6 +53,42 @@ in
       # use fixed auth keys
       openssh.authorizedKeys.keys = config.users.users.root.openssh.authorizedKeys.keys;
     };
+
+    #
+    # sandbox for lutris and steam games
+    #
+    users.sandbox-games = {
+      # home on persistent volume
+      home = "/data/home/sandbox-games";
+
+      # hard code UID for stability over machines
+      # out of range of normal login users
+      uid = 32000;
+
+      # normal user
+      isNormalUser = true;
+
+      # sandbox user
+      description = "Sandbox Games";
+    };
+
+    #
+    # sandbox for kde development
+    #
+    users.sandbox-kde = {
+      # home on persistent volume
+      home = "/data/home/sandbox-kde";
+
+      # hard code UID for stability over machines
+      # out of range of normal login users
+      uid = 32001;
+
+      # normal user
+      isNormalUser = true;
+
+      # sandbox user
+      description = "Sandbox KDE";
+    };
   };
 
   # home manager settings
@@ -62,8 +99,35 @@ in
     # use global pkgs
     useGlobalPkgs = true;
 
-    # use shared home manager settings
-    users.root = import ./home.nix;
-    users.cullmann = import ./home.nix;
+    # root just with shared home manager settings
+    users.root = {
+      # shared config
+      imports = [ ./home.nix ];
+    };
+
+    # main user with extra settings
+    users.cullmann = {
+      # shared config
+      imports = [ ./home.nix ];
+
+      # enable keychain, we use the main user key
+      programs.keychain = {
+        enable = true;
+        enableZshIntegration = true;
+        keys = [ "/data/home/cullmann/.ssh/id_ed25519" ];
+      };
+    };
+
+    # games user with extra settings
+    users.sandbox-games = {
+      # shared config
+      imports = [ ./home.nix ];
+    };
+
+    # kde user with extra settings
+    users.sandbox-kde = {
+      # shared config
+      imports = [ ./home.nix ];
+    };
   };
 }
