@@ -136,6 +136,23 @@ in
     users.sandbox-kde = {
       # shared config
       imports = [ ./home.nix ];
+
+      # create kde build setup
+      home.file = {
+        "projects/kde/.envrc" = {
+          text = "use nix";
+        };
+        "projects/kde/cleanup.sh" = {
+          text = (builtins.readFile "/data/nixos/projects/kde/cleanup.sh");
+          executable = true;
+        };
+        "projects/kde/kdesrc-buildrc" = {
+          text = (builtins.readFile "/data/nixos/projects/kde/kdesrc-buildrc");
+        };
+        "projects/kde/shell.nix" = {
+          text = (builtins.readFile "/data/nixos/projects/kde/shell.nix");
+        };
+      };
     };
   };
 }
