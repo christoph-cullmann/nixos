@@ -416,15 +416,6 @@ in
   # firefox needs programs.firefox.enable here but no systemPackages entry to have icon and work
   programs.firefox.enable = true;
 
-  # Flatpak to sandbox Steam, Bottles and Co.
-  #
-  # flatpak remote-add --if-not-exists --user flathub https://dl.flathub.org/repo/flathub.flatpakrepo
-  # flatpak install --user flathub com.usebottles.bottles
-  # flatpak install --user flathub com.valvesoftware.Steam
-  # flatpak update --user -y
-  #
-  services.flatpak.enable = true;
-
   # allow keyboard configure tools to work
   hardware.keyboard.qmk.enable = true;
 
