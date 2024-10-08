@@ -70,6 +70,9 @@ in
 
       # sandbox user
       description = "Sandbox Games";
+
+      # use fixed auth keys
+      openssh.authorizedKeys.keys = config.users.users.root.openssh.authorizedKeys.keys;
     };
 
     #
@@ -88,6 +91,9 @@ in
 
       # sandbox user
       description = "Sandbox KDE";
+
+      # use fixed auth keys
+      openssh.authorizedKeys.keys = config.users.users.root.openssh.authorizedKeys.keys;
     };
   };
 
