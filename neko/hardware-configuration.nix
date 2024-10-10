@@ -10,6 +10,12 @@
   boot.initrd.kernelModules = [ "i915" ];
   boot.kernelModules = [ "kvm-intel" ];
 
+  # Intel microcode updates please
+  hardware.cpu.intel.updateMicrocode = true;
+
+  # intel graphics
+  hardware.graphics.extraPackages = with pkgs; [ intel-media-driver intel-compute-runtime ];
+
   # /boot efi partition to boot in UEFI mode
   fileSystems."/boot" =
     { device = "/dev/disk/by-id/nvme-Seagate_FireCuda_530_ZP4000GM30013_7VS01VBM-part1";
@@ -17,10 +23,4 @@
       options = [ "fmask=0022" "dmask=0022" ];
       neededForBoot = true;
     };
-
-  nixpkgs.hostPlatform = lib.mkDefault "x86_64-linux";
-  hardware.cpu.intel.updateMicrocode = lib.mkDefault config.hardware.enableRedistributableFirmware;
-
-  # intel graphics
-  hardware.graphics.extraPackages = with pkgs; [ intel-media-driver intel-compute-runtime ];
 }

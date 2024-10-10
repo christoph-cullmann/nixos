@@ -25,6 +25,9 @@ in
   # (e.g. man configuration.nix or on https://nixos.org/nixos/options.html).
   system.stateVersion = "23.05"; # Did you read the comment?
 
+  # atm all stuff is x86_64
+  nixpkgs.hostPlatform = "x86_64-linux";
+
   # enable ZFS
   boot.supportedFilesystems = [ "zfs" ];
 
