@@ -224,6 +224,12 @@ in
   # use X11/wayland layout for console, too
   console.useXkbConfig = true;
 
+  # nice console based on KMS/DRM
+  services.kmscon = {
+    enable = true;
+    useXkbConfig = true;
+  };
+
   # enable SDDM & the KDE Plasma Desktop Environment with Wayland
   services.desktopManager.plasma6.enable = true;
   services.displayManager.sddm = {
