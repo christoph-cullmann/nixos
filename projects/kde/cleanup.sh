@@ -4,7 +4,7 @@
 cd ~/projects/kde || exit 1
 
 # kill all old stuff
-rm -rf ~/projects/kde/src ~/projects/kde/build ~/projects/kde/usr || exit 1
+rm -rf ~/projects/kde/src ~/projects/kde/build ~/projects/kde/usr ~/projects/kde/log || exit 1
 
 # get new kdesrc-build
 mkdir -p ~/projects/kde/src || exit 1
