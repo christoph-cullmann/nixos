@@ -290,12 +290,6 @@ in
   systemd.targets.hibernate.enable = false;
   systemd.targets.hybrid-sleep.enable = false;
 
-  # power management
-  powerManagement = {
-    enable = true;
-    cpuFreqGovernor = "schedutil";
-  };
-
   # allow unfree packages
   nixpkgs.config.allowUnfree = true;
 
