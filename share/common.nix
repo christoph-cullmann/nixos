@@ -302,7 +302,6 @@ in
     aspellDicts.de
     aspellDicts.en
     bitwise
-    borgbackup
     btop
     calibre
     chromium
