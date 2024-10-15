@@ -303,7 +303,6 @@ in
     aspellDicts.en
     bitwise
     btop
-    calibre
     chromium
     clinfo
     config.boot.kernelPackages.perf
