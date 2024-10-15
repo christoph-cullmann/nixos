@@ -315,7 +315,6 @@ in
     fdupes
     ffmpeg
     file
-    fooyin
     fzf
     gimp
     gitFull
