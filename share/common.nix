@@ -46,6 +46,7 @@ in
 
   # tweak ZFS
   boot.extraModprobeConfig = ''
+    options zfs zfetch_max_distance=268435456
     options zfs zfs_arc_meta_limit_percent=75
     options zfs zfs_arc_min=134217728
     options zfs zfs_arc_max=4294967296
