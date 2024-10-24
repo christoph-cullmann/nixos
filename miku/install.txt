@@ -144,7 +144,7 @@ nixos-generate-config --root /mnt
 
 # copy config data from another machine including secrets
 
-sudo scp -r /data/nixos root@192.168.13.115:/mnt/data
+doas scp -r /data/nixos root@192.168.13.115:/mnt/data
 
 # install
 
@@ -161,4 +161,4 @@ shutdown -h now
 
 # sync all /data after the install
 
-sudo -E rsync -va --delete --one-file-system /data/ root@192.168.13.115:/data/
+doas -E rsync -va --delete --one-file-system /data/ root@192.168.13.115:/data/
