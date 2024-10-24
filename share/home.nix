@@ -49,6 +49,8 @@
       bsdroot = "ssh root@bsd.fritz.box";
       mac = "ssh mac.fritz.box";
       macroot = "ssh root@mac.fritz.box";
+      miku = "ssh miku.fritz.box";
+      mikuroot = "ssh root@miku.fritz.box";
       mini = "ssh mini.fritz.box";
       miniroot = "ssh root@mini.fritz.box";
       neko = "ssh neko.fritz.box";
