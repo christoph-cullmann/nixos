@@ -161,4 +161,4 @@ shutdown -h now
 
 # sync all /data after the install
 
-doas -E rsync -va --delete --one-file-system /data/ root@192.168.13.115:/data/
+doas rsync -va --delete --one-file-system /data/ root@192.168.13.115:/data/
