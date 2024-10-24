@@ -308,6 +308,7 @@ in
     clinfo
     config.boot.kernelPackages.perf
     delta
+    dmidecode
     duf
     efibootmgr
     emacs
