@@ -19,4 +19,4 @@ git init
 git add flake.nix
 nix --extra-experimental-features flakes --extra-experimental-features nix-command build .#nixosConfigurations.exampleIso.config.system.build.isoImage
 
-sudo dd if=result/iso/nixos-24.05.20240108.317484b-x86_64-linux.iso of=/dev/sda bs=4M conv=fsync
+doas dd if=result/iso/nixos-*-x86_64-linux.iso of=/dev/sda bs=4M conv=fsync

@@ -1,0 +1,164 @@
+#
+# enable ssh for root
+#
+
+sudo bash
+systemctl start sshd
+passwd
+
+#
+# install script below
+#
+
+#
+# kill old efi boot stuff
+#
+
+efibootmgr
+efibootmgr -b 0 -B
+efibootmgr -b 1 -B
+efibootmgr -b 2 -B
+efibootmgr -b 3 -B
+efibootmgr -b 4 -B
+efibootmgr
+
+# Defining some helper variables (these will be used in later code
+# blocks as well, so make sure to use the same terminal session or
+# redefine them later)
+DISK=/dev/disk/by-id/nvme-KINGSTON_SFYRD4000G_50026B7686EC5F33
+DISK2=/dev/disk/by-id/nvme-KINGSTON_SFYRD4000G_50026B7686EC6164
+HOST=miku
+
+# ensure 4k sector size
+nvme format --lbaf=1 --force $DISK
+nvme id-ns -H $DISK
+
+# ensure 4k sector size
+nvme format --lbaf=1 --force $DISK2
+nvme id-ns -H $DISK2
+
+sleep 5
+
+# kill old data
+sgdisk --zap-all $DISK
+blkdiscard -v $DISK
+wipefs -a $DISK
+gdisk -l $DISK
+
+# wipe second disk
+sgdisk --zap-all $DISK2
+blkdiscard -v $DISK2
+wipefs -a $DISK2
+
+sleep 5
+
+# create partitions
+parted $DISK -- mklabel gpt
+sgdisk -n 1:0:+1024M -c 1:"EFI System Partition" -t 1:EF00 $DISK
+sgdisk -n 2:0:0 -c 2:"Linux" -t 2:8e00 $DISK
+parted $DISK -- set 1 boot on
+
+sleep 5
+
+# take a look
+cat /proc/partitions
+
+# boot partition
+mkfs.fat -F 32 -n EFIBOOT $DISK-part1
+
+sleep 5
+
+# ZFS zpool creation with encryption
+zpool create \
+    -o ashift=13 \
+    -o autotrim=off \
+    -O acltype=posixacl \
+    -O atime=off \
+    -O canmount=off \
+    -O compression=on \
+    -O dnodesize=auto \
+    -O utf8only=on \
+    -O normalization=formD \
+    -O xattr=sa \
+    -O mountpoint=none \
+    -O encryption=on \
+    -O keylocation=prompt \
+    -O keyformat=passphrase \
+    zpool $DISK-part2 $DISK2
+
+sleep 5
+
+# show the pool
+zpool status
+
+sleep 5
+
+# create all the volumes
+zfs create -o mountpoint=legacy zpool/data
+zfs create -o mountpoint=legacy zpool/nix
+zfs create -o mountpoint=legacy zpool/tmp
+
+# we want 64 KB recordsize
+zfs set recordsize=64K zpool/data
+zfs set recordsize=64K zpool/nix
+zfs set recordsize=64K zpool/tmp
+
+sleep 5
+
+# show the pool
+zpool status
+
+sleep 5
+
+# prepare install, tmpfs root
+mount -t tmpfs none /mnt
+
+# Create directories to mount file systems on
+mkdir -p /mnt/{data,nix,home,boot,root,etc/nixos,tmp}
+
+# mount the ESP
+mount $DISK-part1 /mnt/boot
+
+# mount volumes
+mount -t zfs zpool/data /mnt/data
+mount -t zfs zpool/nix /mnt/nix
+mount -t zfs zpool/tmp /mnt/tmp
+
+# bind mount persistent stuff to data
+mkdir -p /mnt/data/{home,root,nixos/$HOST}
+mount --bind /mnt/data/home /mnt/home
+mount --bind /mnt/data/root /mnt/root
+mount --bind /mnt/data/nixos/$HOST /mnt/etc/nixos
+
+# create fake /data to have the right paths
+mkdir -p /data
+mount --bind /mnt/data /data
+
+# take a look
+mount
+
+# configure
+nixos-generate-config --root /mnt
+
+# check /mnt/etc/nixos/hardware-configuration.nix /mnt/etc/nixos/configuration.nix
+
+# copy config data from another machine including secrets
+
+sudo scp -r /data/nixos root@192.168.13.115:/mnt/data
+
+# install
+
+nixos-install --option experimental-features 'nix-command flakes' --no-root-passwd --root /mnt
+
+# unmount all stuff and sync
+
+umount -Rl /data /mnt
+zpool export -a
+
+# shutdown once
+
+shutdown -h now
+
+# sync all /data after the install
+
+sudo -E rsync -va --delete --one-file-system /data/ root@192.168.13.115:/data/
