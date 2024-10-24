@@ -14,7 +14,7 @@
   hardware.cpu.amd.updateMicrocode = true;
 
   # amd graphics
-  hardware.graphics.extraPackages = with pkgs; [ amdvlk rocm-opencl-icd rocm-opencl-runtime ];
+  hardware.graphics.extraPackages = with pkgs; [ amdvlk rocmPackages.clr.icd ];
 
   # /boot efi partition to boot in UEFI mode
   fileSystems."/boot" =
