@@ -367,6 +367,7 @@ in
     pulseaudio
     pwgen
     qmk
+    qsynth
     restic
     ripgrep
     scc
