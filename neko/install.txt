@@ -33,42 +33,30 @@ HOST=neko
 # ensure 4k sector size
 nvme format --lbaf=1 --force $DISK
 nvme id-ns -H $DISK
-
 sleep 5
 
-# kill old data
-sgdisk --zap-all $DISK
-blkdiscard -v $DISK
-wipefs -a $DISK
-gdisk -l $DISK
+# create partition table on all disks and EFI partition
+for D in $DISK $DISK2 $DISK3; do
+    # kill old data
+    sgdisk --zap-all $D
+    blkdiscard -v $D
+    wipefs -a $D
+    sleep 5
 
-# wipe second disk
-sgdisk --zap-all $DISK2
-blkdiscard -v $DISK2
-wipefs -a $DISK2
+    # create partitions
+    parted $D -- mklabel gpt
+    sgdisk -n 1:0:+1024M -c 1:"EFI System Partition" -t 1:EF00 $D
+    sgdisk -n 2:0:0 -c 2:"Linux" -t 2:8e00 $D
+    parted $D -- set 1 boot on
+    sleep 5
 
-# wipe third disk
-sgdisk --zap-all $DISK3
-blkdiscard -v $DISK3
-wipefs -a $DISK3
+    # boot partition
+    mkfs.fat -F 32 -n EFIBOOT $D-part1
+    sleep 5
+done
 
-sleep 5
-
-# create partitions
-parted $DISK -- mklabel gpt
-sgdisk -n 1:0:+1024M -c 1:"EFI System Partition" -t 1:EF00 $DISK
-sgdisk -n 2:0:0 -c 2:"Linux" -t 2:8e00 $DISK
-parted $DISK -- set 1 boot on
-
-sleep 5
-
-# take a look
+# take a look at the partitions
 cat /proc/partitions
-
-# boot partition
-mkfs.fat -F 32 -n EFIBOOT $DISK-part1
-
-sleep 5
 
 # ZFS zpool creation with encryption
 zpool create \
