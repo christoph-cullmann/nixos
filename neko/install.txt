@@ -22,13 +22,13 @@ efibootmgr -b 3 -B
 efibootmgr -b 4 -B
 efibootmgr
 
-# Defining some helper variables (these will be used in later code
-# blocks as well, so make sure to use the same terminal session or
-# redefine them later)
+# host name to use
+HOST=neko
+
+# disks to use
 DISK=/dev/disk/by-id/nvme-Seagate_FireCuda_530_ZP4000GM30013_7VS01VBM
 DISK2=/dev/disk/by-id/nvme-CT2000P5PSSD8_213330E4ED05
 DISK3=/dev/disk/by-id/nvme-Samsung_SSD_980_PRO_2TB_S69ENF0R846614L
-HOST=neko
 
 # ensure 4k sector size
 nvme format --lbaf=1 --force $DISK
@@ -89,7 +89,7 @@ lsblk
 mount -t tmpfs none /mnt
 
 # Create directories to mount file systems on
-mkdir -p /mnt/{data,nix,home,boot,root,etc/nixos,tmp}
+mkdir -p /mnt/{data,nix,boot,root,etc/nixos,tmp}
 
 # mount the ESP
 mount $DISK-part1 /mnt/boot
