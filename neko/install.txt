@@ -59,7 +59,7 @@ done
 lsblk
 
 # create the RAID-0, second partitions on all disks
-mdadm --create /dev/md/system --level=0 --raid-devices=3 $DISK-part2 $DISK2-part2 $DISK3-part2
+mdadm --create --verbose --level=0 --raid-devices=3 /dev/md/system $DISK-part2 $DISK2-part2 $DISK3-part2
 sleep 5
 
 # take a look at the partitions
