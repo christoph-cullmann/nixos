@@ -1,4 +1,4 @@
-# build unstable installer
+# build unstable installer with latest kernel
 
 {
   description = "installation media";
@@ -8,7 +8,7 @@
       exampleIso = nixos.lib.nixosSystem {
         system = "x86_64-linux";
         modules = [
-          "${nixos}/nixos/modules/installer/cd-dvd/installation-cd-graphical-calamares-plasma6.nix"
+          "${nixos}/nixos/modules/installer/cd-dvd/installation-cd-minimal-new-kernel.nix"
         ];
       };
     };
