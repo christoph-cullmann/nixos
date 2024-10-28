@@ -58,23 +58,15 @@ done
 # take a look at the partitions
 cat /proc/partitions
 
-# ZFS zpool creation with encryption
-zpool create \
-    -o ashift=13 \
-    -o autotrim=off \
-    -O acltype=posixacl \
-    -O atime=off \
-    -O canmount=off \
-    -O compression=on \
-    -O dnodesize=auto \
-    -O utf8only=on \
-    -O normalization=formD \
-    -O xattr=sa \
-    -O mountpoint=none \
-    -O encryption=on \
-    -O keylocation=prompt \
-    -O keyformat=passphrase \
-    zpool $DISK-part2 $DISK2 $DISK3
+# create the RAID-0, second partitions on all disks
+mdadm --create /dev/md/system --level=0 --raid-devices=3 $DISK-part2 $DISK2-part2 $DISK3-part2
+
+# create the LUKS container and open it
+cryptsetup luksFormat --sector-size 4096 --batch-mode --verify-passphrase /dev/md/system
+cryptsetup luksOpen /dev/md/system crypt-system
+
+# create btrfs with volumes
+mkfs.btrfs -f --features block-group-tree --label system /dev/mapper/crypt2
 
 sleep 5
 
