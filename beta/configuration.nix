@@ -14,9 +14,8 @@
       /data/nixos/share/common.nix
     ];
 
-  # our hostname and an ID for ZFS
+  # our hostname
   networking.hostName = "beta";
-  networking.hostId = "3f20def9";
 
   # german laptop keyboard
   services.xserver.xkb.layout = "de";

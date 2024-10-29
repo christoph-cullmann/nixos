@@ -14,9 +14,8 @@
       /data/nixos/share/common.nix
     ];
 
-  # our hostname and an ID for ZFS
+  # our hostname
   networking.hostName = "mini";
-  networking.hostId = "e925ccfb";
 
   # EurKey layout
   services.xserver.xkb.layout = "eu";
