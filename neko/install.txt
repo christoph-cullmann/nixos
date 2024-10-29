@@ -95,9 +95,9 @@ mkdir -p /mnt/{data,nix,boot,root,etc/nixos,tmp}
 mount $DISK-part1 /mnt/boot
 
 # mount volumes
-mount -o subvol=data,noatime /mnt/data
-mount -o subvol=nix,noatime /mnt/nix
-mount -o subvol=tmp,noatime /mnt/tmp
+mount -o subvol=data,noatime /dev/mapper/crypt-system /mnt/data
+mount -o subvol=nix,noatime /dev/mapper/crypt-system /mnt/nix
+mount -o subvol=tmp,noatime /dev/mapper/crypt-system /mnt/tmp
 
 # bind mount persistent stuff to data
 mkdir -p /mnt/data/{root,nixos/$HOST}
