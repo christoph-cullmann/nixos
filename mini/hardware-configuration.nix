@@ -18,7 +18,7 @@
 
   # /boot efi partition to boot in UEFI mode
   fileSystems."/boot" = {
-    device = "/dev/disk/by-uuid/A361-6A10";
+    device = "/dev/disk/by-uuid/1B9E-991C";
     fsType = "vfat";
     options = [ "fmask=0022" "dmask=0022" ];
     neededForBoot = true;
@@ -27,7 +27,7 @@
   # encrypted system - on a md device
   boot.swraid.enable = true;
   boot.initrd.luks.devices."crypt-system" = {
-    device = "/dev/disk/by-uuid/a1d1ef39-74ea-4a6c-bc47-8ae90e002126";
+    device = "/dev/disk/by-uuid/565695e2-a09b-412b-9f26-4da10402b967";
     allowDiscards = true;
     bypassWorkqueues = true;
   };
