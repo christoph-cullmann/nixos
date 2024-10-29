@@ -27,10 +27,12 @@ in
   boot.kernelPackages = pkgs.linuxPackages_latest;
 
   # allow md devices
-  boot.swraid.enable = true;
-  boot.swraid.mdadmConf = ''
-    MAILADDR=christoph@cullmann.io
-  '';
+  boot.swraid = {
+    enable = true;
+    mdadmConf = ''
+      MAILADDR=christoph@cullmann.io
+    '';
+  };
 
   # my kernel parameters
   boot.kernelParams = [
