@@ -17,22 +17,17 @@ in
       "/data/nixos/share/users.nix"
   ];
 
-  # This value determines the NixOS release from which the default
-  # settings for stateful data, like file locations and database versions
-  # on your system were taken. It's perfectly fine and recommended to leave
-  # this value at the release version of the first install of this system.
-  # Before changing this value read the documentation for this option
-  # (e.g. man configuration.nix or on https://nixos.org/nixos/options.html).
-  system.stateVersion = "23.05"; # Did you read the comment?
+  # install release
+  system.stateVersion = "24.11";
 
   # atm all stuff is x86_64
   nixpkgs.hostPlatform = "x86_64-linux";
 
+  # use the latest kernel
+  boot.kernelPackages = pkgs.linuxPackages_latest;
+
   # my kernel parameters
   boot.kernelParams = [
-    # no hibernate
-    "nohibernate"
-
     # don't check for split locks, for KVM and Co.
     "split_lock_detect=off"
   ];
@@ -68,25 +63,28 @@ in
     };
 
   # my data
-  fileSystems."/data" =
-    { device = "zpool/data";
-      fsType = "zfs";
-      neededForBoot = true;
-    };
+  fileSystems."/data" = {
+    device = "/dev/mapper/crypt-system";
+    fsType = "btrfs";
+    options = [ "subvol=data" "noatime" ];
+    neededForBoot = true;
+  };
 
   # the system
-  fileSystems."/nix" =
-    { device = "zpool/nix";
-      fsType = "zfs";
-      neededForBoot = true;
-    };
+  fileSystems."/nix" = {
+    device = "/dev/mapper/crypt-system";
+    fsType = "btrfs";
+    options = [ "subvol=nix" "noatime" ];
+    neededForBoot = true;
+  };
 
   # tmp to not fill RAM
-  fileSystems."/tmp" =
-    { device = "zpool/tmp";
-      fsType = "zfs";
-      neededForBoot = true;
-    };
+  fileSystems."/tmp" = {
+    device = "/dev/mapper/crypt-system";
+    fsType = "btrfs";
+    options = [ "subvol=tmp" "noatime" ];
+    neededForBoot = true;
+  };
 
   # bind mount to have root home
   fileSystems."/root" =
