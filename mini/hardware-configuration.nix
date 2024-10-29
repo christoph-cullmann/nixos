@@ -16,6 +16,8 @@
   # amd graphics
   hardware.graphics.extraPackages = with pkgs; [ amdvlk rocmPackages.clr.icd ];
 
+  FIXME
+
   # /boot efi partition to boot in UEFI mode
   fileSystems."/boot" =
     { device = "/dev/disk/by-id/nvme-CT4000P3PSSD8_2325E6E63746-part1";

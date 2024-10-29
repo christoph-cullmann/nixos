@@ -16,6 +16,8 @@
   # amd graphics
   hardware.graphics.extraPackages = with pkgs; [ amdvlk rocmPackages.clr.icd ];
 
+  FIXME
+
   # /boot efi partition to boot in UEFI mode
   fileSystems."/boot" =
     { device = "/dev/disk/by-id/nvme-SAMSUNG_MZVLB1T0HBLR-000L2_S4DZNX0R362286-part1";

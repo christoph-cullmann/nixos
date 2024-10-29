@@ -16,6 +16,8 @@
   # intel graphics
   hardware.graphics.extraPackages = with pkgs; [ intel-media-driver intel-compute-runtime ];
 
+  FIXME
+
   # /boot efi partition to boot in UEFI mode
   fileSystems."/boot" =
     { device = "/dev/disk/by-id/nvme-Seagate_FireCuda_530_ZP4000GM30013_7VS01VBM-part1";
