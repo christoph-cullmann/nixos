@@ -126,7 +126,9 @@ nixos-install --option experimental-features 'nix-command flakes' --no-root-pass
 # unmount all stuff and sync
 
 umount -Rl /data /mnt
-zpool export -a
+cryptsetup luksClose crypt-system
+mdadm --stop /dev/md/system
+sync
 
 # shutdown once
 
