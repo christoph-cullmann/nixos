@@ -26,6 +26,12 @@ in
   # use the latest kernel
   boot.kernelPackages = pkgs.linuxPackages_latest;
 
+  # allow md devices
+  boot.swraid.enable = true;
+  boot.swraid.mdadmConf = ''
+    MAILADDR=christoph@cullmann.io
+  '';
+
   # my kernel parameters
   boot.kernelParams = [
     # don't check for split locks, for KVM and Co.
