@@ -112,6 +112,18 @@ in
       depends = [ "/data" ];
     };
 
+  # trim the disks weekly
+  services.fstrim = {
+    enable = true;
+    interval = "weekly";
+  };
+
+  # scrub the disks weekly
+  services.btrfs.autoScrub = {
+    enable = true;
+    interval = "weekly";
+  };
+
   # keep some stuff persistent
   environment.persistence."/nix/persistent" = {
     hideMounts = true;
