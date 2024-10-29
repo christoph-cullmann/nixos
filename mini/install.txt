@@ -132,7 +132,7 @@ sync
 
 # shutdown once
 
-shutdown -h now
+shutdown now
 
 # sync all /data after the install
 

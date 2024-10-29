@@ -24,7 +24,8 @@
     neededForBoot = true;
   };
 
-  # encrypted system
+  # encrypted system - on a md device
+  boot.swraid.enable = true;
   boot.initrd.luks.devices."crypt-system" = {
     device = "/dev/disk/by-uuid/a1d1ef39-74ea-4a6c-bc47-8ae90e002126";
     allowDiscards = true;
