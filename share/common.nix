@@ -38,6 +38,10 @@ in
   boot.kernelParams = [
     # don't check for split locks, for KVM and Co.
     "split_lock_detect=off"
+
+    # fix igc 0000:0a:00.0 eno1: PCIe link lost, device now detached
+    "pcie_port_pm=off"
+    "pcie_aspm.policy=performance"
   ];
 
   # Use the systemd-boot EFI boot loader.
