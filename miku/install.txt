@@ -22,111 +22,89 @@ efibootmgr -b 3 -B
 efibootmgr -b 4 -B
 efibootmgr
 
-# Defining some helper variables (these will be used in later code
-# blocks as well, so make sure to use the same terminal session or
-# redefine them later)
+# host name to use
+HOST=miku
+
+# disks to use
 DISK=/dev/disk/by-id/nvme-KINGSTON_SFYRD4000G_50026B7686EC5F33
 DISK2=/dev/disk/by-id/nvme-KINGSTON_SFYRD4000G_50026B7686EC6164
-HOST=miku
 
 # ensure 4k sector size
 nvme format --lbaf=1 --force $DISK
 nvme id-ns -H $DISK
+sleep 5
 
 # ensure 4k sector size
 nvme format --lbaf=1 --force $DISK2
 nvme id-ns -H $DISK2
-
 sleep 5
 
-# kill old data
-sgdisk --zap-all $DISK
-blkdiscard -v $DISK
-wipefs -a $DISK
-gdisk -l $DISK
+# create partition table on all disks and EFI partition
+for D in $DISK $DISK2; do
+    # kill old data
+    sgdisk --zap-all $D
+    blkdiscard -v $D
+    wipefs -a $D
+    sleep 5
 
-# wipe second disk
-sgdisk --zap-all $DISK2
-blkdiscard -v $DISK2
-wipefs -a $DISK2
+    # create partitions
+    parted $D -- mklabel gpt
+    sgdisk -n 1:0:+1024M -c 1:"EFI System Partition" -t 1:EF00 $D
+    sgdisk -n 2:0:0 -c 2:"Linux" -t 2:8e00 $D
+    parted $D -- set 1 boot on
+    sleep 5
 
+    # boot partition
+    mkfs.fat -F 32 -n EFIBOOT $D-part1
+    sleep 5
+done
+
+# take a look at the partitions
+lsblk
+
+# create the RAID-0, second partitions on all disks
+mdadm --create --verbose --level=0 --raid-devices=2 /dev/md/system $DISK-part2 $DISK2-part2
 sleep 5
 
-# create partitions
-parted $DISK -- mklabel gpt
-sgdisk -n 1:0:+1024M -c 1:"EFI System Partition" -t 1:EF00 $DISK
-sgdisk -n 2:0:0 -c 2:"Linux" -t 2:8e00 $DISK
-parted $DISK -- set 1 boot on
+# take a look at the partitions
+lsblk
 
+# create the LUKS container and open it
+cryptsetup luksFormat --sector-size 4096 --batch-mode --verify-passphrase /dev/md/system
+cryptsetup luksOpen /dev/md/system crypt-system
 sleep 5
 
-# take a look
-cat /proc/partitions
+# take a look at the partitions
+lsblk
 
-# boot partition
-mkfs.fat -F 32 -n EFIBOOT $DISK-part1
-
+# create btrfs with volumes
+mkfs.btrfs -f --features block-group-tree --label system /dev/mapper/crypt-system
+mount -t btrfs /dev/mapper/crypt-system /mnt
+btrfs subvolume create /mnt/data
+btrfs subvolume create /mnt/nix
+btrfs subvolume create /mnt/tmp
+umount /mnt
 sleep 5
 
-# ZFS zpool creation with encryption
-zpool create \
-    -o ashift=13 \
-    -o autotrim=off \
-    -O acltype=posixacl \
-    -O atime=off \
-    -O canmount=off \
-    -O compression=on \
-    -O dnodesize=auto \
-    -O utf8only=on \
-    -O normalization=formD \
-    -O xattr=sa \
-    -O mountpoint=none \
-    -O encryption=on \
-    -O keylocation=prompt \
-    -O keyformat=passphrase \
-    zpool $DISK-part2 $DISK2
-
-sleep 5
-
-# show the pool
-zpool status
-
-sleep 5
-
-# create all the volumes
-zfs create -o mountpoint=legacy zpool/data
-zfs create -o mountpoint=legacy zpool/nix
-zfs create -o mountpoint=legacy zpool/tmp
-
-# we want 64 KB recordsize
-zfs set recordsize=64K zpool/data
-zfs set recordsize=64K zpool/nix
-zfs set recordsize=64K zpool/tmp
-
-sleep 5
-
-# show the pool
-zpool status
-
-sleep 5
+# take a look at the partitions
+lsblk
 
 # prepare install, tmpfs root
 mount -t tmpfs none /mnt
 
 # Create directories to mount file systems on
-mkdir -p /mnt/{data,nix,home,boot,root,etc/nixos,tmp}
+mkdir -p /mnt/{data,nix,boot,root,etc/nixos,tmp}
 
 # mount the ESP
 mount $DISK-part1 /mnt/boot
 
 # mount volumes
-mount -t zfs zpool/data /mnt/data
-mount -t zfs zpool/nix /mnt/nix
-mount -t zfs zpool/tmp /mnt/tmp
+mount -o subvol=data,noatime /dev/mapper/crypt-system /mnt/data
+mount -o subvol=nix,noatime /dev/mapper/crypt-system /mnt/nix
+mount -o subvol=tmp,noatime /dev/mapper/crypt-system /mnt/tmp
 
 # bind mount persistent stuff to data
-mkdir -p /mnt/data/{home,root,nixos/$HOST}
-mount --bind /mnt/data/home /mnt/home
+mkdir -p /mnt/data/{root,nixos/$HOST}
 mount --bind /mnt/data/root /mnt/root
 mount --bind /mnt/data/nixos/$HOST /mnt/etc/nixos
 
@@ -153,7 +131,9 @@ nixos-install --option experimental-features 'nix-command flakes' --no-root-pass
 # unmount all stuff and sync
 
 umount -Rl /data /mnt
-zpool export -a
+cryptsetup luksClose crypt-system
+mdadm --stop /dev/md/system
+sync
 
 # shutdown once
 
