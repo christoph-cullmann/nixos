@@ -54,9 +54,17 @@ done
 # take a look at the partitions
 lsblk
 
+# create the RAID-0, second partitions on all disks
+# we fake the raid to have proper aligned stuff and same setup as on other machines
+mdadm --create --verbose --level=0 --force --raid-devices=1 /dev/md/system $DISK-part2
+sleep 5
+
+# take a look at the partitions
+lsblk
+
 # create the LUKS container and open it
-cryptsetup luksFormat --sector-size 4096 --batch-mode --verify-passphrase $DISK-part2
-cryptsetup luksOpen $DISK-part2 crypt-system
+cryptsetup luksFormat --sector-size 4096 --batch-mode --verify-passphrase /dev/md/system
+cryptsetup luksOpen /dev/md/system crypt-system
 sleep 5
 
 # take a look at the partitions

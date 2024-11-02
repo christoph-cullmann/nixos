@@ -16,13 +16,18 @@
   # amd graphics
   hardware.graphics.extraPackages = with pkgs; [ amdvlk rocmPackages.clr.icd ];
 
-  FIXME
-
   # /boot efi partition to boot in UEFI mode
-  fileSystems."/boot" =
-    { device = "/dev/disk/by-id/nvme-SAMSUNG_MZVLB1T0HBLR-000L2_S4DZNX0R362286-part1";
-      fsType = "vfat";
-      options = [ "fmask=0022" "dmask=0022" ];
-      neededForBoot = true;
-    };
+  fileSystems."/boot" = {
+    device = "/dev/disk/by-uuid/E632-D1CA";
+    fsType = "vfat";
+    options = [ "fmask=0022" "dmask=0022" ];
+    neededForBoot = true;
+  };
+
+  # encrypted system
+  boot.initrd.luks.devices."crypt-system" = {
+    device = "/dev/disk/by-uuid/0021030c-73ab-4de5-8764-0af3bb6c415c";
+    allowDiscards = true;
+    bypassWorkqueues = true;
+  };
 }
