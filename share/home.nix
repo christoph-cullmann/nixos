@@ -125,12 +125,6 @@
     enable = true;
   };
 
-  # file manager
-  programs.yazi = {
-    enable = true;
-    enableZshIntegration = true;
-  };
-
   # https://github.com/nix-community/nix-direnv
   programs.direnv = {
     enable = true;
