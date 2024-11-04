@@ -78,7 +78,7 @@ in
   fileSystems."/data" = {
     device = "/dev/mapper/crypt-system";
     fsType = "btrfs";
-    options = [ "subvol=data" "noatime" "nodiscard" ];
+    options = [ "subvol=data" "noatime" "nodiscard" "commit=5" ];
     neededForBoot = true;
   };
 
@@ -86,7 +86,7 @@ in
   fileSystems."/nix" = {
     device = "/dev/mapper/crypt-system";
     fsType = "btrfs";
-    options = [ "subvol=nix" "noatime" "nodiscard" ];
+    options = [ "subvol=nix" "noatime" "nodiscard" "commit=5" ];
     neededForBoot = true;
   };
 
@@ -94,7 +94,7 @@ in
   fileSystems."/tmp" = {
     device = "/dev/mapper/crypt-system";
     fsType = "btrfs";
-    options = [ "subvol=tmp" "noatime" "nodiscard" ];
+    options = [ "subvol=tmp" "noatime" "nodiscard" "commit=5" ];
     neededForBoot = true;
   };
 
