@@ -61,7 +61,11 @@ in
   console.earlySetup = true;
 
   # boot splash
-  boot.plymouth.enable = true;
+  boot.plymouth = {
+    enable = true;
+    theme = "hexa_retro";
+    themePackages = [ pkgs.adi1090x-plymouth-themes ];
+  };
 
   # swap to RAM
   zramSwap.enable = true;
