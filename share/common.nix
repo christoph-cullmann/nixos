@@ -334,7 +334,6 @@ in
     mailutils
     mc
     micro
-    mission-center
     mplayer
     nixos-install-tools
     nmap
