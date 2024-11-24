@@ -36,6 +36,10 @@ in
 
   # my kernel parameters
   boot.kernelParams = [
+    # Plymouth
+    "quiet"
+    "splash"
+
     # don't check for split locks, for KVM and Co.
     "split_lock_detect=off"
 
