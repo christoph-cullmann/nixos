@@ -48,6 +48,12 @@ in
     "pcie_aspm.policy=performance"
   ];
 
+  # setup some sysctl stuff
+  boot.kernel.sysctl = {
+    # allow dmesg for all users
+    "kernel.dmesg_restrict" = 0;
+  };
+
   # Use the systemd-boot EFI boot loader.
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
