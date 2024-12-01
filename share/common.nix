@@ -453,6 +453,7 @@ in
       noto-fonts-color-emoji
 
       # monospace fonts to test Kate, Konsole and Co.
+      inconsolata
       monaspace
       monocraft
       recursive
