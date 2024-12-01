@@ -321,6 +321,7 @@ in
     hugo
     hunspellDicts.de_DE
     hunspellDicts.en_US
+    hyfetch
     inetutils
     inkscape
     kdePackages.ark
