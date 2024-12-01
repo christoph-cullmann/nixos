@@ -450,6 +450,11 @@ in
 
       # emoji in Farbe und bunt
       noto-fonts-color-emoji
+
+      # monospace fonts to test Kate, Konsole and Co.
+      monaspace
+      monocraft
+      recursive
     ];
 
     # proper default config for fonts
