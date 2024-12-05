@@ -2,6 +2,11 @@
 let
   impermanence = builtins.fetchTarball "https://github.com/nix-community/impermanence/archive/master.tar.gz";
   cullmann-fonts = pkgs.callPackage "/data/nixos/packages/cullmann-fonts.nix" {};
+  retroarchWithCores = (pkgs.retroarch.withCores (cores: with cores; [
+    bsnes
+    mgba
+    quicknes
+  ]));
 in
 {
   #
@@ -362,6 +367,7 @@ in
     qmk
     qsynth
     restic
+    retroarchWithCores
     ripgrep
     scc
     ssh-audit
@@ -390,7 +396,7 @@ in
     "olm-3.2.16"
   ];
 
-  # run browsers in a sandbox
+  # run some stuff in a sandbox
   programs.firejail = {
     enable = true;
 
@@ -403,6 +409,11 @@ in
       firefox = {
         executable = "${pkgs.lib.getBin pkgs.firefox}/bin/firefox";
         profile = "${pkgs.firejail}/etc/firejail/firefox.profile";
+      };
+
+      retroarch = {
+        executable = "${retroarchWithCores}/bin/retroarch";
+        profile = "${pkgs.firejail}/etc/firejail/retroarch.profile";
       };
 
       signal-desktop = {
