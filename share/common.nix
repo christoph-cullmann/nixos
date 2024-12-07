@@ -463,6 +463,9 @@ in
       # emoji in Farbe und bunt
       noto-fonts-color-emoji
 
+      # fonts collections for testing
+      google-fonts
+
       # monospace fonts to test Kate, Konsole and Co.
       inconsolata
       monaspace
