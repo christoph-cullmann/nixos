@@ -57,6 +57,9 @@ in
   boot.kernel.sysctl = {
     # allow dmesg for all users
     "kernel.dmesg_restrict" = 0;
+
+    # allow proper perf usage
+    "kernel.perf_event_mlock_kb" = 16777216;
   };
 
   # Use the systemd-boot EFI boot loader.
