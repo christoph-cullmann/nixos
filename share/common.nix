@@ -338,6 +338,7 @@ in
     kdePackages.kate
     kdePackages.kcachegrind
     kdePackages.kcalc
+    kdePackages.kio-extras
     kdePackages.kleopatra
     kdePackages.kmail
     kdePackages.konsole
