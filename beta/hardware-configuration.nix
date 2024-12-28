@@ -13,9 +13,6 @@
   # AMD microcode updates please
   hardware.cpu.amd.updateMicrocode = true;
 
-  # amd graphics
-  hardware.graphics.extraPackages = with pkgs; [ rocmPackages.clr.icd ];
-
   # /boot efi partition to boot in UEFI mode
   fileSystems."/boot" = {
     device = "/dev/disk/by-uuid/E632-D1CA";

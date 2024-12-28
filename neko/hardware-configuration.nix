@@ -13,9 +13,6 @@
   # Intel microcode updates please
   hardware.cpu.intel.updateMicrocode = true;
 
-  # intel graphics
-  hardware.graphics.extraPackages = with pkgs; [ intel-media-driver intel-compute-runtime ];
-
   # /boot efi partition to boot in UEFI mode
   fileSystems."/boot" = {
     device = "/dev/disk/by-uuid/554C-161A";
