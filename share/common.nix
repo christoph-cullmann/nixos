@@ -239,7 +239,6 @@ in
   };
 
   # enable sound with PipeWire
-  hardware.pulseaudio.enable = false;
   services.pipewire = {
     enable = true;
     alsa = {
@@ -324,7 +323,7 @@ in
     go
     gorilla-bin
     gptfdisk
-    heaptrack
+    #heaptrack
     hotspot
     hugo
     hunspellDicts.de_DE
@@ -355,7 +354,6 @@ in
     mailutils
     mc
     micro
-    mplayer
     nixos-install-tools
     nmap
     nvme-cli
