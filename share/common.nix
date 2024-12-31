@@ -417,11 +417,6 @@ in
         executable = "${retroarchWithCores}/bin/retroarch";
         profile = "${pkgs.firejail}/etc/firejail/retroarch.profile";
       };
-
-      signal-desktop = {
-        executable = "${pkgs.signal-desktop}/bin/signal-desktop";
-        profile = "${pkgs.firejail}/etc/firejail/signal-desktop.profile";
-      };
     };
   };
 
