@@ -316,6 +316,7 @@ in
     fdupes
     ffmpeg
     file
+    freecad
     fzf
     gimp
     gitFull
