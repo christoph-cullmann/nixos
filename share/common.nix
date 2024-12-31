@@ -346,6 +346,7 @@ in
     kdePackages.okular
     kdePackages.tokodon
     keychain
+    kicad
     lazygit
     libjxl
     libreoffice
