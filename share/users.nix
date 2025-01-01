@@ -196,7 +196,7 @@ in
       # install 3d printing stuff
       home.packages = with pkgs; [
         bambu-studio
-        #orca-slicer
+        prusa-slicer
       ];
     };
   };
