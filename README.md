@@ -1,3 +1,5 @@
+# Christoph Cullmann's NixOS configuration
+
 # build unstable installer with latest kernel
 
 
