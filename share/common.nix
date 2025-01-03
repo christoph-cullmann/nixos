@@ -324,7 +324,7 @@ in
     go
     gorilla-bin
     gptfdisk
-    #heaptrack
+    heaptrack
     hotspot
     hugo
     hunspellDicts.de_DE
