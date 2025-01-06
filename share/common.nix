@@ -467,6 +467,7 @@ in
 
       # monospace fonts to test Kate, Konsole and Co.
       inconsolata
+      maple-mono
       monaspace
       monocraft
       recursive
