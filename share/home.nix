@@ -36,7 +36,7 @@
       updatenow = "doas nixos-rebuild switch";
       upgradenow = "doas nixos-rebuild switch --upgrade";
       gc = "doas nix-collect-garbage --delete-older-than 7d";
-      verify = "doas nix --extra-experimental-features nix-command store verify --all";
+      verify = "doas nix --extra-experimental-features nix-command store verify --all -s https://cache.nixos.org";
       optimize = "doas nix --extra-experimental-features nix-command store optimise";
       scrub = "doas btrfs scrub start -B /data";
 
