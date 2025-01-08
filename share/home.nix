@@ -58,6 +58,8 @@
       moonroot = "ssh root@moon.babylon2k.com";
       neko = "ssh neko.fritz.box";
       nekoroot = "ssh root@neko.fritz.box";
+      star = "ssh star.babylon2k.com";
+      starroot = "ssh root@star.babylon2k.com";
     };
   };
 
