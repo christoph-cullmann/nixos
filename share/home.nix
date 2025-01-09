@@ -54,8 +54,6 @@
       mikuroot = "ssh root@miku.fritz.box";
       mini = "ssh mini.fritz.box";
       miniroot = "ssh root@mini.fritz.box";
-      moon = "ssh moon.babylon2k.com";
-      moonroot = "ssh root@moon.babylon2k.com";
       neko = "ssh neko.fritz.box";
       nekoroot = "ssh root@neko.fritz.box";
       star = "ssh star.babylon2k.com";
