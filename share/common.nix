@@ -303,6 +303,7 @@ in
     aspellDicts.de
     aspellDicts.en
     bitwise
+    blender
     btop
     chromium
     clinfo
