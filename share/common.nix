@@ -429,6 +429,9 @@ in
   # firefox needs programs.firefox.enable here but no systemPackages entry to have icon and work
   programs.firefox.enable = true;
 
+  # we want LFS support
+  programs.git.lfs.enable = true;
+
   # allow keyboard configure tools to work
   hardware.keyboard.qmk.enable = true;
 
