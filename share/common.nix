@@ -260,8 +260,8 @@ in
     # general settings
     settings = {
       # don't hog all cores, might OOM, too
-      cores = 2;
-      max-jobs = 2;
+      cores = 4;
+      max-jobs = 4;
 
       # auto optimize the store
       auto-optimise-store = true;
