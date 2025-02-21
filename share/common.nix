@@ -361,6 +361,7 @@ in
     nvme-cli
     procmail
     okteta
+    openscad-unstable
     p7zip
     parted
     pciutils
