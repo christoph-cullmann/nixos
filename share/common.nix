@@ -309,6 +309,7 @@ in
     clinfo
     config.boot.kernelPackages.perf
     delta
+    dig
     dmidecode
     duf
     efibootmgr
