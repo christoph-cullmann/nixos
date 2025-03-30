@@ -69,6 +69,7 @@ in
     "kernel.unprivileged_bpf_disabled" = 1;
     "net.core.bpf_jit_harden" = 2;
     "net.ipv4.conf.all.accept_redirects" = false;
+    "net.ipv4.conf.all.send_redirects" = false;
     "net.ipv4.conf.default.accept_redirects" = false;
     "net.ipv6.conf.all.accept_redirects" = false;
     "net.ipv6.conf.default.accept_redirects" = false;
