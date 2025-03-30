@@ -70,6 +70,15 @@ in
     "net.core.bpf_jit_harden" = 2;
   };
 
+  # blacklist some stuff
+  boot.blacklistedKernelModules = [
+    # hardening
+    "dccp"
+    "sctp"
+    "rds"
+    "tipc"
+  ];
+
   # Use the systemd-boot EFI boot loader.
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
