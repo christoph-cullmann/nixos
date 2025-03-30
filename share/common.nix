@@ -354,6 +354,7 @@ in
     libreoffice
     libva-utils
     lsof
+    lynis
     mailutils
     mc
     micro
@@ -477,6 +478,7 @@ in
 
       # monospace fonts to test Kate, Konsole and Co.
       inconsolata
+      maple-mono.truetype
       monaspace
       monocraft
       recursive
