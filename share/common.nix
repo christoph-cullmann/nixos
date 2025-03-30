@@ -60,6 +60,12 @@ in
 
     # allow proper perf usage
     "kernel.perf_event_mlock_kb" = 16777216;
+
+    # harden some stuff
+    "kernel.sysrq" = 0;
+    "kernel.kptr_restrict" = 2;
+    "kernel.unprivileged_bpf_disabled" = 1;
+    "net.core.bpf_jit_harden" = 2;
   };
 
   # Use the systemd-boot EFI boot loader.
