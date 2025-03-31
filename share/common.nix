@@ -477,11 +477,6 @@ in
         profile = "${pkgs.firejail}/etc/firejail/chromium.profile";
       };
 
-      firefox = {
-        executable = "${pkgs.lib.getBin pkgs.firefox}/bin/firefox";
-        profile = "${pkgs.firejail}/etc/firejail/firefox.profile";
-      };
-
       retroarch = {
         executable = "${retroarchWithCores}/bin/retroarch";
         profile = "${pkgs.firejail}/etc/firejail/retroarch.profile";
@@ -491,9 +486,6 @@ in
 
   # chromium needs programs.firefox.enable here and systemPackages entry to have icon and work
   programs.chromium.enable = true;
-
-  # firefox needs programs.firefox.enable here but no systemPackages entry to have icon and work
-  programs.firefox.enable = true;
 
   # we want git with LFS support and Co.
   programs.git = {
