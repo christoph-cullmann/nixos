@@ -2,11 +2,6 @@
 let
   impermanence = builtins.fetchTarball "https://github.com/nix-community/impermanence/archive/master.tar.gz";
   cullmann-fonts = pkgs.callPackage "/data/nixos/packages/cullmann-fonts.nix" {};
-  retroarchWithCores = (pkgs.retroarch.withCores (cores: with cores; [
-    bsnes
-    mgba
-    quicknes
-  ]));
 in
 {
   #
@@ -352,9 +347,6 @@ in
   # allow unfree packages
   nixpkgs.config.allowUnfree = true;
 
-  # we want DRM support
-  nixpkgs.config.chromium.enableWideVine = true;
-
   # List packages installed in system profile. To search, run:
   # $ nix search wget
   environment.systemPackages = with pkgs; [
@@ -364,7 +356,6 @@ in
     bitwise
     blender
     btop
-    chromium
     clinfo
     config.boot.kernelPackages.perf
     delta
@@ -433,7 +424,6 @@ in
     qmk
     qsynth
     restic
-    retroarchWithCores
     ripgrep
     scc
     ssh-audit
@@ -461,31 +451,6 @@ in
   nixpkgs.config.permittedInsecurePackages = [
     "olm-3.2.16"
   ];
-
-  # run some stuff in a sandbox
-  programs.firejail = {
-    enable = true;
-
-    wrappedBinaries = {
-      chromium = {
-        executable = "${pkgs.lib.getBin pkgs.chromium}/bin/chromium";
-        profile = "${pkgs.firejail}/etc/firejail/chromium.profile";
-      };
-
-      chromium-browser = {
-        executable = "${pkgs.lib.getBin pkgs.chromium}/bin/chromium-browser";
-        profile = "${pkgs.firejail}/etc/firejail/chromium.profile";
-      };
-
-      retroarch = {
-        executable = "${retroarchWithCores}/bin/retroarch";
-        profile = "${pkgs.firejail}/etc/firejail/retroarch.profile";
-      };
-    };
-  };
-
-  # chromium needs programs.firefox.enable here and systemPackages entry to have icon and work
-  programs.chromium.enable = true;
 
   # we want git with LFS support and Co.
   programs.git = {
@@ -583,9 +548,6 @@ in
 
   # dconf is needed for gtk, see https://nixos.wiki/wiki/KDE
   programs.dconf.enable = true;
-
-  # https://nixos.wiki/wiki/Chromium - Wayland support on
-  environment.sessionVariables.NIXOS_OZONE_WL = "1";
 
   # ensure machine can send mails
   services.opensmtpd = {
