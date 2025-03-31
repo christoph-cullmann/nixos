@@ -20,6 +20,9 @@ in
 
       # our users
       "/data/nixos/share/users.nix"
+
+      # flatpak configuration
+      "/data/nixos/share/flatpak.nix"
   ];
 
   # install release
@@ -220,6 +223,9 @@ in
       # NetworkManager connections
       "/etc/NetworkManager"
       "/var/lib/NetworkManager"
+
+      # flatpak storage
+      "/var/lib/flatpak"
     ];
   };
 
