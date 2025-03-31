@@ -6,6 +6,7 @@ let
     "com.vivaldi.Vivaldi"
     "io.github.ungoogled_software.ungoogled_chromium"
     "org.mozilla.firefox"
+    "org.signal.Signal"
   ];
 in {
   # enable flatpak
