@@ -55,7 +55,7 @@ in
     };
 
     #
-    # sandbox for lutris and steam games and Co.
+    # sandbox for lutris games and Co.
     #
     users.sandbox-games = {
       # home on persistent volume
@@ -159,7 +159,6 @@ in
       # install gaming stuff
       home.packages = with pkgs; [
         lutris
-        steam
         wineWowPackages.stable
         winetricks
       ];
