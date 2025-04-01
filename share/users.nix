@@ -74,27 +74,6 @@ in
       # use fixed auth keys
       openssh.authorizedKeys.keys = config.users.users.root.openssh.authorizedKeys.keys;
     };
-
-    #
-    # sandbox for 3d printing
-    #
-    users.sandbox-3d-printing = {
-      # home on persistent volume
-      home = "/data/home/sandbox-3d-printing";
-
-      # hard code UID for stability over machines
-      # out of range of normal login users
-      uid = 32002;
-
-      # normal user
-      isNormalUser = true;
-
-      # sandbox user
-      description = "Sandbox 3D Printing";
-
-      # use fixed auth keys
-      openssh.authorizedKeys.keys = config.users.users.root.openssh.authorizedKeys.keys;
-    };
   };
 
   # home manager settings
@@ -151,18 +130,6 @@ in
           text = (builtins.readFile "/data/nixos/projects/kde/shell.nix");
         };
       };
-    };
-
-    # 3d printing user with extra settings
-    users.sandbox-3d-printing = {
-      # shared config
-      imports = [ ./home.nix ];
-
-      # install 3d printing stuff
-      home.packages = with pkgs; [
-        bambu-studio
-        prusa-slicer
-      ];
     };
   };
 }

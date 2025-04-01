@@ -6,6 +6,8 @@ let
 
   # all wanted flatpak packages
   desiredFlatpaks = {
+    "com.bambulab.BambuStudio" = "--nofilesystem=xdg-music --nofilesystem=xdg-pictures";
+    "com.prusa3d.PrusaSlicer" = "--nofilesystem=xdg-music --nofilesystem=xdg-pictures";
     "com.usebottles.bottles" = "--nofilesystem=xdg-music --nofilesystem=xdg-pictures";
     "com.valvesoftware.Steam" = "--nofilesystem=xdg-music --nofilesystem=xdg-pictures";
     "com.vivaldi.Vivaldi" = "--nofilesystem=xdg-music --nofilesystem=xdg-pictures";
