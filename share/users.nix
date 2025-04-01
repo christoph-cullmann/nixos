@@ -55,27 +55,6 @@ in
     };
 
     #
-    # sandbox for lutris games and Co.
-    #
-    users.sandbox-games = {
-      # home on persistent volume
-      home = "/data/home/sandbox-games";
-
-      # hard code UID for stability over machines
-      # out of range of normal login users
-      uid = 32000;
-
-      # normal user
-      isNormalUser = true;
-
-      # sandbox user
-      description = "Sandbox Games";
-
-      # use fixed auth keys
-      openssh.authorizedKeys.keys = config.users.users.root.openssh.authorizedKeys.keys;
-    };
-
-    #
     # sandbox for kde development
     #
     users.sandbox-kde = {
@@ -149,19 +128,6 @@ in
         enable = true;
         soundService = "pipewire-pulse";
       };
-    };
-
-    # games user with extra settings
-    users.sandbox-games = {
-      # shared config
-      imports = [ ./home.nix ];
-
-      # install gaming stuff
-      home.packages = with pkgs; [
-        lutris
-        wineWowPackages.stable
-        winetricks
-      ];
     };
 
     # kde user with extra settings

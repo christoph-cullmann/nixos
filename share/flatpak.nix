@@ -6,6 +6,7 @@ let
 
   # all wanted flatpak packages
   desiredFlatpaks = {
+    "com.usebottles.bottles" = "--nofilesystem=xdg-music --nofilesystem=xdg-pictures";
     "com.valvesoftware.Steam" = "--nofilesystem=xdg-music --nofilesystem=xdg-pictures";
     "com.vivaldi.Vivaldi" = "--nofilesystem=xdg-music --nofilesystem=xdg-pictures";
     "io.github.ungoogled_software.ungoogled_chromium" = "--nofilesystem=xdg-music --nofilesystem=xdg-pictures";

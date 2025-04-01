@@ -536,11 +536,8 @@ in
     };
   };
 
-  # OpenGL, 32-bit for steam
-  hardware.graphics = {
-    enable = true;
-    enable32Bit = true;
-  };
+  # OpenGL
+  hardware.graphics.enable = true;
 
   # try to ensure we can use our network LaserJet
   services.printing.enable = true;
@@ -596,7 +593,6 @@ in
     { groups = [ "wheel" ]; noPass = false; keepEnv = true; persist = true; }
 
     # wheel users can use sandbox stuff without password
-    { groups = [ "wheel" ]; runAs = "sandbox-games"; noPass = true; }
     { groups = [ "wheel" ]; runAs = "sandbox-kde"; noPass = true; }
   ];
 }
