@@ -18,11 +18,9 @@ let
 
   # install helper, will set filesystem overrides
   install = lib.lists.foldl( str: app:
-      str + pkgs.flatpak + "/bin/flatpak install -y flathub " + app + ";\n"
+      str + pkgs.flatpak + "/bin/flatpak install --or-update -y flathub " + app + ";\n"
           + pkgs.flatpak + "/bin/flatpak override --reset " + app + ";\n"
-          + pkgs.flatpak + "/bin/flatpak override " + globalOverrides + " " + app + ";\n" # just to be sure, is in the global settings already
-          + pkgs.flatpak + "/bin/flatpak override " + (lib.attrsets.getAttrFromPath [ app ] desiredFlatpaks) + " " + app + ";\n"
-          + pkgs.flatpak + "/bin/flatpak override --show " + app + ";\n"
+          + pkgs.flatpak + "/bin/flatpak override " + globalOverrides + " " + (lib.attrsets.getAttrFromPath [ app ] desiredFlatpaks) + " " + app + ";\n"
   ) "\n";
 in {
   # enable flatpak
