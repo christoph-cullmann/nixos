@@ -390,7 +390,6 @@ in
     kdePackages.kcalc
     kdePackages.konsole
     kdePackages.okular
-    kdePackages.tokodon
     keychain
     kicad
     lazygit
