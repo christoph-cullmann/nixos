@@ -384,16 +384,11 @@ in
     inetutils
     inkscape
     kdePackages.ark
-    kdePackages.calligra
     kdePackages.filelight
     kdePackages.kate
     kdePackages.kcachegrind
     kdePackages.kcalc
-    kdePackages.kio-extras
-    kdePackages.kleopatra
-    kdePackages.kmail
     kdePackages.konsole
-    kdePackages.merkuro
     kdePackages.neochat
     kdePackages.okular
     kdePackages.tokodon
@@ -412,7 +407,6 @@ in
     nmap
     nvme-cli
     procmail
-    okteta
     openscad
     p7zip
     parted
