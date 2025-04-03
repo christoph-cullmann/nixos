@@ -439,11 +439,6 @@ in
     zsh
   ];
 
-  # olm is insecure
-  nixpkgs.config.permittedInsecurePackages = [
-    "olm-3.2.16"
-  ];
-
   # we want git with LFS support and Co.
   programs.git = {
     enable = true;
