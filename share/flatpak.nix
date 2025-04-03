@@ -12,6 +12,7 @@ let
     "com.valvesoftware.Steam" = "--nofilesystem=xdg-music --nofilesystem=xdg-pictures";
     "com.vivaldi.Vivaldi" = "--nofilesystem=xdg-music --nofilesystem=xdg-pictures";
     "io.github.ungoogled_software.ungoogled_chromium" = "--nofilesystem=xdg-music --nofilesystem=xdg-pictures";
+    "org.kde.neochat" = "--nofilesystem=xdg-music --nofilesystem=xdg-pictures";
     "org.mozilla.firefox" = "--nofilesystem=xdg-music --nofilesystem=xdg-pictures";
     "org.signal.Signal" = "--nofilesystem=xdg-music --nofilesystem=xdg-pictures";
   };

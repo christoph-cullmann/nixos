@@ -389,7 +389,6 @@ in
     kdePackages.kcachegrind
     kdePackages.kcalc
     kdePackages.konsole
-    kdePackages.neochat
     kdePackages.okular
     kdePackages.tokodon
     keychain
