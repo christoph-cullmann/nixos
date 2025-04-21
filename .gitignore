@@ -1,3 +1,3 @@
 /secret/
-/installer/*.lock
-/installer/result/
+/installer/flake.lock
+/installer/result
