@@ -13,10 +13,7 @@
       # Shared config of all machines
       /data/nixos/share/common.nix
     ];
-cchchchc
-chchchchc
 
-SSSSS
   # our hostname and an ID for ZFS
   networking.hostName = "miku";
   networking.hostId = "c132caed";

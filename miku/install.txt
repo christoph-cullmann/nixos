@@ -52,56 +52,73 @@ for D in $DISK $DISK2; do
     sgdisk -n 1:0:+1024M -c 1:"EFI System Partition" -t 1:EF00 $D
     sgdisk -n 2:0:0 -c 2:"Linux" -t 2:8e00 $D
     parted $D -- set 1 boot on
-    sleep 5
 
     # boot partition
     mkfs.fat -F 32 -n EFIBOOT $D-part1
-    sleep 5
 done
 
+
 # take a look at the partitions
 lsblk
 
-# create the RAID-0, second partitions on all disks
-mdadm --create --verbose --level=0 --raid-devices=2 /dev/md/system $DISK-part2 $DISK2-part2
+# ZFS zpool creation with compression and encryption
+zpool create \
+    -o ashift=13 \
+    -o autotrim=off \
+    -O acltype=posixacl \
+    -O atime=off \
+    -O canmount=off \
+    -O compression=on \
+    -O dnodesize=auto \
+    -O utf8only=on \
+    -O normalization=formD \
+    -O xattr=sa \
+    -O mountpoint=none \
+    -O encryption=on \
+    -O keylocation=prompt \
+    -O keyformat=passphrase \
+    zpool $DISK-part2 $DISK2-part2
+
 sleep 5
 
 # take a look at the partitions
 lsblk
 
-# create the LUKS container and open it
-cryptsetup luksFormat --sector-size 4096 --batch-mode --verify-passphrase /dev/md/system
-cryptsetup luksOpen /dev/md/system crypt-system
+# show the pool
+zpool status
+
 sleep 5
 
-# take a look at the partitions
-lsblk
+# create all the volumes
+zfs create -o mountpoint=legacy zpool/data
+zfs create -o mountpoint=legacy zpool/nix
+zfs create -o mountpoint=legacy zpool/root
 
-# create btrfs with volumes
-mkfs.btrfs -f --features block-group-tree --label system /dev/mapper/crypt-system
-mount -t btrfs /dev/mapper/crypt-system /mnt
-btrfs subvolume create /mnt/data
-btrfs subvolume create /mnt/nix
-btrfs subvolume create /mnt/tmp
-umount /mnt
 sleep 5
 
-# take a look at the partitions
-lsblk
+# show the pool
+zpool status
 
-# prepare install, tmpfs root
-mount -t tmpfs none /mnt
+sleep 5
+
+# create ZFS snapshot that we'll rollback to on boot
+# see https://ryanseipp.com/post/nixos-encrypted-root/
+zfs snapshot zpool/root@blank
+
+sleep 5
+
+# prepare install, root
+mount -t zfs zpool/root /mnt
 
 # Create directories to mount file systems on
-mkdir -p /mnt/{data,nix,boot,root,etc/nixos,tmp}
+mkdir -p /mnt/{data,nix,boot,root,etc/nixos}
 
 # mount the ESP
 mount $DISK-part1 /mnt/boot
 
 # mount volumes
-mount -o subvol=data,noatime /dev/mapper/crypt-system /mnt/data
-mount -o subvol=nix,noatime /dev/mapper/crypt-system /mnt/nix
-mount -o subvol=tmp,noatime /dev/mapper/crypt-system /mnt/tmp
+mount -t zfs zpool/data /mnt/data
+mount -t zfs zpool/nix /mnt/nix
 
 # bind mount persistent stuff to data
 mkdir -p /mnt/data/{root,nixos/$HOST}
@@ -131,8 +148,7 @@ nixos-install --option experimental-features 'nix-command flakes' --no-root-pass
 # unmount all stuff and sync
 
 umount -Rl /data /mnt
-cryptsetup luksClose crypt-system
-mdadm --stop /dev/md/system
+zpool export -a
 sync
 
 # shutdown once

@@ -15,16 +15,9 @@
 
   # /boot efi partition to boot in UEFI mode
   fileSystems."/boot" = {
-    device = "/dev/disk/by-uuid/5B5C-07AD";
+    device = "/dev/disk/by-id/nvme-KINGSTON_SFYRD4000G_50026B7686EC5F33-part1";
     fsType = "vfat";
     options = [ "fmask=0022" "dmask=0022" ];
     neededForBoot = true;
-  };
-
-  # encrypted system
-  boot.initrd.luks.devices."crypt-system" = {
-    device = "/dev/disk/by-uuid/38f19fd3-61b4-4a34-a5b8-0059eeff3c8e";
-    allowDiscards = true;
-    bypassWorkqueues = true;
   };
 }
