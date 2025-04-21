@@ -26,22 +26,20 @@ in
   # atm all stuff is x86_64
   nixpkgs.hostPlatform = "x86_64-linux";
 
-  # use the latest kernel
-  boot.kernelPackages = pkgs.linuxPackages_latest;
-
-  # allow md devices
-  boot.swraid = {
-    enable = true;
-    mdadmConf = ''
-      MAILADDR=christoph@cullmann.io
-    '';
-  };
+  # enable ZFS
+  boot.supportedFilesystems = [ "zfs" ];
 
   # my kernel parameters
   boot.kernelParams = [
     # Plymouth
     "quiet"
     "splash"
+
+    # no hibernate for ZFS systems
+
+    # make ARC fast
+    "init_on_alloc=0"
+    "init_on_free=0"
 
     # don't check for split locks, for KVM and Co.
     "split_lock_detect=off"
@@ -112,6 +110,28 @@ in
       ProtectKernelModules = true;
     };
   };
+
+  # tweak ZFS
+  boot.extraModprobeConfig = ''
+    options zfs zfetch_max_distance=268435456
+    options zfs zfs_arc_meta_limit_percent=75
+    options zfs zfs_arc_min=134217728
+    options zfs zfs_arc_max=4294967296
+    options zfs zfs_compressed_arc_enabled=0
+    options zfs zfs_abd_scatter_enabled=0
+    options zfs zfs_txg_timeout=30
+    options zfs zfs_vdev_scrub_min_active=1
+    options zfs zfs_vdev_scrub_max_active=1
+    options zfs zfs_vdev_sync_write_min_active=8
+    options zfs zfs_vdev_sync_write_max_active=32
+    options zfs zfs_vdev_sync_read_min_active=8
+    options zfs zfs_vdev_sync_read_max_active=32
+    options zfs zfs_vdev_async_read_min_active=8
+    options zfs zfs_vdev_async_read_max_active=32
+    options zfs zfs_vdev_async_write_min_active=8
+    options zfs zfs_vdev_async_write_max_active=32
+    options zfs zfs_vdev_def_queue_depth=128
+  '';
 
   # Use the systemd-boot EFI boot loader.
   boot.loader.systemd-boot.enable = true;
@@ -226,6 +246,15 @@ in
 
   # kill the tmp content on reboots, we mount that to /nix/persistent to avoid memory fill-up
   boot.tmp.cleanOnBoot = true;
+
+  # ensure our data is not rotting
+  services.zfs.autoScrub = {
+    enable = true;
+    interval = "weekly";
+  };
+
+  # trim the stuff, we use SSDs
+  services.zfs.trim.enable = true;
 
   # enable fast dbus
   services.dbus.implementation = "broker";
@@ -554,6 +583,25 @@ in
   environment.etc."mail/secrets" = {
     text = builtins.readFile "/data/nixos/secret/mail.secret";
     mode = "0400";
+  };
+
+  # send mails on ZFS events
+  services.zfs.zed = {
+    settings = {
+      ZED_DEBUG_LOG = "/tmp/zed.debug.log";
+      ZED_EMAIL_ADDR = [ "root" ];
+      ZED_EMAIL_PROG = "/run/wrappers/bin/sendmail";
+      ZED_EMAIL_OPTS = "@ADDRESS@";
+
+      ZED_NOTIFY_INTERVAL_SECS = 3600;
+      ZED_NOTIFY_VERBOSE = true;
+
+      ZED_USE_ENCLOSURE_LEDS = true;
+      ZED_SCRUB_AFTER_RESILVER = true;
+    };
+
+    # this option does not work; will return error
+    enableMail = false;
   };
 
   # use ZSH per default

@@ -14,8 +14,9 @@
       /data/nixos/share/common.nix
     ];
 
-  # our hostname
+  # our hostname and an ID for ZFS
   networking.hostName = "neko";
+  networking.hostId = "cf5a5ee6";
 
   # EurKey layout
   services.xserver.xkb.layout = "eu";
