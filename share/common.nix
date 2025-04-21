@@ -559,7 +559,7 @@ in
       table secrets file:/etc/mail/secrets
       listen on localhost
       action "local" mda "procmail -f -" virtual <aliases>
-      action "relay" relay host smtps://smtp@moon.babylon2k.com auth <secrets> mail-from bot@cullmann.io
+      action "relay" relay host smtps://smtp@moon.babylon2k.com auth <secrets> mail-from bot@babylon2k.com
       match for local action "local"
       match for any action "relay"
     '';
