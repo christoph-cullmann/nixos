@@ -15,16 +15,9 @@
 
   # /boot efi partition to boot in UEFI mode
   fileSystems."/boot" = {
-    device = "/dev/disk/by-uuid/554C-161A";
+    device = "/dev/disk/by-id/nvme-Seagate_FireCuda_530_ZP4000GM30013_7VS01VBM-part1";
     fsType = "vfat";
     options = [ "fmask=0022" "dmask=0022" ];
     neededForBoot = true;
-  };
-
-  # encrypted system
-  boot.initrd.luks.devices."crypt-system" = {
-    device = "/dev/disk/by-uuid/91f98284-b0fa-40b9-8a32-37f71968b2dd";
-    allowDiscards = true;
-    bypassWorkqueues = true;
   };
 }

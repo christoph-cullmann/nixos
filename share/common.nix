@@ -159,35 +159,38 @@ in
   # swap to RAM
   zramSwap.enable = true;
 
-  # root file system in RAM
-  fileSystems."/" =
-    { device = "none";
-      fsType = "tmpfs";
-      neededForBoot = true;
-      options = [ "defaults" "size=8G" "mode=755" ];
-    };
+  # root file system, we will rollback that on boot
+  fileSystems."/" = {
+    device = "zpool/root";
+    fsType = "zfs";
+    neededForBoot = true;
+  };
+
+  # root rollback, see https://ryanseipp.com/post/nixos-encrypted-root/
+  boot.initrd.systemd.services.rollback = {
+    description = "Rollback root filesystem to a pristine state";
+    wantedBy = ["initrd.target"];
+    after = ["zfs-import-zpool.service"];
+    before = ["sysroot.mount"];
+    path = with pkgs; [zfs];
+    unitConfig.DefaultDependencies = "no";
+    serviceConfig.Type = "oneshot";
+    script = ''
+      zfs rollback -r zpool/root@blank && echo " >> >> Rollback Complete << <<"
+    '';
+  };
 
   # my data
   fileSystems."/data" = {
-    device = "/dev/mapper/crypt-system";
-    fsType = "btrfs";
-    options = [ "subvol=data" "noatime" "nodiscard" "commit=5" ];
+    device = "zpool/data";
+    fsType = "zfs";
     neededForBoot = true;
   };
 
   # the system
   fileSystems."/nix" = {
-    device = "/dev/mapper/crypt-system";
-    fsType = "btrfs";
-    options = [ "subvol=nix" "noatime" "nodiscard" "commit=5" ];
-    neededForBoot = true;
-  };
-
-  # tmp to not fill RAM
-  fileSystems."/tmp" = {
-    device = "/dev/mapper/crypt-system";
-    fsType = "btrfs";
-    options = [ "subvol=tmp" "noatime" "nodiscard" "commit=5" ];
+    device = "zpool/nix";
+    fsType = "zfs";
     neededForBoot = true;
   };
 
@@ -208,18 +211,6 @@ in
       options = [ "bind" ];
       depends = [ "/data" ];
     };
-
-  # trim the disks weekly
-  services.fstrim = {
-    enable = true;
-    interval = "weekly";
-  };
-
-  # scrub the disks weekly
-  services.btrfs.autoScrub = {
-    enable = true;
-    interval = "weekly";
-  };
 
   # keep some stuff persistent
   environment.persistence."/nix/persistent" = {
@@ -243,9 +234,6 @@ in
       "/var/lib/flatpak"
     ];
   };
-
-  # kill the tmp content on reboots, we mount that to /nix/persistent to avoid memory fill-up
-  boot.tmp.cleanOnBoot = true;
 
   # ensure our data is not rotting
   services.zfs.autoScrub = {
