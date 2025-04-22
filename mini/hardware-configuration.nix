@@ -15,16 +15,9 @@
 
   # /boot efi partition to boot in UEFI mode
   fileSystems."/boot" = {
-    device = "/dev/disk/by-uuid/1B9E-991C";
+    device = "/dev/disk/by-id/nvme-CT4000P3PSSD8_2325E6E63746-part1";
     fsType = "vfat";
     options = [ "fmask=0022" "dmask=0022" ];
     neededForBoot = true;
-  };
-
-  # encrypted system
-  boot.initrd.luks.devices."crypt-system" = {
-    device = "/dev/disk/by-uuid/565695e2-a09b-412b-9f26-4da10402b967";
-    allowDiscards = true;
-    bypassWorkqueues = true;
   };
 }
