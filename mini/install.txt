@@ -48,10 +48,11 @@ for D in $DISK $DISK2; do
     sgdisk -n 2:0:0 -c 2:"Linux" -t 2:8e00 $D
     parted $D -- set 1 boot on
 
+    sleep 5
+
     # boot partition
     mkfs.fat -F 32 -n EFIBOOT $D-part1
 done
-
 
 # take a look at the partitions
 lsblk
