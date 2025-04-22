@@ -36,6 +36,7 @@ in
     "splash"
 
     # no hibernate for ZFS systems
+    "nohibernate"
 
     # make ARC fast
     "init_on_alloc=0"
