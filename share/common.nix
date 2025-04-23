@@ -134,6 +134,18 @@ in
     options zfs zfs_vdev_def_queue_depth=128
   '';
 
+  # tune the ZFS pool for NVMe
+  system.activationScripts.zfsTuning = {
+    text = ''
+      # only one level of metadata caching
+      ${pkgs.zfs}/bin/zfs set primarycache=metadata zpool
+      ${pkgs.zfs}/bin/zfs set secondarycache=none zpool
+
+      # use always direct IO to avoid ARC overhead
+      ${pkgs.zfs}/bin/zfs set direct=always zpool
+    '';
+  };
+
   # Use the systemd-boot EFI boot loader.
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
