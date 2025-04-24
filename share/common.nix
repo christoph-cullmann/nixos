@@ -209,7 +209,7 @@ in
     { device = "/data/root";
       fsType = "none";
       neededForBoot = true;
-      options = [ "bind" ];
+      options = [ "bind" "x-gvfs-hide" ];
       depends = [ "/data" ];
     };
 
@@ -218,7 +218,7 @@ in
     { device = "/data/nixos/${config.networking.hostName}";
       fsType = "none";
       neededForBoot = true;
-      options = [ "bind" ];
+      options = [ "bind" "x-gvfs-hide" ];
       depends = [ "/data" ];
     };
 
