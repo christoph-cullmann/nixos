@@ -114,7 +114,6 @@ in
 
   # tweak ZFS
   boot.extraModprobeConfig = ''
-    options zfs zfs_arc_meta_limit_percent=100
     options zfs zfs_arc_min=134217728
     options zfs zfs_arc_max=4294967296
     options zfs zfs_txg_timeout=30
@@ -135,11 +134,11 @@ in
   system.activationScripts.zfsTuning = {
     text = ''
       # only one level of metadata caching
-      ${pkgs.zfs}/bin/zfs set primarycache=metadata zpool
+      ${pkgs.zfs}/bin/zfs set primarycache=all zpool
       ${pkgs.zfs}/bin/zfs set secondarycache=none zpool
 
-      # use always direct IO to avoid ARC overhead
-      ${pkgs.zfs}/bin/zfs set direct=always zpool
+      # use allow direct IO
+      ${pkgs.zfs}/bin/zfs set direct=standard zpool
     '';
   };
 
