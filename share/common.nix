@@ -241,6 +241,9 @@ in
 
       # flatpak storage
       "/var/lib/flatpak"
+
+      # ollama storage
+      "/var/lib/private/ollama"
     ];
   };
 
@@ -631,5 +634,8 @@ in
   # try local AI stuff
   services.ollama = {
     enable = true;
+
+    # preload models, see https://ollama.com/library
+    loadModels = [ "llama3.2" ];
   };
 }
