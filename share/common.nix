@@ -243,7 +243,7 @@ in
       "/var/lib/flatpak"
 
       # ollama storage
-      { directory = "/var/lib/private/ollama"; user = "ollama"; }
+      "/var/lib/private/ollama"
     ];
   };
 
