@@ -638,4 +638,6 @@ in
     # preload models, see https://ollama.com/library
     loadModels = [ "gemma3" "llama3.2" ];
   };
+
+  services.open-webui.enable = true;
 }
