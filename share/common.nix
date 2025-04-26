@@ -627,4 +627,9 @@ in
     # wheel users can use sandbox stuff without password
     { groups = [ "wheel" ]; runAs = "sandbox-kde"; noPass = true; }
   ];
+
+  # try local AI stuff
+  services.ollama = {
+    enable = true;
+  };
 }

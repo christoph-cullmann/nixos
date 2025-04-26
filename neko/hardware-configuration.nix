@@ -6,12 +6,15 @@
 {
   imports = [ (modulesPath + "/installer/scan/not-detected.nix") ];
 
+  # basic drivers
   boot.initrd.availableKernelModules = [ "nvme" "xhci_pci" "ahci" "usbhid" "sd_mod" ];
-  boot.initrd.kernelModules = [ "i915" ];
-  boot.kernelModules = [ "kvm-intel" ];
 
-  # Intel microcode updates please
+  # Intel CPU
+  boot.kernelModules = [ "kvm-intel" ];
   hardware.cpu.intel.updateMicrocode = true;
+
+  # Intel graphics
+  boot.initrd.kernelModules = [ "i915" ];
 
   # /boot efi partition to boot in UEFI mode
   fileSystems."/boot" = {

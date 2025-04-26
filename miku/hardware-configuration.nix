@@ -6,12 +6,16 @@
 {
   imports = [ (modulesPath + "/installer/scan/not-detected.nix") ];
 
+  # basic drivers
   boot.initrd.availableKernelModules = [ "nvme" "xhci_pci" "ahci" "usbhid" "sd_mod" ];
-  boot.initrd.kernelModules = [ "amdgpu" ];
-  boot.kernelModules = [ "kvm-amd" ];
 
-  # AMD microcode updates please
+  # AMD CPU
+  boot.kernelModules = [ "kvm-amd" ];
   hardware.cpu.amd.updateMicrocode = true;
+
+  # AMD graphics
+  boot.initrd.kernelModules = [ "amdgpu" ];
+  services.ollama.acceleration = "rocm";
 
   # /boot efi partition to boot in UEFI mode
   fileSystems."/boot" = {
