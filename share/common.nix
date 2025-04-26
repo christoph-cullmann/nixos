@@ -636,6 +636,6 @@ in
     enable = true;
 
     # preload models, see https://ollama.com/library
-    loadModels = [ "llama3.2" ];
+    loadModels = [ "gemma3" "llama3.2" ];
   };
 }
