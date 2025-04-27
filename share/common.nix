@@ -114,20 +114,27 @@ in
 
   # tweak ZFS
   boot.extraModprobeConfig = ''
+    # maximal 4 GB ARC
     options zfs zfs_arc_min=134217728
     options zfs zfs_arc_max=4294967296
-    options zfs zfs_txg_timeout=30
+
+    # NVMe tuning
+    options zfs zfs_txg_timeout=100
+    options zfs zfs_vdev_async_read_max_active=2048
+    options zfs zfs_vdev_async_read_min_active=1024
+    options zfs zfs_vdev_async_write_max_active=2048
+    options zfs zfs_vdev_async_write_min_active=1024
+    options zfs zfs_vdev_queue_depth_pct=100
+    options zfs zfs_vdev_sync_read_max_active=2048
+    options zfs zfs_vdev_sync_read_min_active=1024
+    options zfs zfs_vdev_sync_write_max_active=2048
+    options zfs zfs_vdev_sync_write_min_active=1024
+
+    # less scrub impact on other IO
+    options zfs zfs_scrub_delay=32
+    options zfs zfs_top_maxinflight=1
     options zfs zfs_vdev_scrub_min_active=1
     options zfs zfs_vdev_scrub_max_active=1
-    options zfs zfs_vdev_sync_write_min_active=8
-    options zfs zfs_vdev_sync_write_max_active=32
-    options zfs zfs_vdev_sync_read_min_active=8
-    options zfs zfs_vdev_sync_read_max_active=32
-    options zfs zfs_vdev_async_read_min_active=8
-    options zfs zfs_vdev_async_read_max_active=32
-    options zfs zfs_vdev_async_write_min_active=8
-    options zfs zfs_vdev_async_write_max_active=32
-    options zfs zfs_vdev_def_queue_depth=128
   '';
 
   # tune the ZFS pool for NVMe
