@@ -120,7 +120,6 @@ in
 
     # less scrub impact on other IO
     options zfs zfs_scrub_delay=32
-    options zfs zfs_top_maxinflight=1
     options zfs zfs_vdev_scrub_min_active=1
     options zfs zfs_vdev_scrub_max_active=1
   '';
