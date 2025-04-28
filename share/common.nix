@@ -114,21 +114,9 @@ in
 
   # tweak ZFS
   boot.extraModprobeConfig = ''
-    # maximal 4 GB ARC
-    options zfs zfs_arc_min=134217728
-    options zfs zfs_arc_max=4294967296
-
-    # NVMe tuning
-    options zfs zfs_txg_timeout=100
-    options zfs zfs_vdev_async_read_max_active=2048
-    options zfs zfs_vdev_async_read_min_active=1024
-    options zfs zfs_vdev_async_write_max_active=2048
-    options zfs zfs_vdev_async_write_min_active=1024
-    options zfs zfs_vdev_queue_depth_pct=100
-    options zfs zfs_vdev_sync_read_max_active=2048
-    options zfs zfs_vdev_sync_read_min_active=1024
-    options zfs zfs_vdev_sync_write_max_active=2048
-    options zfs zfs_vdev_sync_write_min_active=1024
+    # between 1 and 8 GB large ARC
+    options zfs zfs_arc_min=1073741824
+    options zfs zfs_arc_max=8589934592
 
     # less scrub impact on other IO
     options zfs zfs_scrub_delay=32
