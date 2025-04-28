@@ -127,9 +127,12 @@ in
   # tune the ZFS pool for NVMe
   system.activationScripts.zfsTuning = {
     text = ''
-      # only one level of metadata caching
+      # only one level of caching
       ${pkgs.zfs}/bin/zfs set primarycache=all zpool
       ${pkgs.zfs}/bin/zfs set secondarycache=none zpool
+
+      # I have backups and no real databases
+      ${pkgs.zfs}/bin/zfs set sync=disabled zpool
 
       # use allow direct IO
       ${pkgs.zfs}/bin/zfs set direct=standard zpool
