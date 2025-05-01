@@ -114,10 +114,6 @@ in
 
   # tweak ZFS
   boot.extraModprobeConfig = ''
-    # between 1 and 8 GB large ARC
-    options zfs zfs_arc_min=1073741824
-    options zfs zfs_arc_max=8589934592
-
     # less scrub impact on other IO
     options zfs zfs_scrub_delay=32
     options zfs zfs_vdev_scrub_min_active=1
@@ -161,9 +157,6 @@ in
     theme = "hexa_retro";
     themePackages = [ pkgs.adi1090x-plymouth-themes ];
   };
-
-  # swap to RAM
-  zramSwap.enable = true;
 
   # root file system, we will rollback that on boot
   fileSystems."/" = {
