@@ -298,8 +298,8 @@ in
     LC_TIME = "de_DE.UTF-8";
   };
 
-  # allow to have all locales
-  i18n.supportedLocales = [ "all" ];
+  # add all locales we use
+  i18n.supportedLocales = ["de_DE.UTF-8/UTF-8" "en_US.UTF-8/UTF-8"];
 
   # use X11/wayland layout for console, too
   console.useXkbConfig = true;
