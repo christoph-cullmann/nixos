@@ -1,4 +1,5 @@
 # based on https://www.reddit.com/r/NixOS/comments/1hzgxns/fully_declarative_flatpak_management_on_nixos/
+# to list permissions: flatpak info --show-permissions ...
 { config, lib, pkgs, ... }:
 let
   # default restrictions, applied globally and to all packs
@@ -12,6 +13,7 @@ let
     "com.valvesoftware.Steam" = "--nofilesystem=xdg-music --nofilesystem=xdg-pictures";
     "com.vivaldi.Vivaldi" = "--nofilesystem=xdg-music --nofilesystem=xdg-pictures";
     "io.github.ungoogled_software.ungoogled_chromium" = "--nofilesystem=xdg-music --nofilesystem=xdg-pictures";
+    "net.retrodeck.retrodeck" = "--nofilesystem=xdg-music --nofilesystem=xdg-pictures --nofilesystem=xdg-data/Steam --nofilesystem=~/.steam";
     "org.kde.neochat" = "--nofilesystem=xdg-music --nofilesystem=xdg-pictures";
     "org.mozilla.firefox" = "--nofilesystem=xdg-music --nofilesystem=xdg-pictures";
     "org.signal.Signal" = "--nofilesystem=xdg-music --nofilesystem=xdg-pictures";
