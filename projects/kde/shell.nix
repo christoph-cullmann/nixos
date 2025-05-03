@@ -53,6 +53,7 @@ export QT_QUICK_CONTROLS_STYLE_PATH=~/projects/kde/usr/lib/qml/QtQuick/Controls.
     intltool
     isocodes
     kdePackages.poppler
+    kdePackages.wayland-protocols
     lcms2
     libarchive
     libcanberra
