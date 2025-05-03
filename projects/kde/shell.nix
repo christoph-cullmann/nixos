@@ -31,7 +31,6 @@ export QT_QUICK_CONTROLS_STYLE_PATH=~/projects/kde/usr/lib/qml/QtQuick/Controls.
     bison
     boost
     bzip2
-    clang-tools_20
     cmake
     ctags
     curl
@@ -86,6 +85,7 @@ export QT_QUICK_CONTROLS_STYLE_PATH=~/projects/kde/usr/lib/qml/QtQuick/Controls.
     mesa
     meson
     modemmanager
+    myllvm.clang-tools # clang
     myllvm.libclang.python # git-clang-format
     networkmanager
     ninja
