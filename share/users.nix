@@ -101,12 +101,6 @@ in
         enableZshIntegration = true;
         keys = [ "/data/home/cullmann/.ssh/id_ed25519" ];
       };
-
-      # MIDI
-      services.fluidsynth = {
-        enable = true;
-        soundService = "pipewire-pulse";
-      };
     };
 
     # kde user with extra settings
