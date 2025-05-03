@@ -232,8 +232,8 @@ in
       # flatpak storage
       "/var/lib/flatpak"
 
-      # ollama storage
-      "/var/lib/private/ollama"
+      # ollama & Co. storage
+      { directory = "/var/lib/private"; mode = "0700"; }
     ];
   };
 
