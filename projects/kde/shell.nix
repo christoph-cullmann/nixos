@@ -1,7 +1,7 @@
 with import <nixpkgs> {};
 
 # use new clang
-let myllvm = llvmPackages_19; in
+let myllvm = llvmPackages_20; in
 
 # clang based dev env
 myllvm.stdenv.mkDerivation {
@@ -31,7 +31,7 @@ export QT_QUICK_CONTROLS_STYLE_PATH=~/projects/kde/usr/lib/qml/QtQuick/Controls.
     bison
     boost
     bzip2
-    clang-tools_19
+    clang-tools_20
     cmake
     ctags
     curl
