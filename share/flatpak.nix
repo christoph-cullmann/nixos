@@ -7,15 +7,24 @@ let
 
   # all wanted flatpak packages
   desiredFlatpaks = {
-    "com.bambulab.BambuStudio" = "--nofilesystem=xdg-music --nofilesystem=xdg-pictures --filesystem=/data/home/shared"; # allow access to shared stuff
-    "com.prusa3d.PrusaSlicer" = "--nofilesystem=xdg-music --nofilesystem=xdg-pictures --filesystem=/data/home/shared"; # allow access to shared stuff
+    # slicers needs accessed to shared folder with 3d stuff
+    "com.bambulab.BambuStudio" = "--nofilesystem=xdg-music --nofilesystem=xdg-pictures --filesystem=/data/home/shared";
+    "com.prusa3d.PrusaSlicer" = "--nofilesystem=xdg-music --nofilesystem=xdg-pictures --filesystem=/data/home/shared";
+
+    # maximal sandboxed stuff for games
     "com.usebottles.bottles" = "--nofilesystem=xdg-music --nofilesystem=xdg-pictures";
     "com.valvesoftware.Steam" = "--nofilesystem=xdg-music --nofilesystem=xdg-pictures";
+
+    # retrodeck needs access to games
+    "net.retrodeck.retrodeck" = "--nofilesystem=xdg-music --nofilesystem=xdg-pictures --nofilesystem=xdg-data/Steam --nofilesystem=~/.steam --filesystem=~/Games";
+
+    # maximal sandboxed browsers
     "com.vivaldi.Vivaldi" = "--nofilesystem=xdg-music --nofilesystem=xdg-pictures";
     "io.github.ungoogled_software.ungoogled_chromium" = "--nofilesystem=xdg-music --nofilesystem=xdg-pictures";
-    "net.retrodeck.retrodeck" = "--nofilesystem=xdg-music --nofilesystem=xdg-pictures --nofilesystem=xdg-data/Steam --nofilesystem=~/.steam";
-    "org.kde.neochat" = "--nofilesystem=xdg-music --nofilesystem=xdg-pictures";
     "org.mozilla.firefox" = "--nofilesystem=xdg-music --nofilesystem=xdg-pictures";
+
+    # maximal sandboxed messaging apps
+    "org.kde.neochat" = "--nofilesystem=xdg-music --nofilesystem=xdg-pictures";
     "org.signal.Signal" = "--nofilesystem=xdg-music --nofilesystem=xdg-pictures";
   };
 
