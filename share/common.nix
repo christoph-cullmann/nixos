@@ -56,13 +56,14 @@ in
     "kernel.dmesg_restrict" = 0;
 
     # allow proper perf usage
-    "kernel.perf_event_mlock_kb" = 16777216;
+    "kernel.kptr_restrict" = 0;
+    "kernel.perf_event_mlock_kb" = 1024;
+    "kernel.perf_event_paranoid" = -1;
 
     # harden some stuff
     "dev.tty.ldisc_autoload" = 0;
     "fs.suid_dumpable" = 0;
     "kernel.sysrq" = 0;
-    "kernel.kptr_restrict" = 2;
     "kernel.unprivileged_bpf_disabled" = 1;
     "net.core.bpf_jit_harden" = 2;
     "net.ipv4.conf.all.accept_redirects" = false;
