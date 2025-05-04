@@ -21,7 +21,7 @@ in
   ];
 
   # install release
-  system.stateVersion = "24.11";
+  system.stateVersion = "25.05";
 
   # atm all stuff is x86_64
   nixpkgs.hostPlatform = "x86_64-linux";
