@@ -26,21 +26,15 @@ in
   # atm all stuff is x86_64
   nixpkgs.hostPlatform = "x86_64-linux";
 
-  # enable ZFS
-  boot.supportedFilesystems = [ "zfs" ];
+  # enable bcachefs with latest kernel
+  boot.supportedFilesystems = [ "bcachefs" ];
+  boot.kernelPackages = pkgs.linuxPackages_latest;
 
   # my kernel parameters
   boot.kernelParams = [
     # Plymouth
     "quiet"
     "splash"
-
-    # no hibernate for ZFS systems
-    "nohibernate"
-
-    # make ARC fast
-    "init_on_alloc=0"
-    "init_on_free=0"
 
     # don't check for split locks, for KVM and Co.
     "split_lock_detect=off"
@@ -113,29 +107,6 @@ in
     };
   };
 
-  # tweak ZFS
-  boot.extraModprobeConfig = ''
-    # less scrub impact on other IO
-    options zfs zfs_scrub_delay=32
-    options zfs zfs_vdev_scrub_min_active=1
-    options zfs zfs_vdev_scrub_max_active=1
-  '';
-
-  # tune the ZFS pool for NVMe
-  system.activationScripts.zfsTuning = {
-    text = ''
-      # only one level of caching
-      ${pkgs.zfs}/bin/zfs set primarycache=all zpool
-      ${pkgs.zfs}/bin/zfs set secondarycache=none zpool
-
-      # I have backups and no real databases
-      ${pkgs.zfs}/bin/zfs set sync=disabled zpool
-
-      # use allow direct IO
-      ${pkgs.zfs}/bin/zfs set direct=standard zpool
-    '';
-  };
-
   # Use the systemd-boot EFI boot loader.
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
@@ -159,58 +130,40 @@ in
     themePackages = [ pkgs.adi1090x-plymouth-themes ];
   };
 
-  # root file system, we will rollback that on boot
+  # root file system, tmpfs
   fileSystems."/" = {
-    device = "zpool/root";
-    fsType = "zfs";
+    device = "none";
+    fsType = "tmpfs";
     neededForBoot = true;
-  };
-
-  # root rollback, see https://ryanseipp.com/post/nixos-encrypted-root/
-  boot.initrd.systemd.services.rollback = {
-    description = "Rollback root filesystem to a pristine state";
-    wantedBy = ["initrd.target"];
-    after = ["zfs-import-zpool.service"];
-    before = ["sysroot.mount"];
-    path = with pkgs; [zfs];
-    unitConfig.DefaultDependencies = "no";
-    serviceConfig.Type = "oneshot";
-    script = ''
-      zfs rollback -r zpool/root@blank && echo " >> >> Rollback Complete << <<"
-    '';
+    options = [ "defaults" "size=25%" "mode=755" ];
   };
 
   # my data
   fileSystems."/data" = {
-    device = "zpool/data";
-    fsType = "zfs";
+    device = "/nix/data";
+    fsType = "none";
     neededForBoot = true;
-  };
-
-  # the system
-  fileSystems."/nix" = {
-    device = "zpool/nix";
-    fsType = "zfs";
-    neededForBoot = true;
+    options = [ "bind" "x-gvfs-hide" ];
+    depends = [ "/nix" ];
   };
 
   # bind mount to have root home
-  fileSystems."/root" =
-    { device = "/data/root";
-      fsType = "none";
-      neededForBoot = true;
-      options = [ "bind" "x-gvfs-hide" ];
-      depends = [ "/data" ];
-    };
+  fileSystems."/root" = {
+    device = "/data/root";
+    fsType = "none";
+    neededForBoot = true;
+    options = [ "bind" "x-gvfs-hide" ];
+    depends = [ "/data" ];
+  };
 
   # bind mount to have NixOS configuration, different per host
-  fileSystems."/etc/nixos" =
-    { device = "/data/nixos/${config.networking.hostName}";
-      fsType = "none";
-      neededForBoot = true;
-      options = [ "bind" "x-gvfs-hide" ];
-      depends = [ "/data" ];
-    };
+  fileSystems."/etc/nixos" = {
+    device = "/data/nixos/${config.networking.hostName}";
+    fsType = "none";
+    neededForBoot = true;
+    options = [ "bind" "x-gvfs-hide" ];
+    depends = [ "/data" ];
+  };
 
   # keep some stuff persistent
   environment.persistence."/nix/persistent" = {
@@ -237,15 +190,6 @@ in
       { directory = "/var/lib/private"; mode = "0700"; }
     ];
   };
-
-  # ensure our data is not rotting
-  services.zfs.autoScrub = {
-    enable = true;
-    interval = "weekly";
-  };
-
-  # trim the stuff, we use SSDs
-  services.zfs.trim.enable = true;
 
   # enable fast dbus
   services.dbus.implementation = "broker";
@@ -574,25 +518,6 @@ in
   environment.etc."mail/secrets" = {
     text = builtins.readFile "/data/nixos/secret/mail.secret";
     mode = "0400";
-  };
-
-  # send mails on ZFS events
-  services.zfs.zed = {
-    settings = {
-      ZED_DEBUG_LOG = "/tmp/zed.debug.log";
-      ZED_EMAIL_ADDR = [ "root" ];
-      ZED_EMAIL_PROG = "/run/wrappers/bin/sendmail";
-      ZED_EMAIL_OPTS = "@ADDRESS@";
-
-      ZED_NOTIFY_INTERVAL_SECS = 3600;
-      ZED_NOTIFY_VERBOSE = true;
-
-      ZED_USE_ENCLOSURE_LEDS = true;
-      ZED_SCRUB_AFTER_RESILVER = true;
-    };
-
-    # this option does not work; will return error
-    enableMail = false;
   };
 
   # use ZSH per default
