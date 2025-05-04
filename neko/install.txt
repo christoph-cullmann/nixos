@@ -104,6 +104,7 @@ mount
 nixos-generate-config --root /mnt
 
 # check /mnt/etc/nixos/hardware-configuration.nix to get UUIDs
+cat /mnt/etc/nixos/hardware-configuration.nix
 
 # copy config data from another machine including secrets
 
