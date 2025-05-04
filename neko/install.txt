@@ -103,26 +103,18 @@ mount
 # configure
 nixos-generate-config --root /mnt
 
-# check /mnt/etc/nixos/hardware-configuration.nix to get UUIDs
-cat /mnt/etc/nixos/hardware-configuration.nix
-
 # copy config data from another machine including secrets
-
 doas scp -r /data/nixos root@192.168.13.171:/mnt/data
 
 # install
-
 nixos-install --option experimental-features 'nix-command flakes' --no-root-passwd --root /mnt
 
 # unmount all stuff and sync
-
 umount -Rl /data /mnt
 sync
 
 # shutdown once
-
 shutdown now
 
 # sync all /data after the install
-
 doas rsync -va --delete --one-file-system /data/ root@192.168.13.171:/data/
