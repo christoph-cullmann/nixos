@@ -39,20 +39,23 @@ sleep 5
 for D in $DISK $DISK2 $DISK3; do
     # kill old data
     sgdisk --zap-all $D
-    blkdiscard -v $D
+    blkdiscard -v -f $D
     wipefs -a $D
     sleep 5
 
-    # create partitions
+    # Create partition table
     parted $D -- mklabel gpt
-    sgdisk -n 1:0:+1024M -c 1:"EFI System Partition" -t 1:EF00 $D
-    sgdisk -n 2:0:0 -c 2:"Linux" -t 2:8e00 $D
+
+    # Create a /boot as $D-part1
+    parted $D -- mkpart ESP fat32 1MiB 1024MiB
     parted $D -- set 1 boot on
 
-    sleep 5
+    # Create a /nix as $D-part2
+    parted $D -- mkpart NIX 1024MiB 100%
 
-    # boot partition
-    mkfs.fat -F 32 -n EFIBOOT $D-part1
+    # boot partition after short sleep, needed on some machines
+    sleep 5
+    mkfs.vfat $D-part1
 done
 
 # take a look at the partitions
