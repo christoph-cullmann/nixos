@@ -117,8 +117,8 @@ in
   # we want to be able to do a memtest
   boot.loader.systemd-boot.memtest86.enable = true;
 
-  # use systemd early
-  boot.initrd.systemd.enable = true;
+  # don't use systemd early to fix bcachefs mounting
+  boot.initrd.systemd.enable = false;
 
   # setup the console stuff early
   console.earlySetup = true;
