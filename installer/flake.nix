@@ -7,7 +7,7 @@
         system = "x86_64-linux";
         modules = [
           "${nixos}/nixos/modules/installer/cd-dvd/installation-cd-minimal-new-kernel-no-zfs.nix"
-          ({ config, pkgs, ... }: {
+          ({ config, lib, pkgs, ... }: {
             boot.supportedFilesystems = [ "bcachefs" ];
             boot.kernelPackages = lib.mkOverride 0 pkgs.linuxPackages_latest;
             networking.wireless.enable = false;
