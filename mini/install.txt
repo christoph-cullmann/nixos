@@ -28,6 +28,7 @@ HOST=mini
 # disks to use
 DISK=/dev/disk/by-id/nvme-CT4000P3PSSD8_2325E6E63746
 DISK2=/dev/disk/by-id/ata-CT2000MX500SSD1_2138E5D5061F
+DISKS="$DISK $DISK2"
 
 # ensure 4k sector size
 nvme format --lbaf=1 --force $DISK
@@ -35,76 +36,43 @@ nvme id-ns -H $DISK
 sleep 5
 
 # create partition table on all disks and EFI partition
-for D in $DISK $DISK2; do
+RAID=""
+for D in $DISKS; do
     # kill old data
     sgdisk --zap-all $D
-    blkdiscard -v $D
+    blkdiscard -v -f $D
     wipefs -a $D
     sleep 5
 
-    # create partitions
+    # Create partition table
     parted $D -- mklabel gpt
-    sgdisk -n 1:0:+1024M -c 1:"EFI System Partition" -t 1:EF00 $D
-    sgdisk -n 2:0:0 -c 2:"Linux" -t 2:8e00 $D
+
+    # Create a /boot as $D-part1
+    parted $D -- mkpart ESP fat32 1MiB 1024MiB
     parted $D -- set 1 boot on
 
-    sleep 5
+    # Create a /nix as $D-part2
+    parted $D -- mkpart NIX 1024MiB 100%
 
-    # boot partition
-    mkfs.fat -F 32 -n EFIBOOT $D-part1
+    # boot partition after short sleep, needed on some machines
+    sleep 5
+    mkfs.vfat $D-part1
+
+    # add part2 to raid
+    RAID="$RAID $D-part2"
 done
 
 # take a look at the partitions
 lsblk
 
-# ZFS zpool creation with compression and encryption
-zpool create \
-    -o ashift=13 \
-    -o autotrim=off \
-    -O acltype=posixacl \
-    -O atime=off \
-    -O canmount=off \
-    -O compression=on \
-    -O dnodesize=auto \
-    -O utf8only=on \
-    -O normalization=formD \
-    -O xattr=sa \
-    -O mountpoint=none \
-    -O encryption=on \
-    -O keylocation=prompt \
-    -O keyformat=passphrase \
-    zpool $DISK-part2 $DISK2-part2
+# create encrypted bcachefs
+bcachefs format --encrypt -f $RAID
+nix-env -iA nixos.keyutils
+keyctl link @u @s
+bcachefs unlock $DISK-part2
 
-sleep 5
-
-# take a look at the partitions
-lsblk
-
-# show the pool
-zpool status
-
-sleep 5
-
-# create all the volumes
-zfs create -o mountpoint=legacy zpool/data
-zfs create -o mountpoint=legacy zpool/nix
-zfs create -o mountpoint=legacy zpool/root
-
-sleep 5
-
-# show the pool
-zpool status
-
-sleep 5
-
-# create ZFS snapshot that we'll rollback to on boot
-# see https://ryanseipp.com/post/nixos-encrypted-root/
-zfs snapshot zpool/root@blank
-
-sleep 5
-
-# prepare install, root
-mount -t zfs zpool/root /mnt
+# prepare install, tmpfs root
+mount -t tmpfs none /mnt
 
 # Create directories to mount file systems on
 mkdir -p /mnt/{data,nix,boot,root,etc/nixos}
@@ -112,9 +80,12 @@ mkdir -p /mnt/{data,nix,boot,root,etc/nixos}
 # mount the ESP
 mount $DISK-part1 /mnt/boot
 
-# mount volumes
-mount -t zfs zpool/data /mnt/data
-mount -t zfs zpool/nix /mnt/nix
+# mount the /nix
+mount -t bcachefs $DISK-part2 /mnt/nix
+
+# mount the /data via bind mount
+mkdir /mnt/nix/data
+mount --bind /mnt/nix/data /mnt/data
 
 # bind mount persistent stuff to data
 mkdir -p /mnt/data/{root,nixos/$HOST}
@@ -131,26 +102,18 @@ mount
 # configure
 nixos-generate-config --root /mnt
 
-# check /mnt/etc/nixos/hardware-configuration.nix /mnt/etc/nixos/configuration.nix
-
 # copy config data from another machine including secrets
-
 doas scp -r /data/nixos root@192.168.13.100:/mnt/data
 
 # install
-
 nixos-install --option experimental-features 'nix-command flakes' --no-root-passwd --root /mnt
 
 # unmount all stuff and sync
-
 umount -Rl /data /mnt
-zpool export -a
 sync
 
 # shutdown once
-
 shutdown now
 
 # sync all /data after the install
-
 doas rsync -va --delete --one-file-system /data/ root@192.168.13.100:/data/
