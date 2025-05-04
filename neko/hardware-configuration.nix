@@ -15,7 +15,7 @@
 
   # /boot efi partition to boot in UEFI mode
   fileSystems."/boot" = {
-    device = "UUID=CFA5-46EA";
+    device = "UUID=28FC-CA9F";
     fsType = "vfat";
     neededForBoot = true;
     options = [ "fmask=0022" "dmask=0022" ];
@@ -23,7 +23,7 @@
 
   # /nix volume with the system & all persistent data
   fileSystems."/nix" = {
-    device = "UUID=686a90a2-93ac-40a6-a01d-c7b61cc47750";
+    device = "UUID=5e0f8758-12f6-4262-90c7-e633a28f8b6e";
     fsType = "bcachefs";
     neededForBoot = true;
   };
