@@ -32,10 +32,6 @@ in
 
   # my kernel parameters
   boot.kernelParams = [
-    # Plymouth
-    "quiet"
-    "splash"
-
     # don't check for split locks, for KVM and Co.
     "split_lock_detect=off"
 
@@ -122,13 +118,6 @@ in
 
   # setup the console stuff early
   console.earlySetup = true;
-
-  # boot splash
-  boot.plymouth = {
-    enable = true;
-    theme = "hexa_retro";
-    themePackages = [ pkgs.adi1090x-plymouth-themes ];
-  };
 
   # root file system, tmpfs
   fileSystems."/" = {
