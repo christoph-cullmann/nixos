@@ -72,6 +72,9 @@ in
     "tipc"
   ];
 
+  # swap to RAM
+  zramSwap.enable = true;
+
   # harden some services
   systemd.services.systemd-rfkill = {
     serviceConfig = {
