@@ -30,71 +30,59 @@ HOST=beta
 
 # disks to use
 DISK=/dev/disk/by-id/nvme-SAMSUNG_MZVLB1T0HBLR-000L2_S4DZNX0R362286
+DISKS="$DISK"
 
 # create partition table on all disks and EFI partition
-for D in $DISK; do
+RAID=""
+for D in $DISKS; do
     # kill old data
     sgdisk --zap-all $D
-    blkdiscard -v $D
+    blkdiscard -v -f $D
     wipefs -a $D
     sleep 5
 
-    # create partitions
+    # Create partition table
     parted $D -- mklabel gpt
-    sgdisk -n 1:0:+1024M -c 1:"EFI System Partition" -t 1:EF00 $D
-    sgdisk -n 2:0:0 -c 2:"Linux" -t 2:8e00 $D
-    parted $D -- set 1 boot on
-    sleep 5
 
-    # boot partition
-    mkfs.fat -F 32 -n EFIBOOT $D-part1
+    # Create a /boot as $D-part1
+    parted $D -- mkpart ESP fat32 1MiB 1024MiB
+    parted $D -- set 1 boot on
+
+    # Create a /nix as $D-part2
+    parted $D -- mkpart NIX 1024MiB 100%
+
+    # boot partition after short sleep, needed on some machines
     sleep 5
+    mkfs.vfat $D-part1
+
+    # add part2 to raid
+    RAID="$RAID $D-part2"
 done
 
 # take a look at the partitions
 lsblk
 
-# create the RAID-0, second partitions on all disks
-# we fake the raid to have proper aligned stuff and same setup as on other machines
-mdadm --create --verbose --level=0 --force --raid-devices=1 /dev/md/system $DISK-part2
-sleep 5
-
-# take a look at the partitions
-lsblk
-
-# create the LUKS container and open it
-cryptsetup luksFormat --sector-size 4096 --batch-mode --verify-passphrase /dev/md/system
-cryptsetup luksOpen /dev/md/system crypt-system
-sleep 5
-
-# take a look at the partitions
-lsblk
-
-# create btrfs with volumes
-mkfs.btrfs -f --features block-group-tree --label system /dev/mapper/crypt-system
-mount -t btrfs /dev/mapper/crypt-system /mnt
-btrfs subvolume create /mnt/data
-btrfs subvolume create /mnt/nix
-btrfs subvolume create /mnt/tmp
-umount /mnt
-sleep 5
-
-# take a look at the partitions
-lsblk
+# create encrypted bcachefs
+bcachefs format --encrypt -f $RAID
+nix-env -iA nixos.keyutils
+keyctl link @u @s
+bcachefs unlock $DISK-part2
 
 # prepare install, tmpfs root
 mount -t tmpfs none /mnt
 
 # Create directories to mount file systems on
-mkdir -p /mnt/{data,nix,boot,root,etc/nixos,tmp}
+mkdir -p /mnt/{data,nix,boot,root,etc/nixos}
 
 # mount the ESP
 mount $DISK-part1 /mnt/boot
 
-# mount volumes
-mount -o subvol=data,noatime /dev/mapper/crypt-system /mnt/data
-mount -o subvol=nix,noatime /dev/mapper/crypt-system /mnt/nix
-mount -o subvol=tmp,noatime /dev/mapper/crypt-system /mnt/tmp
+# mount the /nix
+mount -t bcachefs $DISK-part2 /mnt/nix
+
+# mount the /data via bind mount
+mkdir /mnt/nix/data
+mount --bind /mnt/nix/data /mnt/data
 
 # bind mount persistent stuff to data
 mkdir -p /mnt/data/{root,nixos/$HOST}
@@ -111,23 +99,15 @@ mount
 # configure
 nixos-generate-config --root /mnt
 
-# check /mnt/etc/nixos/hardware-configuration.nix /mnt/etc/nixos/configuration.nix
-
 # copy config data from another machine including secrets
-
 doas scp -r /data/nixos root@192.168.13.102:/mnt/data
 
 # install
-
 nixos-install --option experimental-features 'nix-command flakes' --no-root-passwd --root /mnt
 
 # unmount all stuff and sync
-
 umount -Rl /data /mnt
-cryptsetup luksClose crypt-system
-mdadm --stop /dev/md/system
 sync
 
 # shutdown once
-
 shutdown now
