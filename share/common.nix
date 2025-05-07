@@ -528,6 +528,9 @@ in
   virtualisation.virtualbox.host.enableHardening = false;
   virtualisation.virtualbox.host.addNetworkInterface = false;
 
+  # allow GrapheneOS install
+  programs.adb.enable = true;
+
   # use doas instead of sudo
   security.sudo.enable = false;
   security.doas.enable = true;

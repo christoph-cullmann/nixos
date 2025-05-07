@@ -44,8 +44,8 @@ in
       # it's me :P
       description = "Christoph Cullmann";
 
-      # allow VirtualBox and sudo for my main user
-      extraGroups = [ "vboxusers" "wheel" ];
+      # allow GrapheneOS install, KVM, VirtualBox and doas for my main user
+      extraGroups = [ "adbusers" "kvm" "vboxusers" "wheel" ];
 
       # init password
       hashedPassword = config.users.users.root.hashedPassword;
