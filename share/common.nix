@@ -122,12 +122,12 @@ in
   # setup the console stuff early
   console.earlySetup = true;
 
-  # root file system, tmpfs
+  # root file system, tmpfs, use 50% for installs on 16 GB machines
   fileSystems."/" = {
     device = "none";
     fsType = "tmpfs";
     neededForBoot = true;
-    options = [ "defaults" "size=25%" "mode=755" ];
+    options = [ "defaults" "size=50%" "mode=755" ];
   };
 
   # my data
