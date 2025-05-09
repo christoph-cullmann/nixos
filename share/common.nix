@@ -547,13 +547,6 @@ in
   # use doas instead of sudo
   security.sudo.enable = false;
   security.doas.enable = true;
-  security.doas.extraRules = [
-    # wheel users are allowed to become all users
-    { groups = [ "wheel" ]; noPass = false; keepEnv = true; persist = true; }
-
-    # wheel users can use sandbox stuff without password
-    { groups = [ "wheel" ]; runAs = "sandbox-kde"; noPass = true; }
-  ];
 
   # try local AI stuff
   services.ollama = {
