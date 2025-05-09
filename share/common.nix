@@ -547,6 +547,11 @@ in
   # use doas instead of sudo
   security.sudo.enable = false;
   security.doas.enable = true;
+  security.doas.extraRules = [
+    # wheel users are allowed to become all users
+    # keep the environment, need that for many scripts
+    { groups = [ "wheel" ]; noPass = false; keepEnv = true; persist = true; }
+  ];
 
   # try local AI stuff
   services.ollama = {
