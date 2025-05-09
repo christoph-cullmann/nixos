@@ -516,6 +516,19 @@ in
   programs.zsh.enable = true;
   environment.shells = with pkgs; [ zsh ];
 
+  # use powerlevel10k
+  environment.etc."powerlevel10k/p10k.zsh".source = ./p10k.zsh;
+  programs.zsh.promptInit = ''
+      # use powerlevel10k
+      source ${pkgs.zsh-powerlevel10k}/share/zsh-powerlevel10k/powerlevel10k.zsh-theme
+      source /etc/powerlevel10k/p10k.zsh
+
+      # use powerlevel10k instant prompt
+      if [[ -r "''${XDG_CACHE_HOME:-''$HOME/.cache}/p10k-instant-prompt-''${(%):-%n}.zsh" ]]; then
+        source "''${XDG_CACHE_HOME:-''$HOME/.cache}/p10k-instant-prompt-''${(%):-%n}.zsh"
+      fi
+    '';
+
   # needed for the ZSH completion
   environment.pathsToLink = [ "/share/zsh" ];
 
