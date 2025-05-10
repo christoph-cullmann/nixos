@@ -181,6 +181,10 @@ in
       # ollama & Co. storage
       { directory = "/var/lib/private"; mode = "0700"; }
     ];
+    files = [
+      # Ly last used user and Co.
+      "/etc/ly/save.ini"
+    ];
   };
 
   # enable fast dbus
@@ -241,11 +245,22 @@ in
   # use X11/wayland layout for console, too
   console.useXkbConfig = true;
 
-  # enable SDDM & the KDE Plasma Desktop Environment with Wayland
+  # enable the KDE Plasma Desktop Environment
   services.desktopManager.plasma6.enable = true;
-  services.displayManager.sddm = {
+
+  # enable the Ly login manager with proper KWallet integration
+  services.displayManager.ly = {
     enable = true;
-    wayland.enable = true;
+    settings = {
+      animation = "matrix";
+      load = true;
+      save = true;
+    };
+  };
+  security.pam.services.ly.kwallet = {
+    enable = true;
+    forceRun = true;
+    package = pkgs.kdePackages.kwallet-pam;
   };
 
   # enable sound with PipeWire
