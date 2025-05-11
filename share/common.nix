@@ -359,6 +359,7 @@ in
     kdePackages.kate
     kdePackages.kcachegrind
     kdePackages.kcalc
+    kdePackages.kgpg
     kdePackages.konsole
     kdePackages.okular
     keychain
