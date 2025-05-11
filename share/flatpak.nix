@@ -20,7 +20,6 @@ let
 
     # maximal sandboxed browsers
     "com.vivaldi.Vivaldi" = "--nofilesystem=xdg-music --nofilesystem=xdg-pictures";
-    "io.github.ungoogled_software.ungoogled_chromium" = "--nofilesystem=xdg-music --nofilesystem=xdg-pictures";
     "org.mozilla.firefox" = "--nofilesystem=xdg-music --nofilesystem=xdg-pictures";
 
     # maximal sandboxed messaging apps
