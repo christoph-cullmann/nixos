@@ -343,6 +343,7 @@ in
     fzf
     gimp
     glxinfo
+    gnupg
     go
     gorilla-bin
     gptfdisk
