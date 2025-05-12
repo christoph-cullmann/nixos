@@ -127,7 +127,7 @@ in
     device = "none";
     fsType = "tmpfs";
     neededForBoot = true;
-    options = [ "defaults" "size=50%" "mode=755" ];
+    options = [ "defaults" "size=25%" "mode=755" ];
   };
 
   # my data
@@ -164,6 +164,9 @@ in
       # user and group mappings
       # Either "/var/lib/nixos" has to be persisted, or all users and groups must have a uid/gid specified. The following users are missing a uid
       "/var/lib/nixos"
+
+      # large tmp files better not in tmpfs
+      "/tmp"
 
       # systemd timers
       "/var/lib/systemd/timers"
