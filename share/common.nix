@@ -190,6 +190,9 @@ in
     ];
   };
 
+  # clean /tmp, we have it on persistent storage to save RAM
+  boot.tmp.cleanOnBoot = true;
+
   # enable fast dbus
   services.dbus.implementation = "broker";
 
