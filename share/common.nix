@@ -585,4 +585,8 @@ in
   };
 
   services.open-webui.enable = true;
+
+  # get gnupg to work
+  programs.gnupg.agent.enable = true;
+  programs.gnupg.agent.pinentryPackage = pkgs.pinentry-curses;
 }
