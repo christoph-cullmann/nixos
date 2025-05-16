@@ -366,6 +366,7 @@ in
     kdePackages.kate
     kdePackages.kcachegrind
     kdePackages.kcalc
+    kdePackages.keysmith
     kdePackages.kgpg
     kdePackages.konsole
     kdePackages.okular
