@@ -369,7 +369,6 @@ in
     kdePackages.konsole
     kdePackages.okular
     keychain
-    kicad
     lazygit
     libjxl
     libreoffice
