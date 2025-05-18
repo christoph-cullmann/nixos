@@ -351,7 +351,6 @@ in
     glxinfo
     gnupg
     go
-    gorilla-bin
     gptfdisk
     heaptrack
     hotspot
@@ -367,7 +366,6 @@ in
     kdePackages.kcachegrind
     kdePackages.kcalc
     kdePackages.keysmith
-    kdePackages.kgpg
     kdePackages.konsole
     kdePackages.okular
     keychain
