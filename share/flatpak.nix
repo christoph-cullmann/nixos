@@ -15,16 +15,16 @@ let
     "com.usebottles.bottles" = "--nofilesystem=xdg-music --nofilesystem=xdg-pictures";
     "com.valvesoftware.Steam" = "--nofilesystem=xdg-music --nofilesystem=xdg-pictures";
 
-    # retrodeck needs access to games
-    "net.retrodeck.retrodeck" = "--nofilesystem=xdg-music --nofilesystem=xdg-pictures --nofilesystem=xdg-data/Steam --nofilesystem=~/.steam --filesystem=~/Games";
-
     # maximal sandboxed browsers
-    "com.vivaldi.Vivaldi" = "--nofilesystem=xdg-music --nofilesystem=xdg-pictures";
+    "com.brave.Browser" = "--nofilesystem=xdg-music --nofilesystem=xdg-pictures";
     "org.mozilla.firefox" = "--nofilesystem=xdg-music --nofilesystem=xdg-pictures";
 
     # maximal sandboxed messaging apps
     "org.kde.neochat" = "--nofilesystem=xdg-music --nofilesystem=xdg-pictures";
     "org.signal.Signal" = "--nofilesystem=xdg-music --nofilesystem=xdg-pictures";
+
+    # maximal sandboxed password safe
+    "com.bitwarden.desktop" = "--nofilesystem=xdg-music --nofilesystem=xdg-pictures";
   };
 
   # install helper, will set filesystem overrides
