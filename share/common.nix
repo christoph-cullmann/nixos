@@ -183,6 +183,9 @@ in
 
       # ollama & Co. storage
       { directory = "/var/lib/private"; mode = "0700"; }
+
+      # local Vaultwarden instance
+      { directory = "/var/lib/vaultwarden"; mode = "0700"; user = "vaultwarden"; }
     ];
     files = [
       # Ly last used user and Co.
@@ -587,4 +590,7 @@ in
   # get gnupg to work
   programs.gnupg.agent.enable = true;
   programs.gnupg.agent.pinentryPackage = pkgs.pinentry-curses;
+
+  # local Vaultwarden
+  services.vaultwarden.enable = true;
 }
