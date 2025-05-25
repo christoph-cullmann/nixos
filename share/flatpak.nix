@@ -7,13 +7,13 @@ let
 
   # all wanted flatpak packages
   desiredFlatpaks = {
-    # slicers needs accessed to shared folder with 3d stuff
+    # slicer needs accessed to shared folder with 3d stuff
     "com.bambulab.BambuStudio" = "--nofilesystem=xdg-music --nofilesystem=xdg-pictures --filesystem=/data/home/shared";
-    "com.prusa3d.PrusaSlicer" = "--nofilesystem=xdg-music --nofilesystem=xdg-pictures --filesystem=/data/home/shared";
 
-    # maximal sandboxed stuff for games
-    "com.usebottles.bottles" = "--nofilesystem=xdg-music --nofilesystem=xdg-pictures";
-    "com.valvesoftware.Steam" = "--nofilesystem=xdg-music --nofilesystem=xdg-pictures";
+    # maximal sandboxed stuff for games, allow ~/Games for local game collection
+    "com.usebottles.bottles" = "--nofilesystem=xdg-music --nofilesystem=xdg-pictures --filesystem=~/Games";
+    "com.valvesoftware.Steam" = "--nofilesystem=xdg-music --nofilesystem=xdg-pictures --filesystem=~/Games";
+    "org.libretro.RetroArch" = "--nofilesystem=xdg-music --nofilesystem=xdg-pictures --filesystem=~/Games";
 
     # maximal sandboxed browsers
     "com.brave.Browser" = "--nofilesystem=xdg-music --nofilesystem=xdg-pictures";

@@ -582,7 +582,7 @@ in
     enable = true;
 
     # preload models, see https://ollama.com/library
-    loadModels = [ "deepseek-r1" "gemma3" "llama3.2" "llava" "mistral" ];
+    loadModels = [ "deepseek-coder" "deepseek-r1" "gemma3" "llama3.2" "llava" "mistral" ];
   };
 
   services.open-webui.enable = true;
