@@ -102,12 +102,15 @@ export QT_QUICK_CONTROLS_STYLE_PATH=~/projects/kde/usr/lib/qml/QtQuick/Controls.
     perlPackages.XMLParser
     perlPackages.YAMLPP
     python312Full
+    python312Packages.build
     python312Packages.lxml
     python312Packages.overrides
     python312Packages.promise
     python312Packages.pyaml
+    python312Packages.pyside6
     python312Packages.python-gitlab
     python312Packages.setproctitle
+    python312Packages.shiboken6
     pkg-config
     polkit
     qrencode
