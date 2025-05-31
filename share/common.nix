@@ -258,6 +258,8 @@ in
   services.kmscon = {
     enable = true;
     useXkbConfig = true;
+    hwRender = true;
+    fonts = [ { name = "MonoLisa"; package = cullmann-fonts; } ];
   };
 
   # enable the KDE Plasma Desktop Environment
