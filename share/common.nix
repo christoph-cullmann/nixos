@@ -417,6 +417,7 @@ in
     unzip
     usbutils
     valgrind
+    vim
     vlc
     vscodium
     vulkan-tools
