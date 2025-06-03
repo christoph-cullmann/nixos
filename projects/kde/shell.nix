@@ -52,6 +52,7 @@ export QT_QUICK_CONTROLS_STYLE_PATH=~/projects/kde/usr/lib/qml/QtQuick/Controls.
     hunspellDicts.en_US
     intltool
     isocodes
+    kdePackages.kimageannotator
     kdePackages.poppler
     kdePackages.wayland-protocols
     lcms2
