@@ -254,14 +254,6 @@ in
   # use X11/wayland layout for console, too
   console.useXkbConfig = true;
 
-  # nice console based on KMS/DRM
-  services.kmscon = {
-    enable = true;
-    useXkbConfig = true;
-    hwRender = true;
-    fonts = [ { name = "MonoLisa"; package = cullmann-fonts; } ];
-  };
-
   # enable the KDE Plasma Desktop Environment
   services.desktopManager.plasma6.enable = true;
 
