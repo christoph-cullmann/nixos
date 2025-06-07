@@ -398,6 +398,7 @@ in
     restic
     ripgrep
     scc
+    signify
     ssh-audit
     sysstat
     tcl
