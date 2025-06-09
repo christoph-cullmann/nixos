@@ -119,8 +119,9 @@ in
   # don't use systemd early to fix bcachefs mounting
   boot.initrd.systemd.enable = false;
 
-  # setup the console stuff early
+  # setup the console stuff early and use a nice font
   console.earlySetup = true;
+  console.font = "${pkgs.spleen}/share/consolefonts/spleen-16x32.psfu";
 
   # root file system, tmpfs, use 50% for installs on 16 GB machines
   fileSystems."/" = {
@@ -472,6 +473,7 @@ in
       monaspace
       monocraft
       recursive
+      spleen
     ];
 
     # proper default config for fonts
