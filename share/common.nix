@@ -230,6 +230,9 @@ in
     settings.Macs = [ "hmac-sha2-512-etm@openssh.com" ];
   };
 
+  # ensure ssh knows where xauth is for X11 forwarding
+  programs.ssh.setXAuthLocation = true;
+
   # Set your time zone.
   time.timeZone = "Europe/Berlin";
 
@@ -416,6 +419,7 @@ in
     vscodium
     vulkan-tools
     wayland-utils
+    xorg.xauth
     xorg.xhost
     xorg.xlsclients
     zoxide
