@@ -1,0 +1,40 @@
+global
+    # use the latest KF6 and Qt6-based software.
+    branch-group kf6-qt6
+
+    # we want ninja, turn off some Qt 5 things to have less dependencies
+    cmake-options -G "Ninja" -DBUILD_WITH_QT6=ON -DQT_MAJOR_VERSION=6 -DPHONON_BUILD_QT5=OFF -DBUILD_QT5=OFF -DBUILD_PYTHON_BINDINGS=OFF -DCMAKE_AUTOGEN_PARALLEL=8 -DKF_IGNORE_PLATFORM_CHECK=TRUE -DKAUTH_BACKEND_NAME=FAKE
+
+    # Restrict make and ninja to using no more than 8 separate compile jobs even
+    # when more CPU is available, to avoid running out of memory
+    make-options -j8 NINJAFLAGS=-j8
+    ninja-options -j8
+
+    # clangd tooling
+    compile-commands-export yes
+    compile-commands-linking yes
+
+    # flat structure
+    directory-layout flat
+
+    # Install directory for Qt
+    qt-install-dir ~/projects/kde/qt
+
+    # Install directory for KDE software
+    install-dir ~/projects/kde/usr
+
+    # Directory for downloaded source code
+    source-dir ~/projects/kde/src
+
+    # Directory to build KDE into before installing
+    # relative to source-dir by default
+    build-dir ~/projects/kde/build
+
+    # Directory to write logs into
+    log-dir ~/projects/kde/log
+
+    # use distro stuff for that
+    ignore-modules wayland wayland-protocols gpgme appstream packagekit-qt poppler qca
+end global
+
+include ${module-definitions-dir}/kf6-qt6.ksb
