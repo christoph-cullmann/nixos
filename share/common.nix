@@ -268,6 +268,7 @@ in
       animation = "matrix";
       load = true;
       save = true;
+      session_log = ".cache/ly-session.log";
     };
   };
   security.pam.services.ly.kwallet = {
