@@ -341,6 +341,7 @@ in
     bitwise
     blender
     btop
+    castget
     clinfo
     config.boot.kernelPackages.perf
     delta
