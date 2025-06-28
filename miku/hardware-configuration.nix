@@ -21,11 +21,4 @@
     neededForBoot = true;
     options = [ "fmask=0022" "dmask=0022" ];
   };
-
-  # /nix volume with the system & all persistent data
-  fileSystems."/nix" = {
-    device = "/dev/disk/by-id/nvme-KINGSTON_SFYRD4000G_50026B7686EC5F33-part2:/dev/disk/by-id/nvme-KINGSTON_SFYRD4000G_50026B7686EC6164-part2";
-    fsType = "bcachefs";
-    neededForBoot = true;
-  };
 }

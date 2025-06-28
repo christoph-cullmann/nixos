@@ -20,11 +20,4 @@
     neededForBoot = true;
     options = [ "fmask=0022" "dmask=0022" ];
   };
-
-  # /nix volume with the system & all persistent data
-  fileSystems."/nix" = {
-    device = "/dev/disk/by-id/nvme-Seagate_FireCuda_530_ZP4000GM30013_7VS01VBM-part2:/dev/disk/by-id/nvme-CT2000P5PSSD8_213330E4ED05-part2:/dev/disk/by-id/nvme-Samsung_SSD_980_PRO_2TB_S69ENF0R846614L-part2";
-    fsType = "bcachefs";
-    neededForBoot = true;
-  };
 }
