@@ -26,18 +26,24 @@ in
   # atm all stuff is x86_64
   nixpkgs.hostPlatform = "x86_64-linux";
 
-  # enable bcachefs with latest kernel
-  boot.supportedFilesystems = [ "bcachefs" ];
-  boot.kernelPackages = pkgs.linuxPackages_latest;
+  # enable ZFS
+  boot.supportedFilesystems = ["zfs"];
 
   # my kernel parameters
   boot.kernelParams = [
+    # Plymouth
+    "quiet"
+    "splash"
+
     # don't check for split locks, for KVM and Co.
     "split_lock_detect=off"
 
     # fix igc 0000:0a:00.0 eno1: PCIe link lost, device now detached
     "pcie_port_pm=off"
     "pcie_aspm.policy=performance"
+
+    # no hibernate for ZFS systems
+    "nohibernate"
   ];
 
   # setup some sysctl stuff
@@ -116,28 +122,53 @@ in
   # we want to be able to do a memtest
   boot.loader.systemd-boot.memtest86.enable = true;
 
-  # don't use systemd early to fix bcachefs mounting
-  boot.initrd.systemd.enable = false;
+  # use systemd early, we use boot.initrd.systemd.services.rollback to rollback /
+  boot.initrd.systemd.enable = true;
 
   # setup the console stuff early and use a nice font
   console.earlySetup = true;
   console.font = "${pkgs.spleen}/share/consolefonts/spleen-16x32.psfu";
 
-  # root file system, tmpfs, use 50% for installs on 16 GB machines
+  # boot splash
+  boot.plymouth = {
+    enable = true;
+    theme = "hexa_retro";
+    themePackages = [ pkgs.adi1090x-plymouth-themes ];
+  };
+
+  # root file system, we will rollback that on boot
   fileSystems."/" = {
-    device = "none";
-    fsType = "tmpfs";
+    device = "zpool/root";
+    fsType = "zfs";
     neededForBoot = true;
-    options = [ "defaults" "size=25%" "mode=755" ];
+  };
+
+  # root rollback, see https://ryanseipp.com/post/nixos-encrypted-root/
+  boot.initrd.systemd.services.rollback = {
+    description = "Rollback root filesystem to a pristine state";
+    wantedBy = ["initrd.target"];
+    after = ["zfs-import-zpool.service"];
+    before = ["sysroot.mount"];
+    path = with pkgs; [zfs];
+    unitConfig.DefaultDependencies = "no";
+    serviceConfig.Type = "oneshot";
+    script = ''
+      zfs rollback -r zpool/root@blank && echo " >> >> Rollback Complete << <<"
+    '';
   };
 
   # my data
   fileSystems."/data" = {
-    device = "/nix/data";
-    fsType = "none";
+    device = "zpool/data";
+    fsType = "zfs";
     neededForBoot = true;
-    options = [ "bind" "x-gvfs-hide" ];
-    depends = [ "/nix" ];
+  };
+
+  # the system
+  fileSystems."/nix" = {
+    device = "zpool/nix";
+    fsType = "zfs";
+    neededForBoot = true;
   };
 
   # bind mount to have root home
@@ -194,8 +225,14 @@ in
     ];
   };
 
-  # clean /tmp, we have it on persistent storage to save RAM
-  boot.tmp.cleanOnBoot = true;
+  # ensure our data is not rotting
+  services.zfs.autoScrub = {
+    enable = true;
+    interval = "weekly";
+  };
+
+  # trim the stuff, we use SSDs
+  services.zfs.trim.enable = true;
 
   # enable fast dbus
   services.dbus.implementation = "broker";
@@ -544,6 +581,25 @@ in
   environment.etc."mail/secrets" = {
     text = builtins.readFile "/data/nixos/secret/mail.secret";
     mode = "0400";
+  };
+
+  # send mails on ZFS events
+  services.zfs.zed = {
+    settings = {
+      ZED_DEBUG_LOG = "/tmp/zed.debug.log";
+      ZED_EMAIL_ADDR = [ "root" ];
+      ZED_EMAIL_PROG = "/run/wrappers/bin/sendmail";
+      ZED_EMAIL_OPTS = "@ADDRESS@";
+
+      ZED_NOTIFY_INTERVAL_SECS = 3600;
+      ZED_NOTIFY_VERBOSE = true;
+
+      ZED_USE_ENCLOSURE_LEDS = true;
+      ZED_SCRUB_AFTER_RESILVER = true;
+    };
+
+    # this option does not work; will return error
+    enableMail = false;
   };
 
   # use ZSH per default
