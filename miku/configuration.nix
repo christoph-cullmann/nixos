@@ -13,7 +13,6 @@
   # our hostname
   networking.hostName = "miku";
   networking.hostId = "4d00f481";
-  broken
 
   # EurKey layout
   services.xserver.xkb.layout = "eu";

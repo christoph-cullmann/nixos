@@ -70,14 +70,55 @@ done
 # take a look at the partitions
 lsblk
 
-# create encrypted bcachefs
-bcachefs format --encrypt -f $RAID
-nix-env -iA nixos.keyutils
-keyctl link @u @s
-bcachefs unlock $DISK-part2
+# ZFS zpool creation with compression and encryption
+zpool create \
+    -o ashift=13 \
+    -o autotrim=off \
+    -O acltype=posixacl \
+    -O atime=off \
+    -O canmount=off \
+    -O checksum=blake3 \
+    -O compression=lz4 \
+    -O dnodesize=auto \
+    -O utf8only=on \
+    -O normalization=none \
+    -O xattr=sa \
+    -O mountpoint=none \
+    -O encryption=on \
+    -O keylocation=prompt \
+    -O keyformat=passphrase \
+    zpool $RAID
 
-# prepare install, tmpfs root
-mount -t tmpfs none /mnt
+sleep 5
+
+# take a look at the partitions
+lsblk
+
+# show the pool
+zpool status
+
+sleep 5
+
+# create all the volumes
+zfs create -o recordsize=64K -o mountpoint=legacy zpool/data
+zfs create -o recordsize=64K -o mountpoint=legacy zpool/nix
+zfs create -o recordsize=64K -o mountpoint=legacy zpool/root
+
+sleep 5
+
+# show the pool
+zpool status
+
+sleep 5
+
+# create ZFS snapshot that we'll rollback to on boot
+# see https://ryanseipp.com/post/nixos-encrypted-root/
+zfs snapshot zpool/root@blank
+
+sleep 5
+
+# prepare install, root
+mount -t zfs zpool/root /mnt
 
 # Create directories to mount file systems on
 mkdir -p /mnt/{data,nix,boot,root,etc/nixos}
@@ -85,12 +126,9 @@ mkdir -p /mnt/{data,nix,boot,root,etc/nixos}
 # mount the ESP
 mount $DISK-part1 /mnt/boot
 
-# mount the /nix
-mount -t bcachefs $DISK-part2 /mnt/nix
-
-# mount the /data via bind mount
-mkdir /mnt/nix/data
-mount --bind /mnt/nix/data /mnt/data
+# mount volumes
+mount -t zfs zpool/data /mnt/data
+mount -t zfs zpool/nix /mnt/nix
 
 # bind mount persistent stuff to data
 mkdir -p /mnt/data/{root,nixos/$HOST}
@@ -115,6 +153,7 @@ nixos-install --option experimental-features 'nix-command flakes' --no-root-pass
 
 # unmount all stuff and sync
 umount -Rl /data /mnt
+zpool export -a
 sync
 
 # shutdown once
