@@ -12,6 +12,8 @@
 
   # our hostname
   networking.hostName = "beta";
+  networking.hostId = "c07bab49";
+  broken
 
   # german laptop keyboard
   services.xserver.xkb.layout = "de";

@@ -12,6 +12,8 @@
 
   # our hostname
   networking.hostName = "neko";
+  networking.hostId = "4836f248";
+  broken
 
   # EurKey layout
   services.xserver.xkb.layout = "eu";
