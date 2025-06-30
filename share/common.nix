@@ -78,8 +78,9 @@ in
     "tipc"
   ];
 
-  # swap to RAM
+  # swap to RAM, allow up to 10% of memory be used for that
   zramSwap.enable = true;
+  zramSwap.memoryPercent = 10;
 
   # harden some services
   systemd.services.systemd-rfkill = {
