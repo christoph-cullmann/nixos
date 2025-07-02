@@ -10,6 +10,10 @@
       /data/nixos/share/common.nix
     ];
 
+  # x86-64 machine
+  nixpkgs.hostPlatform = "x86_64-linux";
+  boot.loader.efi.canTouchEfiVariables = true;
+
   # our hostname
   networking.hostName = "neko";
   networking.hostId = "4836f248";

@@ -23,9 +23,6 @@ in
   # install release
   system.stateVersion = "25.05";
 
-  # atm all stuff is x86_64
-  nixpkgs.hostPlatform = "x86_64-linux";
-
   # enable ZFS
   boot.supportedFilesystems = ["zfs"];
 
@@ -115,7 +112,6 @@ in
 
   # Use the systemd-boot EFI boot loader.
   boot.loader.systemd-boot.enable = true;
-  boot.loader.efi.canTouchEfiVariables = true;
 
   # use a high resolution
   boot.loader.systemd-boot.consoleMode = "max";
