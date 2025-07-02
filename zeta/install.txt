@@ -17,7 +17,7 @@ nix build .#uboot-asahi -o u-boot
 nix build .#installer-bootstrap -o installer -j4 -L
 
 # write to USB stick
-doas dd if=result/iso/nixos-*-x86_64-linux.iso of=/dev/sda bs=4M conv=fsync
+doas dd if=installer/iso/nixos-25.11.20250528.96ec055-aarch64-linux.iso of=/dev/sda bs=4M conv=fsync
 
 #
 # enable ssh for root
