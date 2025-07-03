@@ -19,6 +19,12 @@ nix build .#installer-bootstrap -o installer -j4 -L
 # write to USB stick
 doas dd if=installer/iso/nixos-25.11.20250528.96ec055-aarch64-linux.iso of=/dev/sda bs=4M conv=fsync
 
+# on the Mac
+
+curl https://alx.sh | sh
+
+# follow instructions on the guide https://github.com/nix-community/nixos-apple-silicon/blob/main/docs/uefi-standalone.md
+
 #
 # enable ssh for root
 #
