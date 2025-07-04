@@ -13,7 +13,6 @@
 
   # AArch64 machine
   nixpkgs.hostPlatform = "aarch64-linux";
-  boot.loader.efi.canTouchEfiVariables = false;
 
   # our hostname
   networking.hostName = "zeta";

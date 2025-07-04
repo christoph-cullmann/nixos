@@ -12,8 +12,6 @@
 
   # x86-64 machine
   nixpkgs.hostPlatform = "x86_64-linux";
-  boot.loader.efi.canTouchEfiVariables = true;
-  boot.loader.systemd-boot.memtest86.enable = true;
 
   # our hostname
   networking.hostName = "neko";

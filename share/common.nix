@@ -116,6 +116,12 @@ in
   # use systemd early, we use boot.initrd.systemd.services.rollback to rollback /
   boot.initrd.systemd.enable = true;
 
+  # works only on x86 machines, not on the Macs
+  boot.loader.efi.canTouchEfiVariables = pkgs.stdenv.hostPlatform.isx86;
+
+  # memcheck, works only on x86 machines
+  boot.loader.systemd-boot.memtest86.enable = pkgs.stdenv.hostPlatform.isx86;
+
   # setup the console stuff early and use a nice font
   console.earlySetup = true;
   console.font = "${pkgs.spleen}/share/consolefonts/spleen-16x32.psfu";
