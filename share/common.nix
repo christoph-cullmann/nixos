@@ -234,15 +234,8 @@ in
   # allow all firmware
   hardware.enableAllFirmware = true;
 
-  # use NetworkManager, works well for WiFi, too
-  networking.networkmanager.enable = true;
-
-  # use iwd, only thing that works properly on e.g. Macs
+  # never the wireless variant, we use iwd, if at all
   networking.wireless.enable = false;
-  networking.wireless.iwd = {
-    enable = true;
-    settings.General.EnableNetworkConfiguration = true;
-  };
 
   # ensure firewall is up, allow ssh in
   networking.firewall.enable = true;
