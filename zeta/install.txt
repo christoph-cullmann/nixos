@@ -52,6 +52,37 @@ iwctl
     station wlan0 show
     exit
 
+# create the system partition
+
+# first: take a peek
+
+sgdisk /dev/nvme0n1 -p
+
+    Number  Start (sector)    End (sector)  Size       Code  Name
+    1               6          128005   500.0 MiB   AF0B  iBootSystemContainer
+    2          128006       121547013   463.2 GiB   AF0A  Container
+    3       121547014       122157317   2.3 GiB     AF0A
+    4       122157318       122279429   477.0 MiB   EF00
+    5       242965551       244276259   5.0 GiB     AF0C  RecoveryOSContainer
+
+
+# create partition
+
+sgdisk /dev/nvme0n1 -n 0:0 -s
+
+# take a look again
+
+sgdisk /dev/nvme0n1 -p
+
+    Number  Start (sector)    End (sector)  Size       Code  Name
+    1               6          128005   500.0 MiB   AF0B  iBootSystemContainer
+    2          128006       121547013   463.2 GiB   AF0A  Container
+    3       121547014       122157317   2.3 GiB     AF0A
+    4       122157318       122279429   477.0 MiB   EF00
+    5       122279430       242965550   460.4 GiB   8300
+    6       242965551       244276259   5.0 GiB     AF0C  RecoveryOSContainer
+
+
 #
 # install script below
 #
