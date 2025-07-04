@@ -237,6 +237,13 @@ in
   # use NetworkManager, works well for WiFi, too
   networking.networkmanager.enable = true;
 
+  # use iwd, only thing that works properly on e.g. Macs
+  networking.wireless.enable = false;
+  networking.wireless.iwd = {
+    enable = true;
+    settings.General.EnableNetworkConfiguration = true;
+  };
+
   # ensure firewall is up, allow ssh in
   networking.firewall.enable = true;
   networking.firewall.allowedTCPPorts = [ 22 ];
