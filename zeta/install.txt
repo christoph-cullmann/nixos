@@ -25,6 +25,18 @@ curl https://alx.sh | sh
 
 # follow instructions on the guide https://github.com/nix-community/nixos-apple-silicon/blob/main/docs/uefi-standalone.md
 
+# boot with installer stick on Mac
+
+I did need to do: (If "mounting `/dev/root` on `/mnt-root/iso` failed: No such file or directory" during boot…)
+
+    Some flash drives have quirks. Try a different drive, or use the following steps:
+
+    Attempt to start the installer normally
+    When the boot fails and you are prompted, hit i to start a shell
+    Unplug your flash drive, plug it into a different port, then wait 30 seconds
+    Run the command mount -t iso9660 /dev/root /mnt-root/iso
+    Exit the shell by running exit to continue the boot process
+
 #
 # enable ssh for root
 #
@@ -34,7 +46,11 @@ systemctl start sshd
 passwd
 
 # get wlan
-nmtui
+iwctl
+    station wlan0 scan
+    station wlan0 connect <SSID>
+    station wlan0 show
+    exit
 
 #
 # install script below
