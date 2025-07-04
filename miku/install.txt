@@ -87,7 +87,7 @@ zpool create \
     -O encryption=on \
     -O keylocation=prompt \
     -O keyformat=passphrase \
-    zpool $RAID
+    -f zpool $RAID
 
 sleep 5
 
