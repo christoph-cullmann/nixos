@@ -13,6 +13,13 @@ nix build .#m1n1 -o m1n1
 # build uboot
 nix build .#uboot-asahi -o u-boot
 
+# add to nixos-apple-silicon/iso-configuration/installer-configuration.nix
+
+    networking.hostId = "cce4e4c1";
+    boot.supportedFilesystems.zfs = lib.mkForce true;
+
+to have ZFS support
+
 # build installer ISO
 nix build .#installer-bootstrap -o installer -j4 -L
 
@@ -112,7 +119,7 @@ zpool create \
     -O encryption=on \
     -O keylocation=prompt \
     -O keyformat=passphrase \
-    zpool $RAID
+    -f zpool $RAID
 
 sleep 5
 
@@ -171,7 +178,11 @@ mount
 nixos-generate-config --root /mnt
 
 # copy config data from another machine including secrets
-doas scp -r /data/nixos root@192.168.13.102:/mnt/data
+doas scp -r /data/nixos root@192.168.13.113:/mnt/data
+
+# add apple silicon support
+cp -r /etc/nixos/apple-silicon-support /mnt/etc/nixos/
+chmod -R +w /mnt/etc/nixos/
 
 # install
 nixos-install --option experimental-features 'nix-command flakes' --no-root-passwd --root /mnt

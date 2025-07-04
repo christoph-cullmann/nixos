@@ -5,19 +5,19 @@
     [
       # Include the results of the hardware scan.
       ./hardware-configuration.nix
-
+      # Include the necessary packages and configuration for Apple Silicon support.
+      ./apple-silicon-support
       # Shared config of all machines
       /data/nixos/share/common.nix
     ];
 
-  # x86-64 machine
-  nixpkgs.hostPlatform = "x86_64-linux";
-  boot.loader.efi.canTouchEfiVariables = true;
-  boot.loader.systemd-boot.memtest86.enable = true;
+  # AArch64 machine
+  nixpkgs.hostPlatform = "aarch64-linux";
+  boot.loader.efi.canTouchEfiVariables = false;
 
   # our hostname
-  networking.hostName = "beta";
-  networking.hostId = "c07bab49";
+  networking.hostName = "zeta";
+  networking.hostId = "cce4e4c1";
 
   # german laptop keyboard
   services.xserver.xkb.layout = "de";

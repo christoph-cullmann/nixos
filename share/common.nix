@@ -113,12 +113,6 @@ in
   # Use the systemd-boot EFI boot loader.
   boot.loader.systemd-boot.enable = true;
 
-  # use a high resolution
-  boot.loader.systemd-boot.consoleMode = "max";
-
-  # we want to be able to do a memtest
-  boot.loader.systemd-boot.memtest86.enable = true;
-
   # use systemd early, we use boot.initrd.systemd.services.rollback to rollback /
   boot.initrd.systemd.enable = true;
 
@@ -620,10 +614,10 @@ in
   environment.variables.EDITOR = "micro";
 
   # enable VirtualBox
-  virtualisation.virtualbox.host.enable = true;
-  virtualisation.virtualbox.host.enableKvm = true;
-  virtualisation.virtualbox.host.enableHardening = false;
-  virtualisation.virtualbox.host.addNetworkInterface = false;
+#   virtualisation.virtualbox.host.enable = true;
+#   virtualisation.virtualbox.host.enableKvm = true;
+#   virtualisation.virtualbox.host.enableHardening = false;
+#   virtualisation.virtualbox.host.addNetworkInterface = false;
 
   # allow GrapheneOS install
   programs.adb.enable = true;
@@ -644,8 +638,6 @@ in
     # preload models, see https://ollama.com/library
     loadModels = [ "deepseek-coder" "deepseek-r1" "gemma3" "llama3.2" "llava" "mistral" ];
   };
-
-  services.open-webui.enable = true;
 
   # get gnupg to work
   programs.gnupg.agent.enable = true;
