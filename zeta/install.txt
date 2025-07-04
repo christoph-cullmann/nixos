@@ -65,7 +65,6 @@ sgdisk /dev/nvme0n1 -p
     4       122157318       122279429   477.0 MiB   EF00
     5       242965551       244276259   5.0 GiB     AF0C  RecoveryOSContainer
 
-
 # create partition
 
 sgdisk /dev/nvme0n1 -n 0:0 -s
@@ -82,7 +81,6 @@ sgdisk /dev/nvme0n1 -p
     5       122279430       242965550   460.4 GiB   8300
     6       242965551       244276259   5.0 GiB     AF0C  RecoveryOSContainer
 
-
 #
 # install script below
 #
@@ -90,36 +88,9 @@ sgdisk /dev/nvme0n1 -p
 # host name to use
 HOST=zeta
 
-# disks to use
-DISK=/dev/disk/by-id/nvme-SAMSUNG_MZVLB1T0HBLR-000L2_S4DZNX0R362286
-DISKS="$DISK"
-
-# create partition table on all disks and EFI partition
-RAID=""
-for D in $DISKS; do
-    # kill old data
-    sgdisk --zap-all $D
-    blkdiscard -v -f $D
-    wipefs -a $D
-    sleep 5
-
-    # Create partition table
-    parted $D -- mklabel gpt
-
-    # Create a /boot as $D-part1
-    parted $D -- mkpart ESP fat32 1MiB 1024MiB
-    parted $D -- set 1 boot on
-
-    # Create a /nix as $D-part2
-    parted $D -- mkpart NIX 1024MiB 100%
-
-    # boot partition after short sleep, needed on some machines
-    sleep 5
-    mkfs.vfat $D-part1
-
-    # add part2 to raid
-    RAID="$RAID $D-part2"
-done
+# partitions to use
+BOOT=/dev/disk/by-id/nvme-APPLE_SSD_AP1024Z_0ba01e0141400628-part4
+RAID=/dev/disk/by-id/nvme-APPLE_SSD_AP1024Z_0ba01e0141400628-part5
 
 # take a look at the partitions
 lsblk
@@ -178,7 +149,7 @@ mount -t zfs zpool/root /mnt
 mkdir -p /mnt/{data,nix,boot,root,etc/nixos}
 
 # mount the ESP
-mount $DISK-part1 /mnt/boot
+mount $BOOT /mnt/boot
 
 # mount volumes
 mount -t zfs zpool/data /mnt/data
