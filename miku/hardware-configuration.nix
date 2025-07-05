@@ -19,6 +19,6 @@
     device = "/dev/disk/by-id/nvme-KINGSTON_SFYRD4000G_50026B7686EC5F33-part1";
     fsType = "vfat";
     neededForBoot = true;
-    options = [ "fmask=0022" "dmask=0022" ];
+    options = [ "fmask=0077" "dmask=0077" ];
   };
 }
