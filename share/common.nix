@@ -41,6 +41,9 @@ in
 
     # no hibernate for ZFS systems
     "nohibernate"
+
+    # for the Apple stuff with Notch: use the space around it
+    "apple_dcp.show_notch=1"
   ];
 
   # setup some sysctl stuff
