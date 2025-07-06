@@ -13,5 +13,6 @@
   services.xserver.xkb.layout = "de";
 
   # enable proper power management
+  services.power-profiles-daemon.enable = false;
   services.tlp.enable = true;
 }
