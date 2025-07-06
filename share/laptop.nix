@@ -11,4 +11,7 @@
 
   # german laptop keyboard
   services.xserver.xkb.layout = "de";
+
+  # enable proper power management
+  services.tlp.enable = true;
 }
