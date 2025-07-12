@@ -508,6 +508,7 @@ in
       google-fonts
 
       # monospace fonts to test Kate, Konsole and Co.
+      atkinson-hyperlegible-mono
       inconsolata
       maple-mono.truetype
       monaspace
