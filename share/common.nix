@@ -515,7 +515,10 @@ in
       monocraft
       recursive
       spleen
-    ];
+    ]
+
+    # add all nerd-fonts, very useful for testing, too
+    ++ builtins.filter lib.attrsets.isDerivation (builtins.attrValues pkgs.nerd-fonts);
 
     # proper default config for fonts
     fontconfig = {
