@@ -478,8 +478,8 @@ in
 
   # fonts for all users
   fonts = {
-    # no default fonts
-    enableDefaultPackages = false;
+    # add default fonts
+    enableDefaultPackages = true;
 
     # ensure we have an emulated global fontdir
     fontDir = {
