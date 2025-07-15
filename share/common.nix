@@ -412,6 +412,7 @@ in
     kdePackages.konsole
     kdePackages.okular
     keychain
+    krita
     lazygit
     libjxl
     libreoffice
