@@ -90,6 +90,12 @@
     };
   };
 
+  # better history
+  programs.mcfly = {
+    enable = true;
+    enableZshIntegration = true;
+  };
+
   # nice cd
   programs.zoxide = {
     enable = true;
