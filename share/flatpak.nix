@@ -16,8 +16,8 @@ let
     "org.libretro.RetroArch" = "--nofilesystem=xdg-music --nofilesystem=xdg-pictures --filesystem=~/Games";
 
     # maximal sandboxed browsers
+    "app.zen_browser.zen" = "--nofilesystem=xdg-music --nofilesystem=xdg-pictures";
     "com.brave.Browser" = "--nofilesystem=xdg-music --nofilesystem=xdg-pictures";
-    "org.mozilla.firefox" = "--nofilesystem=xdg-music --nofilesystem=xdg-pictures";
 
     # maximal sandboxed messaging apps
     "org.kde.neochat" = "--nofilesystem=xdg-music --nofilesystem=xdg-pictures";
