@@ -394,6 +394,7 @@ in
     glxinfo
     gnupg
     go
+    gource
     gptfdisk
     heaptrack
     hotspot
