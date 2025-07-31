@@ -426,6 +426,7 @@ in
     nixos-install-tools
     nmap
     nvme-cli
+    perlnavigator
     procmail
     openscad
     p7zip
