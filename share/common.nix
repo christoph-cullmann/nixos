@@ -382,6 +382,7 @@ in
     dig
     dmidecode
     duf
+    dysk
     efibootmgr
     emacs
     f2
