@@ -375,6 +375,7 @@ in
     bitwise
     blender
     btop
+    caligula
     castget
     clinfo
     config.boot.kernelPackages.perf
