@@ -414,6 +414,7 @@ in
     kdePackages.keysmith
     kdePackages.konsole
     kdePackages.okular
+    kdePackages.partitionmanager
     keychain
     krita
     lazygit
