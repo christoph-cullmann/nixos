@@ -11,4 +11,4 @@ mkdir -p ~/projects/kde/src || exit 1
 git clone https://invent.kde.org/sdk/kdesrc-build.git ~/projects/kde/src/kdesrc-build || exit 1
 
 # start from scratch
-exec ./src/kdesrc-build/kdesrc-build --rc-file=~/projects/kde/kdesrc-buildrc --include-dependencies breeze konsole kate
+exec ./src/kdesrc-build/kdesrc-build --rc-file=~/projects/kde/kdesrc-buildrc --include-dependencies breeze kio-extras konsole kate
