@@ -38,7 +38,7 @@
       gc = "doas nix-collect-garbage --delete-older-than 7d";
       verify = "doas nix --extra-experimental-features nix-command store verify --all -s https://cache.nixos.org";
       optimize = "doas nix --extra-experimental-features nix-command store optimise";
-      scrub = "doas zpool scrub -w zpool";
+      scrub = "doas zpool scrub -w zpool && zpool status";
 
       # list latest files last
       ltr = "eza -l -s modified";
