@@ -55,11 +55,11 @@ in
     };
 
     #
-    # sandbox for kde development
+    # sandbox for development
     #
-    users.sandbox-kde = {
+    users.sandbox = {
       # home on persistent volume
-      home = "/data/home/sandbox-kde";
+      home = "/data/home/sandbox";
 
       # hard code UID for stability over machines
       # out of range of normal login users
@@ -69,7 +69,7 @@ in
       isNormalUser = true;
 
       # sandbox user
-      description = "Sandbox KDE";
+      description = "Sandbox User";
 
       # use fixed auth keys
       openssh.authorizedKeys.keys = config.users.users.root.openssh.authorizedKeys.keys;
@@ -103,8 +103,8 @@ in
       };
     };
 
-    # kde user with extra settings
-    users.sandbox-kde = {
+    # sandbox user with extra settings
+    users.sandbox = {
       # shared config
       imports = [ ./home.nix ];
 
