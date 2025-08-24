@@ -41,6 +41,7 @@ export QT_QUICK_CONTROLS_STYLE_PATH=~/projects/kde/usr/lib/qml/QtQuick/Controls.
     doxygen
     ebook_tools
     exiv2
+    fast-float
     flex
     gdb
     giflib
@@ -57,6 +58,7 @@ export QT_QUICK_CONTROLS_STYLE_PATH=~/projects/kde/usr/lib/qml/QtQuick/Controls.
     kdePackages.wayland-protocols
     lcms2
     libarchive
+    libavif
     libcanberra
     libcap
     libdisplay-info
@@ -76,6 +78,7 @@ export QT_QUICK_CONTROLS_STYLE_PATH=~/projects/kde/usr/lib/qml/QtQuick/Controls.
     libselinux
     libsndfile
     libspectre
+    libtommath
     libva
     libxkbcommon
     libxml2
@@ -149,12 +152,14 @@ export QT_QUICK_CONTROLS_STYLE_PATH=~/projects/kde/usr/lib/qml/QtQuick/Controls.
     qt6.qtwebview
     qt6Packages.qgpgme
     simdutf
+    skia
     udev
     util-linux
     valgrind
     wayland
     wayland-protocols
     wayland-scanner
+    woff2
     xcb-util-cursor
     xdotool
     xercesc
