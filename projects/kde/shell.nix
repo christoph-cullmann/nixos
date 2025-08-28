@@ -26,6 +26,7 @@ export QT_QUICK_CONTROLS_STYLE_PATH=~/projects/kde/usr/lib/qml/QtQuick/Controls.
   # add all needed stuff to have a KDE KF6 Qt6 env
   nativeBuildInputs = with pkgs; [
     acl
+    angle
     appstream
     attr
     bison
