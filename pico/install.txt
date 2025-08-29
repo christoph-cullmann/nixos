@@ -22,3 +22,62 @@ mac-fdisk -l /dev/sda
 (echo i; echo; echo b 2p; echo c 3p 1G boot; echo c 4p 64G swap; echo c 5p 5p root; echo w; echo y; echo q ) | mac-fdisk /dev/sda
 mac-fdisk -l /dev/sda
 
+# result will look like
+
+# Command (? for help): /dev/sda
+#         #                    type name                   length   base       ( size )  system
+# /dev/sda1     Apple_partition_map Apple                      63 @ 1          ( 31.5k)  Partition map
+# /dev/sda2         Apple_Bootstrap bootstrap                1600 @ 64         (800.0k)  NewWorld bootblock
+# /dev/sda3         Apple_UNIX_SVR2 boot                  2097152 @ 1664       (  1.0G)  Linux native
+# /dev/sda4         Apple_UNIX_SVR2 swap                134217728 @ 2098816    ( 64.0G)  Linux swap
+# /dev/sda5         Apple_UNIX_SVR2 root               1817208624 @ 136316544  (866.5G)  Linux native
+#
+# Block size=512, Number of Blocks=1953525168
+# DeviceType=0x0, DeviceId=0x0
+
+# create ZFS root
+
+mkdir /media/root
+
+zpool create \
+    -o ashift=13 \
+    -o autotrim=off \
+    -O acltype=posixacl \
+    -O atime=off \
+    -O canmount=off \
+    -O checksum=blake3 \
+    -O compression=lz4 \
+    -O dnodesize=auto \
+    -O utf8only=on \
+    -O normalization=none \
+    -O xattr=sa \
+    -O mountpoint=/ \
+    -R /media/root \
+    -f zpool /dev/sda5
+
+zfs create -o recordsize=64K -o canmount=noauto -o mountpoint=/ zpool/root
+
+zfs mount zpool/root
+
+# create boot
+
+mkfs.ext4 /dev/sda3
+mkdir /media/root/boot
+mount /dev/sda3 /media/root/boot
+
+# create swap
+
+mkswap /dev/sda4
+
+# create the Power Mac boot partition
+
+dd if=/dev/zero of=/dev/sda2
+hformat -l bootstrap /dev/sda2
+
+# fix root permissions
+
+chmod 755 /media/root
+
+# install Chimara Linux
+
+chimera-bootstrap /media/root
