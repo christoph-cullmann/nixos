@@ -130,3 +130,23 @@ update-grub
 
 exit
 reboot
+
+# post install
+
+# add cullmann user
+
+useradd cullmann
+passwd cullmann
+usermod -a -G wheel,kvm cullmann
+
+# enable syslog
+
+dinitctl enable syslog-ng
+
+# enable sshd
+
+dinitctl enable sshd
+
+# we want dhcpd
+
+dinitctl enable dhcpcd
