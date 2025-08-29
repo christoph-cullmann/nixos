@@ -172,3 +172,8 @@ apk add xserver-xorg
 
 dinitctl enable sddm
 
+# add more tools
+
+apk add mc
+
+
