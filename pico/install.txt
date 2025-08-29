@@ -1,0 +1,24 @@
+# boot from USB
+
+Command + Option + O + F combo (Win + Alt + O + F on standard PC keyboards)
+
+boot ud:,\\:tbxi
+
+# login & enable sshd
+
+dinitctl enable sshd
+
+# remote in to anon:chimera and doas bash
+
+ssh anon@chimera
+
+# wipe disk
+
+blkdiscard -v -f /dev/sda
+mac-fdisk -l /dev/sda
+
+# add Power Mac compatible partitions
+
+(echo i; echo; echo b 2p; echo c 3p 1G boot; echo c 4p 64G swap; echo c 5p 5p root; echo w; echo y; echo q ) | mac-fdisk /dev/sda
+mac-fdisk -l /dev/sda
+
