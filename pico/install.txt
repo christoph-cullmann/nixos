@@ -81,3 +81,52 @@ chmod 755 /media/root
 # install Chimara Linux
 
 chimera-bootstrap /media/root
+
+# step into the new system
+
+chimera-bootstrap /media/root
+
+# upgrade
+
+apk update
+apk upgrade --available
+
+# add kernel with ZFS
+
+apk add --no-interactive linux-lts
+apk add --no-interactive linux-lts-zfs-bin
+
+# generate fstab with swap
+
+swapon /dev/sda4
+genfstab / >> /etc/fstab
+cat /etc/fstab
+
+# root passwd
+
+passwd root
+
+# initrd
+
+update-initramfs -c -k all
+
+# Grub for Power Mac
+
+apk add --no-interactive grub-powerpc-ieee1275
+
+mkdir -p /boot/macppc
+mount -t hfs /dev/sda2 /boot/macppc
+grub-install --macppc-directory=/boot/macppc /dev/sda2
+umount /boot/macppc
+rmdir /boot/macppc
+hmount /dev/sda2
+hattrib -t tbxi -c UNIX :System:Library:CoreServices:BootX
+hattrib -b :System:Library:CoreServices
+humount
+
+update-grub
+
+# reboot
+
+exit
+reboot
