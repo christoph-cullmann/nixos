@@ -150,3 +150,11 @@ dinitctl enable sshd
 # we want dhcpd
 
 dinitctl enable dhcpcd
+
+# hostname
+
+echo pico > /etc/hostname
+
+# time zone
+
+ln -sf /usr/share/zoneinfo/Europe/Berlin /etc/localtime
