@@ -158,3 +158,16 @@ echo pico > /etc/hostname
 # time zone
 
 ln -sf /usr/share/zoneinfo/Europe/Berlin /etc/localtime
+
+# add pipewire if not there
+
+apk add pipewire
+
+# add KDE Plasma
+
+apk add plasma-desktop
+
+# we use SDDM
+
+dinitctl enable sddm
+
