@@ -124,16 +124,16 @@ let
     linuxKernel.manualConfig rec {
       inherit stdenv lib;
 
-      version = "6.14.8-asahi";
+      version = "6.15.10-asahi";
       modDirVersion = version;
-      extraMeta.branch = "6.14";
+      extraMeta.branch = "6.15";
 
       src = fetchFromGitHub {
         # tracking: https://github.com/AsahiLinux/linux/tree/asahi-wip (w/ fedora verification)
         owner = "AsahiLinux";
         repo = "linux";
-        rev = "asahi-6.14.8-1";
-        hash = "sha256-JrWVw1FiF9LYMiOPm0QI0bg/CrZAMSSVcs4AWNDIH3Q=";
+        tag = "asahi-6.15.10-3";
+        hash = "sha256-au/v0bLzBaAMscfk47MZpyiG8pomw08qlT1RjVO9/x4=";
       };
 
       kernelPatches = [
@@ -144,6 +144,11 @@ let
       config = configAttrs;
     };
 
-  linux-asahi = (callPackage linux-asahi-pkg { });
+  linux-asahi = (callPackage linux-asahi-pkg { }).overrideAttrs (_: {
+    # FIXME: Remove when https://github.com/NixOS/nixpkgs/pull/436245 lands
+    preConfigure = ''
+      export RUST_LIB_SRC KRUSTFLAGS
+    '';
+  });
 in
 lib.recurseIntoAttrs (linuxPackagesFor linux-asahi)
