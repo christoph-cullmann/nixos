@@ -378,7 +378,6 @@ in
     caligula
     castget
     clinfo
-    config.boot.kernelPackages.perf
     delta
     dig
     dmidecode
@@ -436,6 +435,7 @@ in
     parted
     pciutils
     pdftk
+    perf
     procs
     pulseaudio
     pwgen
@@ -449,7 +449,7 @@ in
     sysstat
     tcl
     texlive.combined.scheme-small
-    tigervnc
+    #tigervnc
     tk
     tldr
     unrar
