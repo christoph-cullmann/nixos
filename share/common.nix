@@ -449,7 +449,7 @@ in
     sysstat
     tcl
     texlive.combined.scheme-small
-    #tigervnc
+    tigervnc
     tk
     tldr
     unrar
