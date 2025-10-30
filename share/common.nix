@@ -392,7 +392,6 @@ in
     freecad
     fzf
     gimp
-    glxinfo
     gnupg
     go
     gource
@@ -424,6 +423,7 @@ in
     lynis
     mailutils
     mc
+    mesa-demos
     micro
     nixos-install-tools
     nmap
