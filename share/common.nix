@@ -621,9 +621,6 @@ in
 
   # enable VirtualBox on the x86-64 machines
   virtualisation.virtualbox.host.enable = pkgs.stdenv.hostPlatform.isx86;
-  virtualisation.virtualbox.host.enableKvm = true;
-  virtualisation.virtualbox.host.enableHardening = false;
-  virtualisation.virtualbox.host.addNetworkInterface = false;
 
   # allow GrapheneOS install
   programs.adb.enable = true;
