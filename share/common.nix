@@ -378,6 +378,7 @@ in
     caligula
     castget
     clinfo
+    cyanrip
     delta
     dig
     dmidecode
