@@ -388,7 +388,7 @@ in
     emacs
     f2
     fdupes
-    ffmpeg
+    ffmpeg-full
     file
     freecad
     fzf
