@@ -444,6 +444,7 @@ in
     qsynth
     restic
     ripgrep
+    rubyripper
     scc
     signify
     ssh-audit
