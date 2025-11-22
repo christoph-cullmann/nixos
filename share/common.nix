@@ -452,6 +452,7 @@ in
     signify
     ssh-audit
     sysstat
+    tageditor
     tcl
     texlive.combined.scheme-small
     tigervnc
