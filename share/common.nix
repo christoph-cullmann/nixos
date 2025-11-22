@@ -372,6 +372,7 @@ in
     alsa-utils
     aspellDicts.de
     aspellDicts.en
+    asunder
     bitwise
     blender
     btop
