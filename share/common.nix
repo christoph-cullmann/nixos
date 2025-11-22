@@ -416,6 +416,7 @@ in
     kdePackages.okular
     kdePackages.partitionmanager
     keychain
+    kid3
     krita
     lazygit
     libjxl
