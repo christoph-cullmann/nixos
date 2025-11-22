@@ -432,6 +432,7 @@ in
     nixos-install-tools
     nmap
     nvme-cli
+    (perl.withPackages(ps: [ ps.ParallelForkManager ]))
     perlnavigator
     procmail
     openscad
