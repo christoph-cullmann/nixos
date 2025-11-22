@@ -390,7 +390,6 @@ in
     fdupes
     ffmpeg-full
     file
-    freac
     freecad
     fzf
     gimp
