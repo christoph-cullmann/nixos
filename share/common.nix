@@ -384,13 +384,13 @@ in
     dmidecode
     duf
     dysk
-    easytag
     efibootmgr
     emacs
     f2
     fdupes
     ffmpeg-full
     file
+    flac
     freecad
     fzf
     gimp
