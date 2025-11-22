@@ -369,6 +369,7 @@ in
   # List packages installed in system profile. To search, run:
   # $ nix search wget
   environment.systemPackages = with pkgs; [
+    abcde
     alsa-utils
     aspellDicts.de
     aspellDicts.en
@@ -444,7 +445,6 @@ in
     qsynth
     restic
     ripgrep
-    rubyripper
     scc
     signify
     ssh-audit
