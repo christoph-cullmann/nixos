@@ -384,6 +384,7 @@ in
     dmidecode
     duf
     dysk
+    easytag
     efibootmgr
     emacs
     f2
