@@ -421,6 +421,7 @@ in
     libjxl
     libreoffice
     libva-utils
+    libwebp
     lsof
     lynis
     mailutils
