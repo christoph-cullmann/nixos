@@ -17,6 +17,6 @@
   nixpkgs.hostPlatform = "x86_64-linux";
 
   # our hostname
-  networking.hostName = "miku";
-  networking.hostId = "4d00f481";
+  networking.hostName = "anko";
+  networking.hostId = "598c1f34";
 }

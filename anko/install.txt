@@ -23,11 +23,11 @@ efibootmgr -b 4 -B
 efibootmgr
 
 # host name to use
-HOST=miku
+HOST=anko
 
 # disks to use
-DISK=/dev/disk/by-id/nvme-KINGSTON_SFYRD4000G_50026B7686EC5F33
-DISK2=/dev/disk/by-id/nvme-KINGSTON_SFYRD4000G_50026B7686EC6164
+DISK=/dev/disk/by-id/nvme-CT4000P3PSSD8_2325E6E63746
+DISK2=/dev/disk/by-id/ata-CT2000MX500SSD1_2138E5D5061F
 DISKS="$DISK $DISK2"
 
 # ensure 4k sector size
@@ -146,7 +146,7 @@ mount
 nixos-generate-config --root /mnt
 
 # copy config data from another machine including secrets
-doas scp -r /data/nixos root@192.168.13.115:/mnt/data
+doas scp -r /data/nixos root@192.168.13.100:/mnt/data
 
 # install
 nixos-install --option experimental-features 'nix-command flakes' --no-root-passwd --root /mnt
@@ -158,6 +158,3 @@ sync
 
 # shutdown once
 shutdown now
-
-# sync all /data after the install
-doas rsync -va --delete --one-file-system /data/ root@192.168.13.115:/data/

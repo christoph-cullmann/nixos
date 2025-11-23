@@ -16,7 +16,7 @@
 
   # /boot efi partition to boot in UEFI mode
   fileSystems."/boot" = {
-    device = "/dev/disk/by-id/nvme-KINGSTON_SFYRD4000G_50026B7686EC5F33-part1";
+    device = "/dev/disk/by-id/nvme-CT4000P3PSSD8_2325E6E63746-part1";
     fsType = "vfat";
     neededForBoot = true;
     options = [ "fmask=0077" "dmask=0077" ];
