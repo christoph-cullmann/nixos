@@ -35,11 +35,6 @@ nvme format --lbaf=1 --force $DISK
 nvme id-ns -H $DISK
 sleep 5
 
-# ensure 4k sector size
-nvme format --lbaf=1 --force $DISK2
-nvme id-ns -H $DISK2
-sleep 5
-
 # create partition table on all disks and EFI partition
 RAID=""
 for D in $DISKS; do
