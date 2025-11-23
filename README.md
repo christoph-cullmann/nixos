@@ -6,7 +6,7 @@
 cd installer
 nix --extra-experimental-features flakes --extra-experimental-features nix-command build .#nixosConfigurations.exampleIso.config.system.build.isoImage
 
-doas dd if=result/iso/nixos-*-x86_64-linux.iso of=/dev/sda bs=4M conv=fsync
+caligula burn result/iso/nixos-*-x86_64-linux.iso
 ```
 
 # reset home manager
