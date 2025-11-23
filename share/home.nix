@@ -44,10 +44,10 @@
       ltr = "eza -l -s modified";
 
       # ssh around in the local network
+      anko = "ssh anko.fritz.box";
+      ankoroot = "ssh root@anko.fritz.box";
       beta = "ssh beta.fritz.box";
       betaroot = "ssh root@beta.fritz.box";
-      bsd = "ssh -X bsd.fritz.box";
-      bsdroot = "ssh root@bsd.fritz.box";
       mac = "ssh mac.fritz.box";
       macroot = "ssh root@mac.fritz.box";
       miku = "ssh miku.fritz.box";
