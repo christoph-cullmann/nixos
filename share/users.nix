@@ -44,8 +44,14 @@ in
       # it's me :P
       description = "Christoph Cullmann";
 
-      # allow GrapheneOS install, Meshtastic flashing, KVM, VirtualBox and doas for my main user
-      extraGroups = [ "adbusers" "dialout" "kvm" "vboxusers" "wheel" ];
+      # allow for main user:
+      #  - GrapheneOS install
+      #  - Meshtastic flashing
+      #  - KVM
+      #  - VirtualBox
+      #  - doas
+      #  - jellyfin media server file access
+      extraGroups = [ "adbusers" "dialout" "kvm" "vboxusers" "wheel" "jellyfin" ];
 
       # init password
       hashedPassword = config.users.users.root.hashedPassword;
