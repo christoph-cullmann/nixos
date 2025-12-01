@@ -1,6 +1,11 @@
 { config, pkgs, ... }:
 
 {
+  imports = [
+      # flatpak configuration, makes only sense if we have some desktop around
+      "/data/nixos/share/flatpak.nix"
+  ];
+
   # boot splash
   boot.plymouth = {
     enable = true;

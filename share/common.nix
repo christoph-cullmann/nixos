@@ -15,9 +15,6 @@ in
 
       # our users
       "/data/nixos/share/users.nix"
-
-      # flatpak configuration
-      "/data/nixos/share/flatpak.nix"
   ];
 
   # install release
