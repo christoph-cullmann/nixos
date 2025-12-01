@@ -9,6 +9,9 @@
       # Shared config of all workstations
       /data/nixos/share/workstation.nix
 
+      # Machines that have a desktop env
+      /data/nixos/share/desktop.nix
+
       # Shared config of all machines
       /data/nixos/share/common.nix
     ];

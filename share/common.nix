@@ -129,13 +129,6 @@ in
   console.earlySetup = true;
   console.font = "${pkgs.spleen}/share/consolefonts/spleen-16x32.psfu";
 
-  # boot splash
-  boot.plymouth = {
-    enable = true;
-    theme = "hexa_retro";
-    themePackages = [ pkgs.adi1090x-plymouth-themes ];
-  };
-
   # root file system, we will rollback that on boot
   fileSystems."/" = {
     device = "zpool/root";
@@ -291,25 +284,6 @@ in
 
   # use X11/wayland layout for console, too
   console.useXkbConfig = true;
-
-  # enable the KDE Plasma Desktop Environment
-  services.desktopManager.plasma6.enable = true;
-
-  # enable the Ly login manager with proper KWallet integration
-  services.displayManager.ly = {
-    enable = true;
-    settings = {
-      animation = "matrix";
-      load = true;
-      save = true;
-      session_log = ".cache/ly-session.log";
-    };
-  };
-  security.pam.services.ly.kwallet = {
-    enable = true;
-    forceRun = true;
-    package = pkgs.kdePackages.kwallet-pam;
-  };
 
   # enable sound with PipeWire
   services.pipewire = {

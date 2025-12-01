@@ -9,6 +9,9 @@
       # Shared config of all laptops
       /data/nixos/share/laptop.nix
 
+      # Machines that have a desktop env
+      /data/nixos/share/desktop.nix
+
       # Shared config of all machines
       /data/nixos/share/common.nix
     ];
