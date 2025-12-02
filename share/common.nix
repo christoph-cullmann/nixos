@@ -400,6 +400,7 @@ in
     mc
     mesa-demos
     micro
+    mtkclient
     nixos-install-tools
     nmap
     nvme-cli
