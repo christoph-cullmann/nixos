@@ -108,6 +108,8 @@ export QT_QUICK_CONTROLS_STYLE_PATH=~/projects/kde/usr/lib/qml/QtQuick/Controls.
     perlPackages.YAMLPP
     python312
     python312Packages.build
+    python312Packages.click
+    python312Packages.jinja2
     python312Packages.lxml
     python312Packages.overrides
     python312Packages.promise
