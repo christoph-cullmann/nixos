@@ -379,6 +379,7 @@ in
     inkscape
     kdePackages.ark
     kdePackages.filelight
+    kdePackages.k3b
     kdePackages.kate
     kdePackages.kcachegrind
     kdePackages.kcalc
