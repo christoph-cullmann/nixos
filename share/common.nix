@@ -374,6 +374,7 @@ in
     hyfetch
     inetutils
     inkscape
+    jmtpfs
     kdePackages.ark
     kdePackages.filelight
     kdePackages.k3b
