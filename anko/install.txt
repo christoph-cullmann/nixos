@@ -145,7 +145,7 @@ mount
 nixos-generate-config --root /mnt
 
 # copy config data from another machine including secrets
-doas scp -r /data/nixos root@192.168.13.127:/mnt/data
+doas scp -r /data/nixos root@192.168.13.2:/mnt/data
 
 # install
 nixos-install --option experimental-features 'nix-command flakes' --no-root-passwd --root /mnt
