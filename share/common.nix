@@ -354,6 +354,7 @@ in
     dysk
     efibootmgr
     emacs
+    exfatprogs
     f2
     fdupes
     ffmpeg-full
