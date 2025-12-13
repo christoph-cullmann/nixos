@@ -1,4 +1,14 @@
 #
+# fan settings in bios to not annoy
+#
+
+Fan Off Temperature Limit: Set to 30 (degrees Celsius).
+Fan Start Temperature Limit: Set to 40 (degrees Celsius).
+Fan Full Speed Temperature Limit: Set to 100 (degrees Celsius).
+Fan Start PWM: Set to 10 (percentage of maximum fan speed).
+PWM Slope Setting: Set to 4 PWM (controls the fan speed curve).
+
+#
 # enable ssh for root
 #
 
