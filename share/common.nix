@@ -353,7 +353,6 @@ in
     duf
     dysk
     efibootmgr
-    emacs
     exfatprogs
     f2
     fdupes
