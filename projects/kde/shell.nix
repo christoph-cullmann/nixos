@@ -1,11 +1,8 @@
 with import <nixpkgs> {};
 
-# use new clang
-let myllvm = llvmPackages_20; in
-
-# clang based dev env
-myllvm.stdenv.mkDerivation {
-  name = "clang-nix-shell";
+# dev env
+stdenv.mkDerivation {
+  name = "nix-shell";
   # ensure the local KDE things are in path
   shellHook = ''
 export PATH=~/projects/kde/usr/bin:~/projects/kde:~/projects/kde/src/kdesrc-build:$PATH
@@ -91,8 +88,8 @@ export QT_QUICK_CONTROLS_STYLE_PATH=~/projects/kde/usr/lib/qml/QtQuick/Controls.
     mesa
     meson
     modemmanager
-    myllvm.clang-tools # clang
-    myllvm.libclang.python # git-clang-format
+    llvmPackages.clang-tools # clang
+    llvmPackages.libclang.python # git-clang-format
     networkmanager
     ninja
     openal
