@@ -8,6 +8,12 @@
   # EurKey layout
   services.xserver.xkb.layout = "eu";
 
+  # auto update the machines at home
+  system.autoUpgrade = {
+    enable = true;
+    allowReboot = false;
+  };
+
   # Jellyfin media server
   services.jellyfin = {
     dataDir = "/data/home/jellyfin";
