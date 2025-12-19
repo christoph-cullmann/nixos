@@ -21,5 +21,10 @@
 
   # our hostname
   networking.hostName = "neko";
+
+  # hostid, important for ZFS pool
   networking.hostId = "4836f248";
+
+  # ethernet card to use
+  systemd.network.networks."10-wan".matchConfig.Name = "enp11s0";
 }
