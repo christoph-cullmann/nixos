@@ -1,9 +1,21 @@
 { config, pkgs, ... }:
 
 {
-  # just classic DHCP, wired only
+  # use networkd for my local machines
   networking.networkmanager.enable = false;
-  networking.useDHCP = true;
+  networking.useDHCP = false;
+  systemd.network.enable = true;
+  systemd.network.networks."10-wan" = {
+    networkConfig = {
+      # start a DHCP Client for IPv4 Addressing/Routing
+      DHCP = "ipv4";
+      # accept Router Advertisements for Stateless IPv6 Autoconfiguraton (SLAAC)
+      IPv6AcceptRA = true;
+    };
+
+    # make routing on this interface a dependency for network-online.target
+    linkConfig.RequiredForOnline = "routable";
+  };
 
   # EurKey layout
   services.xserver.xkb.layout = "eu";

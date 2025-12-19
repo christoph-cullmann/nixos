@@ -21,5 +21,10 @@
 
   # our hostname
   networking.hostName = "miku";
+
+  # hostid, important for ZFS pool
   networking.hostId = "4d00f481";
+
+  # ethernet card to use
+  systemd.network.networks."10-wan".matchConfig.Name = "eno1";
 }
