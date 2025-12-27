@@ -43,6 +43,14 @@ in
     "apple_dcp.show_notch=1"
   ];
 
+  # tweak ZFS
+  # https://github.com/openzfs/zfs/issues/10253
+  boot.extraModprobeConfig = ''
+    # less scrub impact on other IO
+    options zfs zfs_vdev_nia_credit=1
+    options zfs zfs_vdev_scrub_max_active=1
+  '';
+
   # setup some sysctl stuff
   boot.kernel.sysctl = {
     # allow dmesg for all users
