@@ -49,6 +49,9 @@ in
     # less scrub impact on other IO
     options zfs zfs_vdev_nia_credit=1
     options zfs zfs_vdev_scrub_max_active=1
+
+    # less trim impact on other IO
+    options zfs zfs_trim_queue_limit=5
   '';
 
   # setup some sysctl stuff
