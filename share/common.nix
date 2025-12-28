@@ -370,6 +370,7 @@ in
     ffmpeg-full
     file
     flac
+    flamegraph
     freecad
     fzf
     gimp
