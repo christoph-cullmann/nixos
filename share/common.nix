@@ -357,7 +357,6 @@ in
     caligula
     castget
     clinfo
-    config.boot.kernelPackages.perf # use perf that matches our kernel
     cyanrip
     delta
     dig
@@ -423,6 +422,7 @@ in
     parted
     pciutils
     pdftk
+    perf
     procs
     pulseaudio
     pwgen
