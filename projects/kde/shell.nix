@@ -40,6 +40,7 @@ export QT_QUICK_CONTROLS_STYLE_PATH=~/projects/kde/usr/lib/qml/QtQuick/Controls.
     ebook_tools
     exiv2
     fast-float
+    firefox
     flex
     gdb
     giflib
