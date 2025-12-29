@@ -56,6 +56,7 @@ export QT_QUICK_CONTROLS_STYLE_PATH=~/projects/kde/usr/lib/qml/QtQuick/Controls.
     kdePackages.poppler
     kdePackages.wayland-protocols
     lcms2
+    lemminx
     libarchive
     libavif
     libcanberra
@@ -159,6 +160,7 @@ export QT_QUICK_CONTROLS_STYLE_PATH=~/projects/kde/usr/lib/qml/QtQuick/Controls.
     udev
     util-linux
     valgrind
+    vscode-json-languageserver
     wayland
     wayland-protocols
     wayland-scanner
@@ -181,6 +183,7 @@ export QT_QUICK_CONTROLS_STYLE_PATH=~/projects/kde/usr/lib/qml/QtQuick/Controls.
     xorg.xcbutilimage
     xorg.xcbutilkeysyms
     xorg.xcbutilwm
+    yaml-language-server
     zlib
     zstd
     xz
