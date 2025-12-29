@@ -30,6 +30,7 @@ export QT_QUICK_CONTROLS_STYLE_PATH=~/projects/kde/usr/lib/qml/QtQuick/Controls.
     boost
     bzip2
     chromium
+    clojure-lsp
     cmake
     ctags
     curl
@@ -155,6 +156,7 @@ export QT_QUICK_CONTROLS_STYLE_PATH=~/projects/kde/usr/lib/qml/QtQuick/Controls.
     qt6.qtwebsockets
     qt6.qtwebview
     qt6Packages.qgpgme
+    rocqPackages.vsrocq-language-server
     sdl3
     simdutf
     skia
