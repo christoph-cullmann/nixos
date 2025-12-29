@@ -100,6 +100,7 @@ export QT_QUICK_CONTROLS_STYLE_PATH=~/projects/kde/usr/lib/qml/QtQuick/Controls.
     openssl
     pcre
     perl
+    perlnavigator
     perlPackages.IOSocketSSL
     perlPackages.JSONXS
     perlPackages.NetDBus

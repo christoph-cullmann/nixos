@@ -416,7 +416,6 @@ in
     nmap
     nvme-cli
     (perl.withPackages(ps: [ ps.ParallelForkManager ]))
-    perlnavigator
     procmail
     openscad
     p7zip
