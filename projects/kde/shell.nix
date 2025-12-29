@@ -89,8 +89,9 @@ export QT_QUICK_CONTROLS_STYLE_PATH=~/projects/kde/usr/lib/qml/QtQuick/Controls.
     mesa
     meson
     modemmanager
-    llvmPackages.clang-tools # clang
+    llvmPackages.clang-tools # clangd
     llvmPackages.libclang.python # git-clang-format
+    neocmakelsp
     networkmanager
     ninja
     openal
