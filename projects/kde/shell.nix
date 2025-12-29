@@ -157,6 +157,7 @@ export QT_QUICK_CONTROLS_STYLE_PATH=~/projects/kde/usr/lib/qml/QtQuick/Controls.
     sdl3
     simdutf
     skia
+    typescript-language-server
     udev
     util-linux
     valgrind
