@@ -407,6 +407,7 @@ in
     libwebp
     lsof
     lynis
+    maildrop
     mailutils
     mc
     mesa-demos
@@ -416,7 +417,6 @@ in
     nmap
     nvme-cli
     (perl.withPackages(ps: [ ps.ParallelForkManager ]))
-    procmail
     openscad
     p7zip
     parted
@@ -563,7 +563,7 @@ in
       table aliases file:/etc/mail/aliases
       table secrets file:/etc/mail/secrets
       listen on localhost
-      action "local" mda "procmail -f -" virtual <aliases>
+      action "local" mda "maildrop -d %{dest.user:lowercase}" virtual <aliases>
       action "relay" relay host smtps://smtp@moon.babylon2k.com auth <secrets> mail-from bot@babylon2k.com
       match for local action "local"
       match for any action "relay"
