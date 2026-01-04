@@ -13,7 +13,6 @@ let
     # maximal sandboxed stuff for games, allow ~/Games for local game collection
     "com.usebottles.bottles" = "--nofilesystem=xdg-music --nofilesystem=xdg-pictures --filesystem=~/Games";
     "com.valvesoftware.Steam" = "--nofilesystem=xdg-music --nofilesystem=xdg-pictures --filesystem=~/Games";
-    "org.libretro.RetroArch" = "--nofilesystem=xdg-music --nofilesystem=xdg-pictures --filesystem=~/Games";
 
     # maximal sandboxed browsers
     "app.zen_browser.zen" = "--nofilesystem=xdg-music --nofilesystem=xdg-pictures";
