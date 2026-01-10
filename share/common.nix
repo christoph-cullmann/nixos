@@ -349,6 +349,7 @@ in
   # $ nix search wget
   environment.systemPackages = with pkgs; [
     alsa-utils
+    android-tools
     aspellDicts.de
     aspellDicts.en
     bitwise
@@ -609,9 +610,6 @@ in
 
   # enable VirtualBox on the x86-64 machines
   virtualisation.virtualbox.host.enable = pkgs.stdenv.hostPlatform.isx86;
-
-  # allow GrapheneOS install
-  programs.adb.enable = true;
 
   # use doas instead of sudo
   security.sudo.enable = false;
