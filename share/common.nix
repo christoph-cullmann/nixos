@@ -372,7 +372,6 @@ in
     file
     flac
     flamegraph
-    freecad
     fzf
     gimp
     gnupg
