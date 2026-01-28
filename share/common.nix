@@ -239,7 +239,7 @@ in
   hardware.enableAllFirmware = true;
 
   # never the wireless variant, we use iwd, if at all
-  networking.wireless.enable = false;
+  networking.wireless.enable = pkgs.lib.mkForce false;
 
   # ensure firewall is up, allow ssh in
   networking.firewall.enable = true;
