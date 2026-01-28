@@ -238,6 +238,9 @@ in
   # allow all firmware
   hardware.enableAllFirmware = true;
 
+  # never the wireless variant, we use iwd, if at all
+  networking.wireless.enable = false;
+
   # ensure firewall is up, allow ssh in
   networking.firewall.enable = true;
   networking.firewall.allowedTCPPorts = [ 22 ];
