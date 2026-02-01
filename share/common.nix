@@ -394,6 +394,7 @@ in
     kdePackages.kcachegrind
     kdePackages.kcalc
     kdePackages.keysmith
+    kdePackages.kompare
     kdePackages.konsole
     kdePackages.okular
     kdePackages.partitionmanager
