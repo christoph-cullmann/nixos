@@ -134,6 +134,7 @@ export QT_QUICK_CONTROLS_STYLE_PATH=~/projects/kde/usr/lib/qml/QtQuick/Controls.
     qt6.qtdoc
     qt6.qtimageformats
     qt6.qtlanguageserver
+    qt6.qtlocation
     qt6.qtlottie
     qt6.qtmultimedia
     qt6.qtnetworkauth
