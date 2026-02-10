@@ -449,9 +449,9 @@ in
     vscodium
     vulkan-tools
     wayland-utils
-    xorg.xauth
-    xorg.xhost
-    xorg.xlsclients
+    xauth
+    xhost
+    xlsclients
     zoxide
     zsh
   ];
