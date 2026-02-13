@@ -299,6 +299,13 @@ in
     };
     jack.enable = true;
     pulse.enable = true;
+
+    # allow highres audio
+    extraConfig.pipewire.noresample = {
+      "context.properties" = {
+        "default.clock.allowed-rates" = [ 44100 48000 96000 192000 384000 ];
+      };
+    };
   };
 
   # allow realtime
