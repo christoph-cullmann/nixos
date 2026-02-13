@@ -301,10 +301,32 @@ in
     pulse.enable = true;
 
     # allow highres audio
-    extraConfig.pipewire.noresample = {
+    # check what
+    #     grep Rates /proc/asound/card*/stream*
+    # tells
+    # we settle for 192000
+    extraConfig.pipewire.hires = {
       "context.properties" = {
-        "default.clock.rate" = 384000;
-        "default.clock.allowed-rates" = [ 384000 352800 192000 176400 96000 88200 48000 44100 ];
+        "default.clock.rate" = 192000;
+        "default.clock.quantum" = 32;
+        "default.clock.min-quantum" = 32;
+        "default.clock.max-quantum" = 32;
+      };
+    };
+    extraConfig.pipewire-pulse.hires = {
+      "context.properties" = [ {
+          name = "libpipewire-module-protocol-pulse";
+          args = { };
+      } ];
+      "pulse.properties" = {
+        "pulse.min.req" = "32/192000";
+        "pulse.default.req" = "32/192000";
+        "pulse.max.req" = "32/192000";
+        "pulse.min.quantum" = "32/192000";
+        "pulse.max.quantum" = "32/192000";
+      };
+      "stream.properties" = {
+          "node.latency" = "32/192000";
       };
     };
   };
