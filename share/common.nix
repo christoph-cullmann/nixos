@@ -303,7 +303,7 @@ in
     # allow highres audio
     extraConfig.pipewire.noresample = {
       "context.properties" = {
-        "default.clock.allowed-rates" = [ 44100 48000 96000 192000 384000 ];
+        "default.clock.allowed-rates" = [ 44100 48000 88200 96000 176400 192000 352800 384000 ];
       };
     };
   };
