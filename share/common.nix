@@ -308,25 +308,7 @@ in
     extraConfig.pipewire.hires = {
       "context.properties" = {
         "default.clock.rate" = 192000;
-        "default.clock.quantum" = 32;
-        "default.clock.min-quantum" = 32;
-        "default.clock.max-quantum" = 32;
-      };
-    };
-    extraConfig.pipewire-pulse.hires = {
-      "context.properties" = [ {
-          name = "libpipewire-module-protocol-pulse";
-          args = { };
-      } ];
-      "pulse.properties" = {
-        "pulse.min.req" = "32/192000";
-        "pulse.default.req" = "32/192000";
-        "pulse.max.req" = "32/192000";
-        "pulse.min.quantum" = "32/192000";
-        "pulse.max.quantum" = "32/192000";
-      };
-      "stream.properties" = {
-          "node.latency" = "32/192000";
+        "default.clock.allowed-rates" = [ 44100 48000 88200 96000 176400 192000 352800 384000 ];
       };
     };
   };
