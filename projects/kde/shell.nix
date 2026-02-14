@@ -78,10 +78,19 @@ export QT_QUICK_CONTROLS_STYLE_PATH=~/projects/kde/usr/lib/qml/QtQuick/Controls.
     libraw
     libsecret
     libselinux
+    libSM
     libsndfile
     libspectre
     libtommath
     libva
+    libX11
+    libXau
+    libxcb
+    libxcvt
+    libXdmcp
+    libXext
+    libXfixes
+    libXft
     libxkbcommon
     libxml2
     libxslt
@@ -172,23 +181,14 @@ export QT_QUICK_CONTROLS_STYLE_PATH=~/projects/kde/usr/lib/qml/QtQuick/Controls.
     wayland-scanner
     woff2
     xcb-util-cursor
+    xcbutil
+    xcbutilimage
+    xcbutilkeysyms
+    xcbutilwm
     xdotool
     xercesc
     xml2
     xmlto
-    xorg.libSM
-    xorg.libX11
-    xorg.libXau
-    xorg.libxcb
-    xorg.libxcvt
-    xorg.libXdmcp
-    xorg.libXext
-    xorg.libXfixes
-    xorg.libXft
-    xorg.xcbutil
-    xorg.xcbutilimage
-    xorg.xcbutilkeysyms
-    xorg.xcbutilwm
     yaml-language-server
     zlib
     zstd
