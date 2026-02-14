@@ -16,7 +16,7 @@ let
 
     # maximal sandboxed browsers
     "app.zen_browser.zen" = "--nofilesystem=xdg-music --nofilesystem=xdg-pictures";
-    "com.brave.Browser" = "--nofilesystem=xdg-music --nofilesystem=xdg-pictures";
+    "com.vivaldi.Vivaldi" = "--nofilesystem=xdg-music --nofilesystem=xdg-pictures";
 
     # maximal sandboxed messaging apps
     "org.kde.neochat" = "--nofilesystem=xdg-music --nofilesystem=xdg-pictures";
