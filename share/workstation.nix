@@ -33,4 +33,11 @@
     openFirewall = true;
   };
   users.users.jellyfin.extraGroups = [ "media-files" ];
+
+  # Slim Server for Logitech Squeezebox Players, add it to media-files, too
+  services.slimserver = {
+    dataDir = "/data/home/slimserver";
+    enable = true;
+  };
+  users.users.slimserver.extraGroups = [ "media-files" ];
 }
