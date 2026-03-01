@@ -26,10 +26,11 @@
     allowReboot = false;
   };
 
-  # Jellyfin media server
+  # Jellyfin media server, add it to media-files, too
   services.jellyfin = {
     dataDir = "/data/home/jellyfin";
     enable = true;
     openFirewall = true;
   };
+  users.users.jellyfin.extraGroups = [ "media-files" ];
 }

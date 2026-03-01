@@ -17,6 +17,12 @@ in
     # default shell is ZSH
     defaultUserShell = pkgs.zsh;
 
+    # group for my media files
+    groups.media-files = {
+      # hard code GID for stability over machines
+      gid = 1234;
+    };
+
     #
     # administrator
     #
@@ -50,8 +56,8 @@ in
       #  - KVM
       #  - VirtualBox
       #  - doas
-      #  - jellyfin media server file access
-      extraGroups = [ "adbusers" "dialout" "kvm" "vboxusers" "wheel" "jellyfin" ];
+      #  - media file access
+      extraGroups = [ "adbusers" "dialout" "kvm" "vboxusers" "wheel" "media-files" ];
 
       # init password
       hashedPassword = config.users.users.root.hashedPassword;
