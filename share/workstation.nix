@@ -40,6 +40,6 @@
     enable = true;
   };
   users.users.slimserver.extraGroups = [ "media-files" ];
-  networking.firewall.allowedTCPPorts = [ 3483 9000 ];
+  networking.firewall.allowedTCPPorts = [ 3483 9000 9090 ];
   networking.firewall.allowedUDPPorts = [ 3483 ];
 }
