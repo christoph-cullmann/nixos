@@ -24,4 +24,10 @@
 
   # ethernet card to use
   systemd.network.networks."10-wan".matchConfig.Name = "enp1s0";
+
+  # Squeezebox Client for itself
+  services.squeezelite = {
+    enable = true;
+    extraArguments = "-o hw:CARD=LT -s localhost";
+  };
 }
