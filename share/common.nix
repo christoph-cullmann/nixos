@@ -388,7 +388,6 @@ in
     gimp
     gnupg
     go
-    gource
     gptfdisk
     heaptrack
     hotspot
@@ -430,7 +429,6 @@ in
     nmap
     nvme-cli
     (perl.withPackages(ps: [ ps.ParallelForkManager ]))
-    openscad
     p7zip
     parted
     pciutils
