@@ -398,6 +398,7 @@ in
     inetutils
     inkscape
     jmtpfs
+    kdePackages.alpaka
     kdePackages.ark
     kdePackages.filelight
     kdePackages.k3b
