@@ -108,9 +108,6 @@ export QT_QUICK_CONTROLS_STYLE_PATH=/Users/cullmann/projects/kde/usr/lib/qml/QtQ
     qt6.qttools
     qt6.qttranslations
     qt6.qtvirtualkeyboard
-    qt6.qtwebchannel
-    qt6.qtwebsockets
-    qt6.qtwebview
     xercesc
     xml2
     xmlto
