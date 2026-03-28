@@ -119,17 +119,13 @@ export QT_QUICK_CONTROLS_STYLE_PATH=~/projects/kde/usr/lib/qml/QtQuick/Controls.
     perlPackages.XMLParser
     perlPackages.YAMLPP
     python312
-    python312Packages.build
-    python312Packages.click
-    python312Packages.jinja2
     python312Packages.lxml
     python312Packages.overrides
     python312Packages.promise
     python312Packages.pyaml
-    python312Packages.pyside6
     python312Packages.python-gitlab
     python312Packages.setproctitle
-    python312Packages.shiboken6
+    python312Packages.multiprocess
     pkg-config
     polkit
     qrencode
@@ -163,7 +159,6 @@ export QT_QUICK_CONTROLS_STYLE_PATH=~/projects/kde/usr/lib/qml/QtQuick/Controls.
     qt6.qtvirtualkeyboard
     qt6.qtwayland
     qt6Packages.qgpgme
-    rocqPackages.vsrocq-language-server
     sdl3
     simdutf
     skia
