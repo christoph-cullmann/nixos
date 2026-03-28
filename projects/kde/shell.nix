@@ -158,6 +158,8 @@ export QT_QUICK_CONTROLS_STYLE_PATH=~/projects/kde/usr/lib/qml/QtQuick/Controls.
     qt6.qttranslations
     qt6.qtvirtualkeyboard
     qt6.qtwayland
+    qt6.qtwebchannel
+    qt6.qtwebsockets
     qt6Packages.qgpgme
     sdl3
     simdutf
