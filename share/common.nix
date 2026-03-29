@@ -402,6 +402,7 @@ in
     kdePackages.ark
     kdePackages.filelight
     kdePackages.k3b
+    kdePackages.karousel
     kdePackages.kate
     kdePackages.kcachegrind
     kdePackages.kcalc
