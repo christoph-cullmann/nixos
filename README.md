@@ -8,10 +8,3 @@ nix --extra-experimental-features flakes --extra-experimental-features nix-comma
 
 caligula burn result/iso/nixos-*-x86_64-linux.iso
 ```
-
-# reset home manager
-
-```zsh
-rm /data/home/cullmann/.local/state/nix/profiles/home-manager* /date/home/cullmann/.local/state/home-manager/gcroots/current-home
-rm /data/home/sandbox/.local/state/nix/profiles/home-manager* /date/home/sandbox/.local/state/home-manager/gcroots/current-home
-```
