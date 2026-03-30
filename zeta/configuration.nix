@@ -9,11 +9,11 @@
       # Include the necessary packages and configuration for Apple Silicon support.
       ./apple-silicon-support
 
-      # Machines that have a desktop env
-      /data/nixos/share/desktop.nix
-
       # Shared config of all machines
       /data/nixos/share/common.nix
+
+      # Machines that have a desktop env
+      /data/nixos/share/desktop.nix
     ];
 
   # AArch64 machine

@@ -6,11 +6,11 @@
       # Include the results of the hardware scan.
       ./hardware-configuration.nix
 
-      # Machines that have a desktop env
-      /data/nixos/share/desktop.nix
-
       # Shared config of all machines
       /data/nixos/share/common.nix
+
+      # Machines that have a desktop env
+      /data/nixos/share/desktop.nix
     ];
 
   # x86-64 machine
