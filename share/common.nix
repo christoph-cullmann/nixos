@@ -89,6 +89,7 @@ in
   # use NetworkManager, if we have WiFi, allows Plasma to manage connections
   # use iwd, only thing that works properly on e.g. Macs
   networking.networkmanager.enable = true;
+  networking.wireless.enable = pkgs.lib.mkForce false;
   networking.wireless.iwd = {
     enable = true;
     settings.General.EnableNetworkConfiguration = true;
@@ -235,9 +236,6 @@ in
 
   # allow all firmware
   hardware.enableAllFirmware = true;
-
-  # never the wireless variant, we use iwd, if at all
-  networking.wireless.enable = pkgs.lib.mkForce false;
 
   # ensure firewall is up, allow ssh in
   networking.firewall.enable = true;
