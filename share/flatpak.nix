@@ -36,6 +36,14 @@ in {
   # enable flatpak
   services.flatpak.enable = true;
 
+  # make flatpak persistent
+  environment.persistence."/nix/persistent" = {
+    directories = [
+      # flatpak storage
+      "/var/lib/flatpak"
+    ];
+  };
+
   # update stuff on rebuild and boot
   system.activationScripts.flatpakManagement = {
     text = ''

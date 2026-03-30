@@ -207,7 +207,6 @@ in
     hideMounts = true;
     directories = [
       # user and group mappings
-      # Either "/var/lib/nixos" has to be persisted, or all users and groups must have a uid/gid specified. The following users are missing a uid
       "/var/lib/nixos"
 
       # systemd timers
@@ -219,15 +218,6 @@ in
       # NetworkManager connections
       "/etc/NetworkManager"
       "/var/lib/NetworkManager"
-
-      # flatpak storage
-      "/var/lib/flatpak"
-
-      # ollama & Co. storage
-      { directory = "/var/lib/private"; mode = "0700"; }
-
-      # local Vaultwarden instance
-      { directory = "/var/lib/vaultwarden"; mode = "0700"; user = "vaultwarden"; }
     ];
   };
 

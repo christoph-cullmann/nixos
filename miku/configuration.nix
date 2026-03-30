@@ -24,4 +24,26 @@
 
   # EurKey layout
   services.xserver.xkb.layout = "eu";
+
+  # try local AI stuff
+  services.ollama = {
+    enable = true;
+
+    # preload models, see https://ollama.com/library
+    loadModels = [ "deepseek-coder" "deepseek-r1" "gemma3" "llama3.2" "llava" "mistral" ];
+  };
+
+  # local Vaultwarden
+  services.vaultwarden.enable = true;
+
+  # keep some stuff persistent for the miku services
+  environment.persistence."/nix/persistent" = {
+    directories = [
+      # ollama & Co. storage
+      { directory = "/var/lib/private"; mode = "0700"; }
+
+      # local Vaultwarden instance
+      { directory = "/var/lib/vaultwarden"; mode = "0700"; user = "vaultwarden"; }
+    ];
+  };
 }

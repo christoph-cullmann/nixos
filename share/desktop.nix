@@ -45,20 +45,9 @@ in
   services.desktopManager.plasma6.enable = true;
   services.displayManager.plasma-login-manager.enable = true;
 
-  # try local AI stuff
-  services.ollama = {
-    enable = true;
-
-    # preload models, see https://ollama.com/library
-    loadModels = [ "deepseek-coder" "deepseek-r1" "gemma3" "llama3.2" "llava" "mistral" ];
-  };
-
   # get gnupg to work
   programs.gnupg.agent.enable = true;
   programs.gnupg.agent.pinentryPackage = pkgs.pinentry-curses;
-
-  # local Vaultwarden
-  services.vaultwarden.enable = true;
 
   # enable VirtualBox on the x86-64 machines
   virtualisation.virtualbox.host.enable = pkgs.stdenv.hostPlatform.isx86;
