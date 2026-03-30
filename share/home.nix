@@ -43,19 +43,11 @@
       # list latest files last
       ltr = "eza -l -s modified";
 
-      # ssh around in the local network
-      anko = "ssh anko.fritz.box";
-      ankoroot = "ssh root@anko.fritz.box";
-      beta = "ssh beta.fritz.box";
-      betaroot = "ssh root@beta.fritz.box";
-      mac = "ssh mac.fritz.box";
-      macroot = "ssh root@mac.fritz.box";
+      # ssh around some machines
       miku = "ssh miku.fritz.box";
       mikuroot = "ssh root@miku.fritz.box";
       neko = "ssh neko.fritz.box";
       nekoroot = "ssh root@neko.fritz.box";
-      puffy = "ssh -X puffy.fritz.box";
-      puffyroot = "ssh root@puffy.fritz.box";
       star = "ssh star.babylon2k.com";
       starroot = "ssh root@star.babylon2k.com";
     };
