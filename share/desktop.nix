@@ -41,24 +41,9 @@ in
   # allow realtime
   security.rtkit.enable = true;
 
-  # enable the KDE Plasma Desktop Environment
+  # enable the KDE Plasma Desktop Environment & Login Manager
   services.desktopManager.plasma6.enable = true;
-
-  # enable the Ly login manager with proper KWallet integration
-  services.displayManager.ly = {
-    enable = true;
-    settings = {
-      animation = "matrix";
-      load = true;
-      save = true;
-      session_log = ".cache/ly-session.log";
-    };
-  };
-  security.pam.services.ly.kwallet = {
-    enable = true;
-    forceRun = true;
-    package = pkgs.kdePackages.kwallet-pam;
-  };
+  services.displayManager.plasma-login-manager.enable = true;
 
   # try local AI stuff
   services.ollama = {

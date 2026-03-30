@@ -229,10 +229,6 @@ in
       # local Vaultwarden instance
       { directory = "/var/lib/vaultwarden"; mode = "0700"; user = "vaultwarden"; }
     ];
-    files = [
-      # Ly last used user and Co.
-      "/etc/ly/save.ini"
-    ];
   };
 
   # ensure our data is not rotting
