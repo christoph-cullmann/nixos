@@ -78,8 +78,7 @@ in
   # enable VirtualBox on the x86-64 machines
   virtualisation.virtualbox.host.enable = pkgs.stdenv.hostPlatform.isx86;
 
-  # List packages installed in system profile. To search, run:
-  # $ nix search wget
+  # packages for the desktop system
   environment.systemPackages = with pkgs; [
     alsa-utils
     android-tools
@@ -87,7 +86,6 @@ in
     aspellDicts.en
     bitwise
     blender
-    btop
     caligula
     castget
     clinfo
@@ -140,13 +138,8 @@ in
     libreoffice
     libva-utils
     libwebp
-    lsof
     lynis
-    maildrop
-    mailutils
-    mc
     mesa-demos
-    micro
     mtkclient
     nixos-install-tools
     nmap
@@ -185,8 +178,6 @@ in
     xauth
     xhost
     xlsclients
-    zoxide
-    zsh
   ];
 
   # allow keyboard configure tools to work

@@ -396,6 +396,18 @@ in
     enableMail = false;
   };
 
+  # basic packages we want on all machines
+  environment.systemPackages = with pkgs; [
+    btop
+    lsof
+    maildrop
+    mailutils
+    mc
+    micro
+    zoxide
+    zsh
+  ];
+
   # use ZSH per default
   programs.zsh.enable = true;
   environment.shells = with pkgs; [ zsh ];
