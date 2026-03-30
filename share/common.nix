@@ -1,7 +1,7 @@
 { config, pkgs, ... }:
 let
   impermanence = builtins.fetchTarball "https://github.com/nix-community/impermanence/archive/master.tar.gz";
-  cullmann-fonts = pkgs.callPackage "/data/nixos/packages/cullmann-fonts.nix" {};
+  home-manager = builtins.fetchTarball "https://github.com/nix-community/home-manager/archive/master.tar.gz";
 in
 {
   #
@@ -13,8 +13,8 @@ in
       # manage persistent files
       "${impermanence}/nixos.nix"
 
-      # our users
-      "/data/nixos/share/users.nix"
+      # home manager for per user config
+      "${home-manager}/nixos"
   ];
 
   # install release
@@ -302,32 +302,6 @@ in
   # add all locales we use
   i18n.supportedLocales = ["de_DE.UTF-8/UTF-8" "en_US.UTF-8/UTF-8"];
 
-  # enable sound with PipeWire
-  services.pipewire = {
-    enable = true;
-    alsa = {
-      enable = true;
-      support32Bit = true;
-    };
-    jack.enable = true;
-    pulse.enable = true;
-
-    # allow highres audio
-    # check what
-    #     grep Rates /proc/asound/card*/stream*
-    # tells
-    # we settle for 192000
-    extraConfig.pipewire.hires = {
-      "context.properties" = {
-        "default.clock.rate" = 192000;
-        "default.clock.allowed-rates" = [ 44100 48000 88200 96000 176400 192000 352800 384000 ];
-      };
-    };
-  };
-
-  # allow realtime
-  security.rtkit.enable = true;
-
   # no need to replace the kernel at runtime
   security.protectKernelImage = true;
 
@@ -369,117 +343,6 @@ in
   # allow unfree packages
   nixpkgs.config.allowUnfree = true;
 
-  # List packages installed in system profile. To search, run:
-  # $ nix search wget
-  environment.systemPackages = with pkgs; [
-    alsa-utils
-    android-tools
-    aspellDicts.de
-    aspellDicts.en
-    bitwise
-    blender
-    btop
-    caligula
-    castget
-    clinfo
-    cyanrip
-    delta
-    dig
-    dmidecode
-    duf
-    dysk
-    efibootmgr
-    exfatprogs
-    f2
-    fdupes
-    ffmpeg-full
-    file
-    flac
-    flamegraph
-    fzf
-    gimp
-    gnupg
-    go
-    gptfdisk
-    heaptrack
-    hotspot
-    hugo
-    hunspellDicts.de_DE
-    hunspellDicts.en_US
-    hyfetch
-    inetutils
-    inkscape
-    jmtpfs
-    kdePackages.alpaka
-    kdePackages.ark
-    kdePackages.filelight
-    kdePackages.k3b
-    kdePackages.karousel
-    kdePackages.kate
-    kdePackages.kcachegrind
-    kdePackages.kcalc
-    kdePackages.keysmith
-    kdePackages.kompare
-    kdePackages.konsole
-    kdePackages.okular
-    kdePackages.partitionmanager
-    keychain
-    kid3
-    krita
-    lazygit
-    libjxl
-    libreoffice
-    libva-utils
-    libwebp
-    lsof
-    lynis
-    maildrop
-    mailutils
-    mc
-    mesa-demos
-    micro
-    mtkclient
-    nixos-install-tools
-    nmap
-    nvme-cli
-    (perl.withPackages(ps: [ ps.ParallelForkManager ]))
-    p7zip
-    parted
-    pciutils
-    pdftk
-    perf
-    procs
-    pulseaudio
-    pwgen
-    qmk
-    restic
-    ripgrep
-    scc
-    signify
-    ssh-audit
-    sysstat
-    tageditor
-    tcl
-    texlive.combined.scheme-small
-    tigervnc
-    tk
-    tldr
-    unrar
-    unzip
-    usbutils
-    valgrind
-    vim
-    vlc
-    vscodium
-    vulkan-tools
-    wayland-utils
-    xauth
-    xhost
-    xlsclients
-    zoxide
-    zsh
-  ];
-
   # we want git with LFS support and Co.
   programs.git = {
     enable = true;
@@ -488,96 +351,8 @@ in
     prompt.enable = true;
   };
 
-  # allow keyboard configure tools to work
-  hardware.keyboard.qmk.enable = true;
-
   # add ~/bin to PATH
   environment.homeBinInPath = true;
-
-  # fonts for all users
-  fonts = {
-    # add default fonts
-    enableDefaultPackages = true;
-
-    # ensure we have an emulated global fontdir
-    fontDir = {
-      enable = true;
-      decompressFonts = true;
-    };
-
-    # system fonts
-    packages = with pkgs; [
-      # personal paid fonts
-      # https://www.monolisa.dev/
-      # https://www.lucasfonts.com/fonts/the-sans
-      # https://www.lucasfonts.com/fonts/the-serif
-      cullmann-fonts
-
-      # font families with good unicode coverage as fallback
-      noto-fonts
-      noto-fonts-cjk-sans
-      noto-fonts-cjk-serif
-      noto-fonts-lgc-plus
-
-      # emoji in Farbe und bunt
-      noto-fonts-color-emoji
-
-      # fonts collections for testing
-      google-fonts
-
-      # monospace fonts to test Kate, Konsole and Co.
-      atkinson-hyperlegible-mono
-      inconsolata
-      maple-mono.truetype
-      monaspace
-      monocraft
-      recursive
-      spleen
-    ]
-
-    # add all nerd-fonts, very useful for testing, too
-    ++ builtins.filter lib.attrsets.isDerivation (builtins.attrValues pkgs.nerd-fonts);
-
-    # proper default config for fonts
-    fontconfig = {
-      # we use fontconfig
-      enable = true;
-
-      # use some proper default fonts
-      defaultFonts = {
-        emoji = [ "Noto Color Emoji" ];
-        monospace = [ "MonoLisa" "Noto Sans Mono" ];
-        sansSerif = [ "TheSansOffice" "Noto Sans" ];
-        serif = [ "TheSerifOffice" "Noto Serif" ];
-      };
-
-      # don't look like ancient X11
-      antialias = true;
-
-      # enable proper hinting
-      hinting = {
-        enable = true;
-        style = "full";
-        autohint = true;
-      };
-
-      # disable subpixel rendering to avoid color blurr
-      subpixel = {
-        rgba = "none";
-        lcdfilter = "none";
-      };
-    };
-  };
-
-  # OpenGL
-  hardware.graphics.enable = true;
-
-  # try to ensure we can use our network LaserJet
-  services.printing.enable = true;
-  services.printing.drivers = [ pkgs.hplip ];
-
-  # dconf is needed for gtk, see https://nixos.wiki/wiki/KDE
-  programs.dconf.enable = true;
 
   # ensure machine can send mails
   services.opensmtpd = {
@@ -631,9 +406,6 @@ in
   # use micro as default terminal editor
   environment.variables.EDITOR = "micro";
 
-  # enable VirtualBox on the x86-64 machines
-  virtualisation.virtualbox.host.enable = pkgs.stdenv.hostPlatform.isx86;
-
   # use doas instead of sudo
   security.sudo.enable = false;
   security.doas.enable = true;
@@ -643,18 +415,38 @@ in
     { groups = [ "wheel" ]; noPass = false; keepEnv = true; persist = true; }
   ];
 
-  # try local AI stuff
-  services.ollama = {
-    enable = true;
+  # define the users we have on our systems
+  users = {
+    # all users and passwords are defined here
+    mutableUsers = false;
 
-    # preload models, see https://ollama.com/library
-    loadModels = [ "deepseek-coder" "deepseek-r1" "gemma3" "llama3.2" "llava" "mistral" ];
+    # default shell is ZSH
+    defaultUserShell = pkgs.zsh;
+
+    #
+    # administrator
+    #
+    users.root = {
+      # init password
+      hashedPassword = builtins.readFile "/data/nixos/secret/password.secret";
+
+      # use fixed auth keys
+      openssh.authorizedKeys.keys = pkgs.lib.splitString "\n" (builtins.readFile "/data/nixos/secret/authorized_keys.secret");
+    };
   };
 
-  # get gnupg to work
-  programs.gnupg.agent.enable = true;
-  programs.gnupg.agent.pinentryPackage = pkgs.pinentry-curses;
+  # home manager settings
+  home-manager = {
+    # let home manager install stuff to /etc/profiles
+    useUserPackages = true;
 
-  # local Vaultwarden
-  services.vaultwarden.enable = true;
+    # use global pkgs
+    useGlobalPkgs = true;
+
+    # root just with shared home manager settings
+    users.root = {
+      # shared config
+      imports = [ ./home.nix ];
+    };
+  };
 }
