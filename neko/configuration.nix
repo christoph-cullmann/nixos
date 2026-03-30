@@ -6,9 +6,6 @@
       # Include the results of the hardware scan.
       ./hardware-configuration.nix
 
-      # Shared config of all workstations
-      /data/nixos/share/workstation.nix
-
       # Machines that have a desktop env
       /data/nixos/share/desktop.nix
 
@@ -25,6 +22,6 @@
   # hostid, important for ZFS pool
   networking.hostId = "4836f248";
 
-  # ethernet card to use
-  systemd.network.networks."10-wan".matchConfig.Name = "enp11s0";
+  # EurKey layout
+  services.xserver.xkb.layout = "eu";
 }

@@ -6,9 +6,6 @@
       # Include the results of the hardware scan.
       ./hardware-configuration.nix
 
-      # Shared config of all laptops
-      /data/nixos/share/laptop.nix
-
       # Machines that have a desktop env
       /data/nixos/share/desktop.nix
 
@@ -21,5 +18,10 @@
 
   # our hostname
   networking.hostName = "beta";
+
+  # hostid, important for ZFS pool
   networking.hostId = "c07bab49";
+
+  # german laptop keyboard
+  services.xserver.xkb.layout = "de";
 }

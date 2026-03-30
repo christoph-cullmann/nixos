@@ -86,6 +86,18 @@ in
     "tipc"
   ];
 
+  # use NetworkManager, if we have WiFi, allows Plasma to manage connections
+  # use iwd, only thing that works properly on e.g. Macs
+  networking.networkmanager.enable = true;
+  networking.wireless.iwd = {
+    enable = true;
+    settings.General.EnableNetworkConfiguration = true;
+  };
+
+  # enable proper power management
+  services.power-profiles-daemon.enable = false;
+  services.tlp.enable = true;
+
   # swap to RAM, allow up to 10% of memory be used for that
   zramSwap.enable = true;
   zramSwap.memoryPercent = 10;
