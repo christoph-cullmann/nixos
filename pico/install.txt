@@ -1,0 +1,179 @@
+# boot from USB
+
+Command + Option + O + F combo (Win + Alt + O + F on standard PC keyboards)
+
+boot ud:,\\:tbxi
+
+# login & enable sshd
+
+dinitctl enable sshd
+
+# remote in to anon:chimera and doas bash
+
+ssh anon@chimera
+
+# wipe disk
+
+blkdiscard -v -f /dev/sda
+mac-fdisk -l /dev/sda
+
+# add Power Mac compatible partitions
+
+(echo i; echo; echo b 2p; echo c 3p 1G boot; echo c 4p 64G swap; echo c 5p 5p root; echo w; echo y; echo q ) | mac-fdisk /dev/sda
+mac-fdisk -l /dev/sda
+
+# result will look like
+
+# Command (? for help): /dev/sda
+#         #                    type name                   length   base       ( size )  system
+# /dev/sda1     Apple_partition_map Apple                      63 @ 1          ( 31.5k)  Partition map
+# /dev/sda2         Apple_Bootstrap bootstrap                1600 @ 64         (800.0k)  NewWorld bootblock
+# /dev/sda3         Apple_UNIX_SVR2 boot                  2097152 @ 1664       (  1.0G)  Linux native
+# /dev/sda4         Apple_UNIX_SVR2 swap                134217728 @ 2098816    ( 64.0G)  Linux swap
+# /dev/sda5         Apple_UNIX_SVR2 root               1817208624 @ 136316544  (866.5G)  Linux native
+#
+# Block size=512, Number of Blocks=1953525168
+# DeviceType=0x0, DeviceId=0x0
+
+# create ZFS root
+
+mkdir /media/root
+
+zpool create \
+    -o ashift=13 \
+    -o autotrim=off \
+    -O acltype=posixacl \
+    -O atime=off \
+    -O canmount=off \
+    -O checksum=blake3 \
+    -O compression=lz4 \
+    -O dnodesize=auto \
+    -O utf8only=on \
+    -O normalization=none \
+    -O xattr=sa \
+    -O mountpoint=/ \
+    -R /media/root \
+    -f zpool /dev/sda5
+
+zfs create -o recordsize=64K -o canmount=noauto -o mountpoint=/ zpool/root
+
+zfs mount zpool/root
+
+# create boot
+
+mkfs.ext4 /dev/sda3
+mkdir /media/root/boot
+mount /dev/sda3 /media/root/boot
+
+# create swap
+
+mkswap /dev/sda4
+
+# create the Power Mac boot partition
+
+dd if=/dev/zero of=/dev/sda2
+hformat -l bootstrap /dev/sda2
+
+# fix root permissions
+
+chmod 755 /media/root
+
+# install Chimara Linux
+
+chimera-bootstrap /media/root
+
+# step into the new system
+
+chimera-bootstrap /media/root
+
+# upgrade
+
+apk update
+apk upgrade --available
+
+# add kernel with ZFS
+
+apk add --no-interactive linux-lts
+apk add --no-interactive linux-lts-zfs-bin
+
+# generate fstab with swap
+
+swapon /dev/sda4
+genfstab / >> /etc/fstab
+cat /etc/fstab
+
+# root passwd
+
+passwd root
+
+# initrd
+
+update-initramfs -c -k all
+
+# Grub for Power Mac
+
+apk add --no-interactive grub-powerpc-ieee1275
+
+mkdir -p /boot/macppc
+mount -t hfs /dev/sda2 /boot/macppc
+grub-install --macppc-directory=/boot/macppc /dev/sda2
+umount /boot/macppc
+rmdir /boot/macppc
+hmount /dev/sda2
+hattrib -t tbxi -c UNIX :System:Library:CoreServices:BootX
+hattrib -b :System:Library:CoreServices
+humount
+
+update-grub
+
+# reboot
+
+exit
+reboot
+
+# post install
+
+# add cullmann user
+
+useradd cullmann
+passwd cullmann
+usermod -a -G wheel,kvm cullmann
+
+# enable syslog
+
+dinitctl enable syslog-ng
+
+# enable sshd
+
+dinitctl enable sshd
+
+# we want dhcpd
+
+dinitctl enable dhcpcd
+
+# hostname
+
+echo pico > /etc/hostname
+
+# time zone
+
+ln -sf /usr/share/zoneinfo/Europe/Berlin /etc/localtime
+
+# add pipewire if not there
+
+apk add pipewire
+
+# add KDE Plasma and X11
+
+apk add plasma-desktop
+apk add xserver-xorg
+
+# we use SDDM
+
+dinitctl enable sddm
+
+# add more tools
+
+apk add mc
+
+
