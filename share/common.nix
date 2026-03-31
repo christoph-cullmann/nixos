@@ -23,6 +23,13 @@ in
   # enable ZFS
   boot.supportedFilesystems = ["zfs"];
 
+  # boot splash
+  boot.plymouth = {
+    enable = true;
+    theme = "hexa_retro";
+    themePackages = [ pkgs.adi1090x-plymouth-themes ];
+  };
+
   # my kernel parameters
   boot.kernelParams = [
     # Plymouth

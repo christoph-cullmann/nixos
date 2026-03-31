@@ -8,13 +8,6 @@ in
       "/data/nixos/share/flatpak.nix"
   ];
 
-  # boot splash
-  boot.plymouth = {
-    enable = true;
-    theme = "hexa_retro";
-    themePackages = [ pkgs.adi1090x-plymouth-themes ];
-  };
-
   # enable sound with PipeWire
   services.pipewire = {
     enable = true;
