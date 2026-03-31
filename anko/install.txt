@@ -30,6 +30,10 @@ efibootmgr -b 1 -B
 efibootmgr -b 2 -B
 efibootmgr -b 3 -B
 efibootmgr -b 4 -B
+efibootmgr -b 5 -B
+efibootmgr -b 6 -B
+efibootmgr -b 7 -B
+efibootmgr -b 8 -B
 efibootmgr
 
 # host name to use
