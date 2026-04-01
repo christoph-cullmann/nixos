@@ -9,11 +9,6 @@
           "${nixos}/nixos/modules/installer/cd-dvd/installation-cd-minimal.nix"
           ({ config, pkgs, ... }: {
             networking.networkmanager.enable = true;
-            networking.wireless.enable = pkgs.lib.mkForce false;
-            networking.wireless.iwd = {
-              enable = true;
-              settings.General.EnableNetworkConfiguration = true;
-            };
           })
         ];
       };
