@@ -36,7 +36,7 @@
   # local Vaultwarden
   services.vaultwarden.enable = true;
 
-  # keep some stuff persistent for the miku services
+  # keep some stuff persistent for the services
   environment.persistence."/nix/persistent" = {
     directories = [
       # ollama & Co. storage
