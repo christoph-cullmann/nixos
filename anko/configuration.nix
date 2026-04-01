@@ -29,6 +29,11 @@
 #   };
 #
 #
+
+  # extra group for media-files
+  users.groups.media-files = {
+  };
+
   # Jellyfin media server, add it to media-files, too
   services.jellyfin = {
     enable = true;
