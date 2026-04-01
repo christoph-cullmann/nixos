@@ -22,14 +22,6 @@
   # EurKey layout
   services.xserver.xkb.layout = "eu";
 
-  # Squeezebox Client for itself
-#   services.squeezelite = {
-#     enable = true;
-#     extraArguments = "-o hw:CARD=LT -s localhost";
-#   };
-#
-#
-
   # extra group for media-files
   users.groups.media-files = {
   };
@@ -48,6 +40,12 @@
   users.users.slimserver.extraGroups = [ "media-files" ];
   networking.firewall.allowedTCPPorts = [ 3483 9000 9090 ];
   networking.firewall.allowedUDPPorts = [ 3483 ];
+
+  # Squeezebox Client for itself
+  services.squeezelite = {
+    enable = true;
+    extraArguments = "-o hw:CARD=LT -s localhost";
+  };
 
   # keep some stuff persistent for the services
   environment.persistence."/nix/persistent" = {
