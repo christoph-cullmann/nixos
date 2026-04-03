@@ -44,7 +44,7 @@
   # Squeezebox Client for itself
   services.squeezelite = {
     enable = true;
-    extraArguments = "-o hw:CARD=LT -s localhost -a :::0";
+    extraArguments = "-o hw:CARD=LT -C 60 -s localhost -a ::24_3:0";
   };
 
   # keep some stuff persistent for the services
