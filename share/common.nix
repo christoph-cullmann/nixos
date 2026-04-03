@@ -47,7 +47,7 @@ in
     "nohibernate"
 
     # for the Apple stuff with Notch: use the space around it
-    "apple_dcp.show_notch=1"
+    "appledrm.show_notch=1"
   ];
 
   # tweak ZFS
