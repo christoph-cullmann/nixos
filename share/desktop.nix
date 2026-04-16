@@ -125,6 +125,7 @@ in
     ripgrep
     scc
     signify
+    sniffnet
     ssh-audit
     sysstat
     tageditor
