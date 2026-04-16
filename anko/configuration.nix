@@ -42,10 +42,10 @@
   networking.firewall.allowedUDPPorts = [ 3483 ];
 
   # Squeezebox Client for itself
-  services.squeezelite = {
-    enable = true;
-    extraArgs = "-o hw:CARD=LT -s localhost -a ::24_3:0";
-  };
+#   services.squeezelite = {
+#     enable = true;
+#     extraArgs = "-o hw:CARD=LT -s localhost -a ::24_3:0";
+#   };
 
   # keep some stuff persistent for the services
   environment.persistence."/nix/persistent" = {
