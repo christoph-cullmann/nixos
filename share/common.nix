@@ -23,6 +23,9 @@ in
   # enable ZFS
   boot.supportedFilesystems = ["zfs"];
 
+  # avoid to enforce root import, is more safe as more checks are done
+  boot.zfs.forceImportRoot = false;
+
   # boot splash
   boot.plymouth = {
     enable = true;
