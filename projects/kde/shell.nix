@@ -1,7 +1,7 @@
 with import <nixpkgs> {};
 
 # dev env
-stdenv.mkDerivation {
+llvmPackages.stdenv.mkDerivation {
   name = "nix-shell";
   # ensure the local KDE things are in path
   shellHook = ''
