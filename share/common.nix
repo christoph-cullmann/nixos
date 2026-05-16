@@ -151,8 +151,12 @@ in
   boot.loader.systemd-boot.memtest86.enable = pkgs.stdenv.hostPlatform.isx86;
 
   # use the kmscon as console variant
-  services.kmscon.enable = true;
-  services.kmscon.useXkbConfig = true;
+  services.kmscon = {
+    enable = true;
+    hwRender = true;
+    term = "xterm-256color";
+    useXkbConfig = true;
+  };
 
   # root file system, we will rollback that on boot
   fileSystems."/" = {
