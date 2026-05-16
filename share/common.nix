@@ -150,12 +150,9 @@ in
   # memcheck, works only on x86 machines
   boot.loader.systemd-boot.memtest86.enable = pkgs.stdenv.hostPlatform.isx86;
 
-  # setup the console stuff early and use a nice font
-  console.earlySetup = true;
-  console.font = "${pkgs.spleen}/share/consolefonts/spleen-16x32.psfu";
-
-  # use X11/wayland layout for console, too
-  console.useXkbConfig = true;
+  # use the kmscon as console variant
+  services.kmscon.enable = true;
+  services.kmscon.useXkbConfig = true;
 
   # root file system, we will rollback that on boot
   fileSystems."/" = {
