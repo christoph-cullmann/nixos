@@ -154,8 +154,6 @@ in
   # use the kmscon as console variant
   services.kmscon = {
     enable = true;
-    fonts = [ { name = "MonoLisa"; package = cullmann-fonts; } ];
-    hwRender = true;
     term = "xterm-256color";
     useXkbConfig = true;
   };
