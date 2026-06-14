@@ -129,6 +129,7 @@ export QT_QUICK_CONTROLS_STYLE_PATH=~/projects/kde/usr/lib/qml/QtQuick/Controls.
     pkg-config
     polkit
     qrencode
+    qwen-code
     qt6.qt3d
     qt6.qt5compat
     qt6.qtbase

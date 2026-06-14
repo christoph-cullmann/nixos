@@ -27,10 +27,14 @@
 
   # try local AI stuff
   services.ollama = {
+    # turn ollama on
     enable = true;
 
     # preload models, see https://ollama.com/library
-    loadModels = [ "deepseek-coder" "deepseek-r1" "gemma3" "llama3.2" "llava" "mistral" ];
+    loadModels = [ "gemma4:e4b" "granite4.1:8b" "qwen3.5:9b" ];
+
+    # only keep modules listed in loadModels
+    syncModels = true;
   };
 
   # local Vaultwarden
