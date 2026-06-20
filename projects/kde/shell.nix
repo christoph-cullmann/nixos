@@ -81,6 +81,7 @@ export QT_QUICK_CONTROLS_STYLE_PATH=~/projects/kde/usr/lib/qml/QtQuick/Controls.
     libSM
     libsndfile
     libspectre
+    libssh
     libtommath
     libva
     libX11
@@ -162,6 +163,7 @@ export QT_QUICK_CONTROLS_STYLE_PATH=~/projects/kde/usr/lib/qml/QtQuick/Controls.
     qt6.qtwebengine
     qt6.qtwebsockets
     qt6Packages.qgpgme
+    qwen-code
     sdl3
     simdutf
     skia

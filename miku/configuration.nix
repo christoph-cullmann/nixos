@@ -35,6 +35,10 @@
 
     # only keep modules listed in loadModels
     syncModels = true;
+
+    # larger context to get qwen-code to work    environmentVariables = {
+      OLLAMA_CONTEXT_LENGTH = "65536";
+    };
   };
 
   # local Vaultwarden
