@@ -32,7 +32,6 @@ export QT_QUICK_CONTROLS_STYLE_PATH=~/projects/kde/usr/lib/qml/QtQuick/Controls.
     chromium
     clojure-lsp
     cmake
-    crush
     ctags
     curl
     discount
