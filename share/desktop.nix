@@ -136,7 +136,6 @@ in
     tldr
     unrar
     unzip
-    usbutils
     valgrind
     vim
     vlc

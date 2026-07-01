@@ -395,6 +395,7 @@ in
     mailutils
     mc
     micro
+    usbutils
     zoxide
     zsh
   ];
