@@ -19,6 +19,32 @@ in
   # enable VirtualBox on the x86-64 machines
   virtualisation.virtualbox.host.enable = pkgs.stdenv.hostPlatform.isx86;
 
+  # enable sound with PipeWire
+  services.pipewire = {
+    enable = true;
+    alsa = {
+      enable = true;
+      support32Bit = true;
+    };
+    jack.enable = true;
+    pulse.enable = true;
+
+    # allow highres audio
+    # check what
+    #     grep Rates /proc/asound/card*/stream*
+    # tells
+    # we settle for 192000
+    extraConfig.pipewire.hires = {
+      "context.properties" = {
+        "default.clock.rate" = 192000;
+        "default.clock.allowed-rates" = [ 44100 48000 88200 96000 176400 192000 352800 384000 ];
+      };
+    };
+  };
+
+  # allow realtime
+  security.rtkit.enable = true;
+
   # packages for the desktop system
   environment.systemPackages = with pkgs; [
     alsa-utils
