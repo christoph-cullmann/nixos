@@ -103,12 +103,6 @@
     options = [ "--cmd" "cd" ];
   };
 
-  # integrate fuzzy search
-  programs.fzf = {
-    enable = true;
-    enableZshIntegration = true;
-  };
-
   # better completion
   programs.carapace = {
     enable = true;
