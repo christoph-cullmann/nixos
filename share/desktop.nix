@@ -117,6 +117,7 @@ in
     pciutils
     pdftk
     perf
+    polonium
     procs
     pulseaudio
     pwgen
