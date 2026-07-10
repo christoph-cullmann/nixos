@@ -12,7 +12,6 @@
 
   # AMD graphics
   boot.initrd.kernelModules = [ "amdgpu" ];
-  services.ollama.package = pkgs.ollama-rocm;
 
   # /boot efi partition to boot in UEFI mode
   fileSystems."/boot" = {
