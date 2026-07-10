@@ -34,7 +34,7 @@
     package = pkgs.ollama-cpu;
 
     # preload models, see https://ollama.com/library
-    loadModels = [ "gemma4:e4b" "granite4.1:8b" "ornith:35b" "qwen3.5:9b" ];
+    loadModels = [ "gemma4:e4b" "granite4.1:8b" "ornith:9b" "ornith:35b" "qwen3.5:9b" ];
 
     # only keep modules listed in loadModels
     syncModels = true;
