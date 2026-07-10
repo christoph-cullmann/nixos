@@ -98,7 +98,6 @@ in
     kdePackages.partitionmanager
     keychain
     kid3
-    krita
     lazygit
     libjxl
     libreoffice
