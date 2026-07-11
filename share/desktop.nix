@@ -129,7 +129,7 @@ in
     sysstat
     tageditor
     tcl
-    texlive.combined.scheme-small
+    texliveSmall
     tigervnc
     tk
     tldr
