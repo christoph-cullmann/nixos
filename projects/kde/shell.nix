@@ -101,6 +101,7 @@ export QT_QUICK_CONTROLS_STYLE_PATH=~/projects/kde/usr/lib/qml/QtQuick/Controls.
     lmdb
     mesa
     meson
+    mistral-vibe
     modemmanager
     llvmPackages.clang-tools # clangd
     llvmPackages.libclang.python # git-clang-format
