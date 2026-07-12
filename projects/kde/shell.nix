@@ -120,14 +120,14 @@ export QT_QUICK_CONTROLS_STYLE_PATH=~/projects/kde/usr/lib/qml/QtQuick/Controls.
     perlPackages.URI
     perlPackages.XMLParser
     perlPackages.YAMLPP
-    python312
-    python312Packages.lxml
-    python312Packages.overrides
-    python312Packages.promise
-    python312Packages.pyaml
-    python312Packages.python-gitlab
-    python312Packages.setproctitle
-    python312Packages.multiprocess
+    python314
+    python314Packages.lxml
+    python314Packages.overrides
+    python314Packages.promise
+    python314Packages.pyaml
+    python314Packages.python-gitlab
+    python314Packages.setproctitle
+    python314Packages.multiprocess
     pkg-config
     polkit
     qrencode
@@ -164,7 +164,6 @@ export QT_QUICK_CONTROLS_STYLE_PATH=~/projects/kde/usr/lib/qml/QtQuick/Controls.
     qt6.qtwebengine
     qt6.qtwebsockets
     qt6Packages.qgpgme
-    qwen-code
     sdl3
     simdutf
     skia
