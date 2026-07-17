@@ -24,6 +24,9 @@ let
 
     # maximal sandboxed password safe
     "com.bitwarden.desktop" = "--nofilesystem=xdg-music --nofilesystem=xdg-pictures";
+
+    # maximal sandboxed torrent client, allow to access shared stuff
+    "org.deluge_torrent.deluge" = "--nofilesystem=xdg-music --nofilesystem=xdg-pictures";
   };
 
   # install helper, will set filesystem overrides
