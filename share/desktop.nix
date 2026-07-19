@@ -100,7 +100,7 @@ in
     kid3
     lazygit
     libjxl
-    libreoffice
+    libreoffice-qt
     libva-utils
     libwebp
     lynis
