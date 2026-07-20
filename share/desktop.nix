@@ -83,7 +83,6 @@ in
     hyfetch
     inetutils
     inkscape
-    jmtpfs
     kdePackages.alpaka
     kdePackages.ark
     kdePackages.filelight
