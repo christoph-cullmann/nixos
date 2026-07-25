@@ -1,4 +1,4 @@
-with import <nixpkgs> {};
+with import <nixpkgs> { config.allowUnfree = true; };
 
 # dev env
 llvmPackages.stdenv.mkDerivation {
