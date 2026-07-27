@@ -42,27 +42,26 @@ in
     };
 
     # avoid suspend of sound devices that leads to issues
-    wireplumber.configPackages = [
-      (pkgs.writeTextDir "share/wireplumber/wireplumber.conf.d/alsa.conf" ''
-        monitor.alsa.rules = [
-          {
-            matches = [
-              {
-                node.name = "~alsa_input.*"
-              }
-              {
-                node.name = "~alsa_output.*"
-              }
-            ]
-            actions = {
-              update-props = {
-                session.suspend-timeout-seconds = 0
-              }
+    # see https://wiki.nixos.org/wiki/PipeWire
+    wireplumber.extraConfig."99-disable-suspend" = {
+      "monitor.alsa.rules" = [
+        {
+          matches = [
+            {
+              "node.name" = "~alsa_input.*";
             }
-          }
-        ]
-      '')
-    ];
+            {
+              "node.name" = "~alsa_output.*";
+            }
+          ];
+          actions = {
+            update-props = {
+              "session.suspend-timeout-seconds" = 0;
+            };
+          };
+        }
+      ];
+    };
   };
 
   # allow realtime
