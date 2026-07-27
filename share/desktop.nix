@@ -40,6 +40,29 @@ in
         "default.clock.allowed-rates" = [ 44100 48000 88200 96000 176400 192000 352800 384000 ];
       };
     };
+
+    # avoid suspend of sound devices that leads to issues
+    wireplumber.configPackages = [
+      (pkgs.writeTextDir "share/wireplumber/wireplumber.conf.d/alsa.conf" ''
+        monitor.alsa.rules = [
+          {
+            matches = [
+              {
+                node.name = "~alsa_input.*"
+              }
+              {
+                node.name = "~alsa_output.*"
+              }
+            ]
+            actions = {
+              update-props = {
+                session.suspend-timeout-seconds = 0
+              }
+            }
+          }
+        ]
+      '')
+    ];
   };
 
   # allow realtime
