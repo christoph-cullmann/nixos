@@ -1,7 +1,7 @@
 with import <nixpkgs> { config.allowUnfree = true; };
 
 # dev env
-llvmPackages.stdenv.mkDerivation {
+stdenv.mkDerivation {
   name = "nix-shell";
   # ensure the local KDE things are in path
   shellHook = ''
