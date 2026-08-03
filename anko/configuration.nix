@@ -38,4 +38,18 @@
       { directory = "/var/lib/jellyfin"; mode = "0700"; user = "jellyfin"; }
     ];
   };
+
+  # Slim Server for Logitech Squeezebox Players, add it to media-files & make it persistent
+  services.slimserver = {
+    enable = true;
+  };
+  users.users.slimserver.extraGroups = [ "media-files" ];
+  environment.persistence."/nix/persistent" = {
+    directories = [
+      # local Slim Server instance
+      { directory = "/var/lib/slimserver"; mode = "0700"; user = "slimserver"; }
+    ];
+  };
+  networking.firewall.allowedTCPPorts = [ 3483 9000 9090 ];
+  networking.firewall.allowedUDPPorts = [ 3483 ];
 }
