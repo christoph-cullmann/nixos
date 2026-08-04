@@ -148,6 +148,7 @@ in
     qmk
     restic
     ripgrep
+    rsgain
     scc
     signify
     sniffnet
