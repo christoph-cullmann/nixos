@@ -140,6 +140,7 @@ in
     pciutils
     pdftk
     perf
+    picard
     polonium
     procs
     pulseaudio
