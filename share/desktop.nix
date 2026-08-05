@@ -155,6 +155,7 @@ in
     ssh-audit
     sysstat
     tageditor
+    tauon
     tcl
     texliveSmall
     tigervnc
