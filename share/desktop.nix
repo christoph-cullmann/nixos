@@ -82,7 +82,7 @@ in
     caligula
     castget
     clinfo
-    cyanrip
+    #cyanrip
     delta
     dig
     dmidecode

@@ -34,7 +34,7 @@
     package = pkgs.ollama-rocm;
 
     # preload models, see https://ollama.com/library
-    loadModels = [ "gemma4:e4b" "granite4.1:8b" "ornith:9b" "ornith:35b" "qwen3.5:9b" ];
+    loadModels = [ "qwen3.8:27b" ];
 
     # only keep modules listed in loadModels
     syncModels = true;
