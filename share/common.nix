@@ -290,9 +290,6 @@ in
     LC_TIME = "de_DE.UTF-8";
   };
 
-  # add all locales we use
-  i18n.supportedLocales = ["de_DE.UTF-8/UTF-8" "en_US.UTF-8/UTF-8"];
-
   # no need to replace the kernel at runtime
   security.protectKernelImage = true;
 
