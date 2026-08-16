@@ -3,61 +3,69 @@
   callPackage,
   linuxPackagesFor,
   _kernelPatches ? [ ],
-}:
+}@args:
 
 let
+  extraArgs = lib.removeAttrs args [
+    "lib"
+    "callPackage"
+    "linuxPackagesFor"
+    "_kernelPatches"
+  ];
+
   linux-asahi-pkg =
     {
       stdenv,
       lib,
       fetchFromGitHub,
-      fetchpatch,
       buildLinux,
       ...
     }:
-    buildLinux rec {
-      inherit stdenv lib;
+    buildLinux (
+      lib.recursiveUpdate rec {
+        inherit stdenv lib;
 
-      pname = "linux-asahi";
-      version = "7.0.10";
-      modDirVersion = version;
-      extraMeta.branch = "7.0";
+        pname = "linux-asahi";
+        version = "7.1.8";
+        modDirVersion = version;
+        extraMeta.branch = "7.1";
 
-      src = fetchFromGitHub {
-        owner = "AsahiLinux";
-        repo = "linux";
-        tag = "asahi-7.0.10-2";
-        hash = "sha256-TbSciNtqe1hvwIC2V5G2A0bh0eMSxeQxjzXOaPnYa1c=";
-      };
+        src = fetchFromGitHub {
+          owner = "AsahiLinux";
+          repo = "linux";
+          tag = "asahi-7.1.8-1";
+          hash = "sha256-hsRB5FJz3hRR0QakBY7+dRXD5p9z6ZQiuJZgghpaTjY=";
+        };
 
-      kernelPatches = [
-        {
-          name = "Asahi config";
-          patch = null;
-          structuredExtraConfig = with lib.kernel; {
-            # Needed for GPU
-            ARM64_16K_PAGES = yes;
+        kernelPatches = [
+          {
+            name = "Asahi config";
+            patch = null;
+            structuredExtraConfig = with lib.kernel; {
+              # Needed for GPU
+              ARM64_16K_PAGES = yes;
 
-            ARM64_MEMORY_MODEL_CONTROL = yes;
-            ARM64_ACTLR_STATE = yes;
+              ARM64_MEMORY_MODEL_CONTROL = yes;
+              ARM64_ACTLR_STATE = yes;
 
-            # Might lead to the machine rebooting if not loaded soon enough
-            APPLE_WATCHDOG = yes;
+              # Might lead to the machine rebooting if not loaded soon enough
+              APPLE_WATCHDOG = yes;
 
-            # Can not be built as a module, defaults to no
-            APPLE_M1_CPU_PMU = yes;
+              # Can not be built as a module, defaults to no
+              APPLE_M1_CPU_PMU = yes;
 
-            # Defaults to 'y', but we want to allow the user to set options in modprobe.d
-            HID_APPLE = module;
+              # Defaults to 'y', but we want to allow the user to set options in modprobe.d
+              HID_APPLE = module;
 
-            APPLE_PMGR_MISC = yes;
-            APPLE_PMGR_PWRSTATE = yes;
-          };
-          features.rust = true;
-        }
-      ]
-      ++ _kernelPatches;
-    };
+              APPLE_PMGR_MISC = yes;
+              APPLE_PMGR_PWRSTATE = yes;
+            };
+            features.rust = true;
+          }
+        ]
+        ++ _kernelPatches;
+      } extraArgs
+    );
 
   linux-asahi = callPackage linux-asahi-pkg { };
 in
