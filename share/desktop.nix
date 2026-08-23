@@ -108,6 +108,7 @@ in
     hunspellDicts.de_DE
     hunspellDicts.en_US
     hyfetch
+    imagemagick
     inetutils
     inkscape
     kdePackages.alpaka
