@@ -86,7 +86,7 @@ in
     delta
     dig
     dmidecode
-    dsf2flac
+    #dsf2flac
     duf
     dysk
     efibootmgr

@@ -6,6 +6,9 @@
   # basic drivers
   boot.initrd.availableKernelModules = [ "uas" ];
 
+  # Apple Silicon support
+  hardware.asahi.enable = true;
+
   # /boot efi partition to boot in UEFI mode
   fileSystems."/boot" = {
     device = "/dev/disk/by-id/nvme-APPLE_SSD_AP1024Z_0ba01e0141400628-part4";
