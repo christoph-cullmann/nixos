@@ -83,6 +83,7 @@ export QT_QUICK_CONTROLS_STYLE_PATH=~/projects/kde/usr/lib/qml/QtQuick/Controls.
     libspectre
     libssh
     libtommath
+    libusb1
     libva
     libX11
     libXau
