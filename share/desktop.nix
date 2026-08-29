@@ -150,7 +150,6 @@ in
     qmk
     restic
     ripgrep
-    rockbox-utility
     rsgain
     scc
     signify
