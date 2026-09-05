@@ -305,7 +305,7 @@ in
       auto-optimise-store = true;
 
       # enable new stuff
-      experimental-features = "nix-command flakes";
+      experimental-features = ["nix-command" "flakes"];
     };
 
     # cleanup the store from time to time
