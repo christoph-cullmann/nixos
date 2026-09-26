@@ -29,11 +29,14 @@ export QT_QUICK_CONTROLS_STYLE_PATH=~/projects/kde/usr/lib/qml/QtQuick/Controls.
     bison
     boost
     bzip2
+    cargo
     chromium
     clojure-lsp
     cmake
+    corrosion
     ctags
     curl
+    cxx-rs
     discount
     djvulibre
     docbook_xml_dtd_45
@@ -165,6 +168,7 @@ export QT_QUICK_CONTROLS_STYLE_PATH=~/projects/kde/usr/lib/qml/QtQuick/Controls.
     qt6.qtwebsockets
     qt6Packages.qgpgme
     qwen-code
+    rustc
     sdl3
     simdutf
     skia
