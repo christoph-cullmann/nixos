@@ -46,6 +46,7 @@ export QT_QUICK_CONTROLS_STYLE_PATH=~/projects/kde/usr/lib/qml/QtQuick/Controls.
     exiv2
     fast-float
     fireplace
+    flatpak-builder
     flex
     gdb
     giflib
