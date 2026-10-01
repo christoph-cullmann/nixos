@@ -113,6 +113,7 @@ in
     inkscape
     kdePackages.alpaka
     kdePackages.ark
+    kdePackages.digikam
     kdePackages.filelight
     kdePackages.k3b
     kdePackages.kate
