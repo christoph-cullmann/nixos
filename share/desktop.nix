@@ -85,6 +85,7 @@ in
     #cyanrip
     delta
     dig
+    digikam
     dmidecode
     #dsf2flac
     duf
@@ -113,7 +114,6 @@ in
     inkscape
     kdePackages.alpaka
     kdePackages.ark
-    kdePackages.digikam
     kdePackages.filelight
     kdePackages.k3b
     kdePackages.kate
