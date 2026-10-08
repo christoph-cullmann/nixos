@@ -23,13 +23,17 @@ efibootmgr -b 1 -B
 efibootmgr -b 2 -B
 efibootmgr -b 3 -B
 efibootmgr -b 4 -B
+efibootmgr -b 80 -B
+efibootmgr -b 81 -B
+efibootmgr -b 82 -B
+efibootmgr -b ffff -B
 efibootmgr
 
 # host name to use
 HOST=beta
 
 # disks to use
-DISK=/dev/disk/by-id/nvme-SAMSUNG_MZVLB1T0HBLR-000L2_S4DZNX0R362286
+DISK=/dev/disk/by-id/ata-APPLE_SSD_SM0256F_S1K4NYCFA46727
 DISKS="$DISK"
 
 # create partition table on all disks and EFI partition
@@ -138,7 +142,7 @@ mount
 nixos-generate-config --root /mnt
 
 # copy config data from another machine including secrets
-doas scp -r /data/nixos root@192.168.13.102:/mnt/data
+doas scp -r /data/nixos root@192.168.178.138:/mnt/data
 
 # install
 nixos-install --option experimental-features 'nix-command flakes' --no-root-passwd --root /mnt

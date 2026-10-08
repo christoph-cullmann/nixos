@@ -4,7 +4,7 @@
   imports = [ (modulesPath + "/installer/scan/not-detected.nix") ];
 
   # basic drivers
-  boot.initrd.availableKernelModules = [ "nvme" "xhci_pci" "ahci" "usbhid" "uas" "sd_mod" ];
+  boot.initrd.availableKernelModules = [ "xhci_pci" "ahci" "usbhid" "uas" "sd_mod" ];
 
   # Intel CPU
   boot.kernelModules = [ "kvm-intel" ];
@@ -15,7 +15,7 @@
 
   # /boot efi partition to boot in UEFI mode
   fileSystems."/boot" = {
-    device = "/dev/disk/by-id/nvme-CT4000P3PSSD8_2325E6E63746-part1";
+    device = "/dev/disk/by-id/ata-APPLE_SSD_SM0256F_S1K4NYCFA46727-part1";
     fsType = "vfat";
     neededForBoot = true;
     options = [ "fmask=0077" "dmask=0077" ];
