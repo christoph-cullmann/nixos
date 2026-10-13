@@ -82,12 +82,12 @@ in
     caligula
     castget
     clinfo
-    #cyanrip
+    cyanrip
     delta
     dig
     digikam
     dmidecode
-    #dsf2flac
+    dsf2flac
     duf
     dysk
     efibootmgr
