@@ -109,7 +109,6 @@ export QT_QUICK_CONTROLS_STYLE_PATH=~/projects/kde/usr/lib/qml/QtQuick/Controls.
     modemmanager
     llvmPackages.clang-tools # clangd
     llvmPackages.libclang.python # git-clang-format
-    neocmakelsp
     networkmanager
     ninja
     openal
@@ -117,7 +116,6 @@ export QT_QUICK_CONTROLS_STYLE_PATH=~/projects/kde/usr/lib/qml/QtQuick/Controls.
     openssl
     pcre
     perl
-    perlnavigator
     perlPackages.IOSocketSSL
     perlPackages.JSONXS
     perlPackages.NetDBus
@@ -173,11 +171,9 @@ export QT_QUICK_CONTROLS_STYLE_PATH=~/projects/kde/usr/lib/qml/QtQuick/Controls.
     sdl3
     simdutf
     skia
-    typescript-language-server
     udev
     util-linux
     valgrind
-    vscode-json-languageserver
     wayland
     wayland-protocols
     wayland-scanner
@@ -191,7 +187,6 @@ export QT_QUICK_CONTROLS_STYLE_PATH=~/projects/kde/usr/lib/qml/QtQuick/Controls.
     xercesc
     xml2
     xmlto
-    yaml-language-server
     zlib
     zstd
     xz
