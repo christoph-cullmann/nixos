@@ -141,9 +141,6 @@ in
   # Use the systemd-boot EFI boot loader.
   boot.loader.systemd-boot.enable = true;
 
-  # use systemd early, we use boot.initrd.systemd.services.rollback to rollback /
-  boot.initrd.systemd.enable = true;
-
   # works only on x86 machines, not on the Macs
   boot.loader.efi.canTouchEfiVariables = pkgs.stdenv.hostPlatform.isx86;
 
