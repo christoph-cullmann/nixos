@@ -63,7 +63,7 @@ export QT_QUICK_CONTROLS_STYLE_PATH=/Users/cullmann/projects/kde/usr/lib/qml/QtQ
     llvmPackages_17.libclang.python # git-clang-format
     ninja
     openjpeg
-    pcre
+    pcre2
     perl
     perlPackages.IOSocketSSL
     perlPackages.JSONXS
