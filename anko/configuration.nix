@@ -36,7 +36,7 @@
   # Squeezebox Client for itself
   services.squeezelite = {
     enable = true;
-    extraArgs = "-s 127.0.0.1";
+    extraArgs = "-s 127.0.0.1 -o hw:CARD=Z2";
     name = "Zen";
   };
 
