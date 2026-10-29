@@ -383,6 +383,7 @@ in
 
   # basic packages we want on all machines
   environment.systemPackages = with pkgs; [
+    alsa-utils
     btop
     lsof
     maildrop

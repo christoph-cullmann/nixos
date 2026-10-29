@@ -33,6 +33,13 @@
   };
   users.users.jellyfin.extraGroups = [ "media-files" ];
 
+  # Squeezebox Client for itself
+  services.squeezelite = {
+    enable = true;
+    extraArgs = "-s 127.0.0.1";
+    name = "Zen";
+  };
+
   # Slim Server for Logitech Squeezebox Players, add it to media-files & make it persistent
   services.slimserver = {
     enable = true;

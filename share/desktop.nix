@@ -73,7 +73,6 @@ in
 
   # packages for the desktop system
   environment.systemPackages = with pkgs; [
-    alsa-utils
     android-tools
     aspellDicts.de
     aspellDicts.en
