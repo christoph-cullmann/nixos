@@ -34,7 +34,7 @@
     package = pkgs.ollama-rocm;
 
     # preload models, see https://ollama.com/library
-    loadModels = [ "qwen3.8:27b" ];
+    loadModels = [ "mimo-v2.6:9b" "ornith-1.5:9b" ];
 
     # only keep modules listed in loadModels
     syncModels = true;
