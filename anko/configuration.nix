@@ -34,9 +34,13 @@
   users.users.jellyfin.extraGroups = [ "media-files" ];
 
   # Squeezebox Client for itself
+  services.pipewire.enable = true;
+  services.pipewire.pulse.enable = true;
+  services.pipewire.systemWide = true;
   services.squeezelite = {
     enable = true;
-    extraArgs = "-s 127.0.0.1 -o hw:CARD=Z2 -a ::32:0 -r 44100,48000,88200,96000,176400,192000,352800,384000 -C 60";
+    pulseaudio.enable = true;
+    extraArgs = "-s 127.0.0.1 -a ::32:0 -r 44100,48000,88200,96000,176400,192000,352800,384000";
     name = "Zen";
   };
 
