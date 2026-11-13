@@ -1,4 +1,4 @@
-with import <nixpkgs> { config.allowUnfree = true; };
+with import <nixpkgs> {};
 
 # dev env
 stdenv.mkDerivation {
@@ -51,6 +51,8 @@ export QT_QUICK_CONTROLS_STYLE_PATH=~/projects/kde/usr/lib/qml/QtQuick/Controls.
     gdb
     giflib
     gitFull
+    goose-cli
+    goose-desktop
     gperf
     gpgme
     graphviz
@@ -106,7 +108,6 @@ export QT_QUICK_CONTROLS_STYLE_PATH=~/projects/kde/usr/lib/qml/QtQuick/Controls.
     lmdb
     mesa
     meson
-    #mistral-vibe
     modemmanager
     llvmPackages.clang-tools # clangd
     llvmPackages.libclang.python # git-clang-format
@@ -167,7 +168,7 @@ export QT_QUICK_CONTROLS_STYLE_PATH=~/projects/kde/usr/lib/qml/QtQuick/Controls.
     qt6.qtwebengine
     qt6.qtwebsockets
     qt6Packages.qgpgme
-    qwen-code
+    reuse
     rustc
     sdl3
     simdutf

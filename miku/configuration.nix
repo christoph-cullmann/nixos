@@ -30,8 +30,8 @@
     # turn ollama on
     enable = true;
 
-    # use our AMD GPU
-    package = pkgs.ollama-rocm;
+    # try to use the cpu
+    package = pkgs.ollama-cpu;
 
     # preload models, see https://ollama.com/library
     loadModels = [ "mimo-v2.6:9b" "ornith-1.5:9b" ];
