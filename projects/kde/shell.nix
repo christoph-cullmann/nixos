@@ -31,8 +31,6 @@ export QT_QUICK_CONTROLS_STYLE_PATH=~/projects/kde/usr/lib/qml/QtQuick/Controls.
     bzip2
     cargo
     chromium
-    cline
-    clojure-lsp
     cmake
     corrosion
     ctags
@@ -168,6 +166,7 @@ export QT_QUICK_CONTROLS_STYLE_PATH=~/projects/kde/usr/lib/qml/QtQuick/Controls.
     qt6.qtwebengine
     qt6.qtwebsockets
     qt6Packages.qgpgme
+    qtcreator
     reuse
     rustc
     sdl3
