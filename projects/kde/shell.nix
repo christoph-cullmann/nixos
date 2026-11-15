@@ -31,6 +31,7 @@ export QT_QUICK_CONTROLS_STYLE_PATH=~/projects/kde/usr/lib/qml/QtQuick/Controls.
     bzip2
     cargo
     chromium
+    cline
     clojure-lsp
     cmake
     corrosion
@@ -52,7 +53,6 @@ export QT_QUICK_CONTROLS_STYLE_PATH=~/projects/kde/usr/lib/qml/QtQuick/Controls.
     giflib
     gitFull
     goose-cli
-    goose-desktop
     gperf
     gpgme
     graphviz
