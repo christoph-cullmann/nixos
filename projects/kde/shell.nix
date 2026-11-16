@@ -106,12 +106,14 @@ export QT_QUICK_CONTROLS_STYLE_PATH=~/projects/kde/usr/lib/qml/QtQuick/Controls.
     lmdb
     mesa
     meson
+    # build error mistral-vibe
     modemmanager
     llvmPackages.clang-tools # clangd
     llvmPackages.libclang.python # git-clang-format
     networkmanager
     ninja
     openal
+    opencode
     openjpeg
     openssl
     pcre2
@@ -167,6 +169,7 @@ export QT_QUICK_CONTROLS_STYLE_PATH=~/projects/kde/usr/lib/qml/QtQuick/Controls.
     qt6.qtwebsockets
     qt6Packages.qgpgme
     qtcreator
+    qwen-code
     reuse
     rustc
     sdl3
