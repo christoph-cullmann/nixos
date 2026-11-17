@@ -34,7 +34,7 @@
     package = pkgs.ollama-cpu;
 
     # preload models, see https://ollama.com/library
-    loadModels = [ "mimo-v2.6:9b" "ornith-1.5:9b" ];
+    loadModels = [ "granite4.2:30b" "qwen3.8:27b" "mimo-v2.6:9b" "ornith-1.5:9b" ];
 
     # only keep modules listed in loadModels
     syncModels = true;
