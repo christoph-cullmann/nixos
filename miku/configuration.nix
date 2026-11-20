@@ -36,7 +36,7 @@
 
     # preload models, see https://ollama.com/library
     # try stuff that fits the 16 GB GPU
-    loadModels = [ "gemma4:12b" "granite4.2:8b" "qwen3.5:4b" "mimo-v2.6:9b" "ornith-1.5:9b" ];
+    loadModels = [ "gemma4:12b" "qwen3.5:4b" ];
 
     # only keep modules listed in loadModels
     syncModels = true;
