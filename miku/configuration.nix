@@ -43,7 +43,7 @@
 
     # larger context & no cloud stuff
     environmentVariables = {
-      OLLAMA_CONTEXT_LENGTH = "131072";
+      OLLAMA_CONTEXT_LENGTH = "262144";
       OLLAMA_NO_CLOUD = "1";
     };
   };
