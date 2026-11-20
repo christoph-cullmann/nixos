@@ -30,18 +30,20 @@
     # turn ollama on
     enable = true;
 
-    # try to use the cpu
-    package = pkgs.ollama-cpu;
+    # try to use the Radeon
+    package = pkgs.ollama-rocm;
 
     # preload models, see https://ollama.com/library
-    loadModels = [ "granite4.2:30b" "qwen3.8:27b" "mimo-v2.6:9b" "ornith-1.5:9b" ];
+    # try stuff that fits the 16 GB GPU
+    loadModels = [ "gemma4:12b" "granite4.2:8b" "qwen3.5:9b" "mimo-v2.6:9b" "ornith-1.5:9b" ];
 
     # only keep modules listed in loadModels
     syncModels = true;
 
-    # larger context to get qwen-code to work
+    # larger context & no cloud stuff
     environmentVariables = {
       OLLAMA_CONTEXT_LENGTH = "262144";
+      OLLAMA_NO_CLOUD = "1";
     };
   };
 
