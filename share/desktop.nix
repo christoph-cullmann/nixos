@@ -353,8 +353,14 @@ in
       # shared config
       imports = [ ./home.nix ];
 
-      # create kde build setup
+      # create ai/kde build setup
       home.file = {
+        "projects/ai/.envrc" = {
+          text = "use nix";
+        };
+        "projects/ai/shell.nix" = {
+          text = (builtins.readFile "/data/nixos/projects/ai/shell.nix");
+        };
         "projects/kde/.envrc" = {
           text = "use nix";
         };
