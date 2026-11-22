@@ -8,9 +8,24 @@ in
       "/data/nixos/share/flatpak.nix"
   ];
 
-  # enable the KDE Plasma Desktop Environment & Login Manager
+  # enable the KDE Plasma Desktop Environment
   services.desktopManager.plasma6.enable = true;
-  services.displayManager.plasma-login-manager.enable = true;
+
+  # enable the Ly login manager with proper KWallet integration
+  services.displayManager.ly = {
+    enable = true;
+    settings = {
+      animation = "matrix";
+      load = true;
+      save = true;
+      session_log = ".cache/ly-session.log";
+    };
+  };
+  security.pam.services.ly.kwallet = {
+    enable = true;
+    forceRun = true;
+    package = pkgs.kdePackages.kwallet-pam;
+  };
 
   # get gnupg to work
   programs.gnupg.agent.enable = true;
