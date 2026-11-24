@@ -3,7 +3,7 @@ global
     branch-group kf6-qt6
 
     # we want ninja, turn off some Qt 5 things to have less dependencies
-    cmake-options -G "Ninja" -DBUILD_WITH_QT6=ON -DQT_MAJOR_VERSION=6 -DPHONON_BUILD_QT5=OFF -DBUILD_QT5=OFF -DBUILD_PYTHON_BINDINGS=OFF -DCMAKE_AUTOGEN_PARALLEL=12
+    cmake-options -G "Ninja" -DBUILD_WITH_QT6=ON -DQT_MAJOR_VERSION=6 -DPHONON_BUILD_QT5=OFF -DBUILD_QT5=OFF -DBUILD_PYTHON_BINDINGS=OFF -DCMAKE_AUTOGEN_PARALLEL=12 -DENABLE_ACP_CLIENT=ON
 
     # ensure we don't fully saturate the machine
     make-options -j12 NINJAFLAGS=-j12
